@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+/* ============================================================
+   LUXURY DESIGN SYSTEM — Hotel Parkland
+   Warm cream base, terracotta + gold accents, serif/sans pairing.
+   Re-skin: change the --luxury-* variables below; every component
+   reads from these tokens via the @theme block.
+   ============================================================ */
+
+:root {
+  /* ---- Brand Color Palette ---- */
+  --luxury-dark: #242420;
+  --luxury-dark-alt: #2c2b26;
+  --luxury-cream: #faf7f0;
+  --luxury-cream-alt: #f1e9d8;
+  --luxury-ivory: #fdfbf6;
+  /* Primary accent: terracotta (matches the reference-site pattern). */
+  --luxury-gold: #a3442f;
+  --luxury-gold-light: #c97a5c;
+  --luxury-gold-dim: #7c3424;
+  /* Same value as --luxury-gold here — terracotta already passes WCAG AA
+     (~6.5:1) as text on cream/white, unlike a literal pale gold would. */
+  --luxury-gold-text: #7c3424;
+  --luxury-charcoal: #242420;
+  --luxury-muted: #746f68;
+  /* Off-canvas navigation panel — soft mint, kept light on purpose. */
+  --luxury-mint: #c4f7ca;
+  --luxury-border: rgba(163, 68, 47, 0.2);
+  /* Secondary accent: warm sand/gold, used sparingly (icons, small labels). */
+  --brand-sand: #b0916a;
+
+  --background: #ffffff;
+  --foreground: #242420;
+  --color-primary-green: #007e43;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-gold: var(--luxury-gold);
+  --color-gold-light: var(--luxury-gold-light);
+  --color-gold-dim: var(--luxury-gold-dim);
+  --color-gold-text: var(--luxury-gold-text);
+  --color-sand: var(--brand-sand);
+  --color-luxury-dark: var(--luxury-dark);
+  --color-luxury-cream: var(--luxury-cream);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display-serif);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), "Manrope", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scrollDown {
+  0% { opacity: 0; transform: translateY(-8px); }
+  50% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Respect OS-level motion preference — prevents CLS and vestibular issues */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-slide-in-left,
+  .animate-slide-in-right {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+  .scroll-indicator {
+    animation: none;
+  }
+}
+
+.delay-100 { animation-delay: 0.05s; }
+.delay-200 { animation-delay: 0.1s; }
+.delay-300 { animation-delay: 0.15s; }
+.delay-400 { animation-delay: 0.2s; }
+
+/* ============================================================
+   LUXURY TYPOGRAPHY & COMPONENTS
+   Wrapped in @layer components so Tailwind utilities (@layer
+   utilities) always win when both target the same element —
+   e.g. className="luxury-hero-title text-2xl" correctly shrinks
+   the logo instead of the clamp() size silently winning.
+   ============================================================ */
+
+@layer components {
+  .luxury-hero-title {
+    font-family: var(--font-display-serif), Georgia, serif;
+   font-size: clamp(0.125rem, -1.5357rem + 5.9048vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+    font-weight: 500;
+  }
+
+  .luxury-section-title {
+    font-family: var(--font-display-serif), Georgia, serif;
+    font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+
+  .luxury-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .luxury-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .luxury-divider {
+    width: 64px;
+    height: 1px;
+    background: var(--luxury-gold);
+  }
+
+  .luxury-card-hover {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .luxury-card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Bordered outline CTA that fills with the accent colour on hover */
+  .luxury-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.25rem;
+    border: 1px solid var(--luxury-gold);
+    color: var(--luxury-gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .luxury-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--luxury-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: -1;
+  }
+
+  .luxury-btn:hover { color: #fff; }
+  .luxury-btn:hover::before { transform: scaleX(1); transform-origin: left; }
+
+  .luxury-btn-light { border-color: rgba(255, 255, 255, 0.6); color: #fff; }
+  .luxury-btn-light::before { background: #fff; }
+  .luxury-btn-light:hover { color: var(--luxury-dark); }
+
+  .luxury-btn-solid {
+    background: var(--color-primary-green);
+    color: #fff;
+    border-color: var(--color-primary-green);
+  }
+  .luxury-btn-solid::before { background: var(--color-primary-green); }
+
+  /* Image hover zoom */
+  .luxury-img-zoom { overflow: hidden; }
+  .luxury-img-zoom img { transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .luxury-img-zoom:hover img { transform: scale(1.06); }
+
+  /* Scroll indicator */
+  .scroll-indicator { animation: scrollDown 2s ease infinite; }
+
+  /* Section background/text/border helpers */
+  .bg-luxury-dark { background-color: var(--luxury-dark); }
+  .bg-luxury-dark-alt { background-color: var(--luxury-dark-alt); }
+  .bg-luxury-cream { background-color: var(--luxury-cream); }
+  .bg-luxury-cream-alt { background-color: var(--luxury-cream-alt); }
+  .bg-luxury-ivory { background-color: var(--luxury-ivory); }
+  .bg-luxury-mint { background-color: #f7f6f6; }
+  .text-luxury-gold { color: var(--luxury-gold); }
+  .text-luxury-charcoal { color: var(--luxury-charcoal); }
+  .text-luxury-muted { color: var(--luxury-muted); }
+  .border-luxury-gold { border-color: var(--luxury-gold); }
+  .border-luxury-border { border-color: var(--luxury-border); }
+}

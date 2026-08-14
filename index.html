@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add('js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Parkland — Sauraha, Chitwan National Park</title>
+<meta name="description" content="Hotel Parkland: a five-star sanctuary of traditional hospitality in a sylvan setting, ten minutes from the gates of Chitwan National Park, Nepal.">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: '#FAF7F0',
+          'cream-dark': '#F1E9D8',
+          charcoal: '#242420',
+          terracotta: { light: '#C97A5C', DEFAULT: '#A3442F', dark: '#7C3424' },
+          gold: '#B0916A',
+          sage: '#6E8F6B',
+        },
+        fontFamily: {
+          serif: ['"Playfair Display"', 'serif'],
+          sans: ['Manrope', 'sans-serif'],
+        },
+        letterSpacing: {
+          widest2: '.28em',
+        },
+      },
+    },
+  };
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Manrope', sans-serif; background-color: #FAF7F0; color: #242420; }
+  .font-serif { font-family: 'Playfair Display', serif; }
+
+  #site-header { transition: background-color .45s ease, box-shadow .45s ease, padding .45s ease; }
+  #site-header .nav-link, #site-header .logo-mark, #site-header .icon-btn { color: #fff; transition: color .45s ease; }
+  #site-header.is-scrolled { background-color: rgba(250,247,240,0.97); box-shadow: 0 8px 30px -12px rgba(36,36,32,0.15); }
+  #site-header.is-scrolled .nav-link, #site-header.is-scrolled .logo-mark, #site-header.is-scrolled .icon-btn { color: #242420; }
+  #site-header .book-btn { transition: none; }
+
+  /* Gated behind html.js so content stays fully visible if JS fails to load */
+  html.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  html.js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  .eyebrow { letter-spacing: .28em; }
+
+  /* Offset anchor-nav targets so the fixed header doesn't cover the heading on jump */
+  section[id], #book { scroll-margin-top: 6rem; }
+
+  ::selection { background: #A3442F; color: #fff; }
+
+  #mobile-menu { transition: opacity .35s ease, visibility .35s ease; }
+  #mobile-menu.hidden-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="site-header" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20 lg:h-24">
+    <a href="#top" class="logo-mark flex items-baseline gap-2 shrink-0">
+      <span class="font-serif text-2xl lg:text-[1.7rem] tracking-wide">Hotel Parkland</span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-10 text-[13px] tracking-widest2 uppercase">
+      <a href="#rooms" class="nav-link hover:opacity-70 transition">Rooms</a>
+      <a href="#dining" class="nav-link hover:opacity-70 transition">Dining</a>
+      <a href="#activities" class="nav-link hover:opacity-70 transition">Activities</a>
+      <a href="#nearby" class="nav-link hover:opacity-70 transition">Nearby</a>
+      <a href="#gallery" class="nav-link hover:opacity-70 transition">Gallery</a>
+      <a href="#contact" class="nav-link hover:opacity-70 transition">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <a href="tel:+9779841229970" class="nav-link hidden md:inline-flex text-[13px] tracking-wide hover:opacity-70 transition">+977 984-1229970</a>
+      <a href="#book" class="book-btn inline-flex items-center justify-center bg-terracotta hover:bg-terracotta-dark text-white text-[12px] tracking-widest2 uppercase px-6 py-3 transition-colors">Book Now</a>
+      <button id="menu-toggle" class="icon-btn lg:hidden p-2 -mr-2" aria-label="Open menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div id="mobile-menu" class="hidden-menu fixed inset-0 z-[60] bg-charcoal text-cream flex flex-col">
+  <div class="flex items-center justify-between px-6 h-20">
+    <span class="font-serif text-xl">Hotel Parkland</span>
+    <button id="menu-close" class="p-2" aria-label="Close menu"><i data-lucide="x" class="w-6 h-6"></i></button>
+  </div>
+  <nav class="flex-1 flex flex-col items-start justify-center gap-8 px-10 font-serif text-4xl">
+    <a href="#rooms" class="mobile-link">Rooms</a>
+    <a href="#dining" class="mobile-link">Dining</a>
+    <a href="#activities" class="mobile-link">Activities</a>
+    <a href="#nearby" class="mobile-link">Nearby</a>
+    <a href="#gallery" class="mobile-link">Gallery</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </nav>
+  <div class="px-10 pb-10 text-sm tracking-wide text-cream/70 space-y-1">
+    <p>Sauraha, Chitwan National Park, Nepal</p>
+    <p>+977 984-1229970 · parkland@mail.com.np</p>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative h-screen min-h-[640px] w-full overflow-hidden">
+  <img src="assets/img/hero.jpg" alt="Aerial view of Hotel Parkland's pool and gardens" class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/25 to-charcoal/40"></div>
+  <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+    <p class="eyebrow text-cream/90 text-[12px] md:text-[13px] uppercase mb-6">Sauraha &middot; Chitwan National Park, Nepal</p>
+    <h1 class="font-serif text-white text-5xl sm:text-6xl lg:text-7xl leading-[1.08] max-w-4xl">A Five-Star Sanctuary<br class="hidden sm:block"> on the Edge of the Wild</h1>
+    <p class="text-cream/85 max-w-xl mt-6 text-base lg:text-lg font-light">Traditional hospitality in a sylvan setting — ten minutes from the heart of Sauraha, and minutes from the gates of the jungle.</p>
+    <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
+      <a href="#book" class="bg-terracotta hover:bg-terracotta-dark text-white text-[12px] tracking-widest2 uppercase px-8 py-4 transition-colors">Book Your Stay</a>
+      <a href="#rooms" class="border border-white/70 text-white text-[12px] tracking-widest2 uppercase px-8 py-4 hover:bg-white/10 transition-colors">Explore The Resort</a>
+    </div>
+  </div>
+  <a href="#welcome" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/80 animate-bounce" aria-label="Scroll down">
+    <i data-lucide="chevron-down" class="w-7 h-7"></i>
+  </a>
+</section>
+
+<!-- ============ WELCOME / ABOUT ============ -->
+<section id="welcome" class="py-24 lg:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal order-2 lg:order-1">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Welcome To Hotel Parkland</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15] mb-6">Where Jungle Tranquility<br>Meets Refined Comfort</h2>
+      <p class="text-charcoal/75 leading-relaxed mb-5">Since 1987, Hotel Parkland has offered travellers a quiet and peaceful stay just ten minutes from the centre of Sauraha, and only minutes from the entrance to Chitwan National Park and its office.</p>
+      <p class="text-charcoal/75 leading-relaxed mb-10">Our magnificent, mature gardens shelter rare indigenous trees, shrubs and flowers that draw birds and butterflies year-round — the same sylvan calm that keeps so many of our guests returning, year after year. As we embark on our journey toward five-star hospitality, that quiet, garden-bound character remains our compass.</p>
+
+      <div class="grid grid-cols-3 gap-6 border-t border-charcoal/10 pt-8">
+        <div>
+          <p class="font-serif text-3xl text-terracotta">1987</p>
+          <p class="text-[11px] tracking-widest2 uppercase text-charcoal/60 mt-2">Est. Since</p>
+        </div>
+        <div>
+          <p class="font-serif text-3xl text-terracotta">32</p>
+          <p class="text-[11px] tracking-widest2 uppercase text-charcoal/60 mt-2">Rooms &amp; Suites</p>
+        </div>
+        <div>
+          <p class="font-serif text-3xl text-terracotta">10 Min</p>
+          <p class="text-[11px] tracking-widest2 uppercase text-charcoal/60 mt-2">To Sauraha Centre</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal order-1 lg:order-2 relative">
+      <div class="aspect-[4/5] overflow-hidden">
+        <img src="assets/img/garden.jpg" alt="Mature tropical gardens at Hotel Parkland" class="w-full h-full object-cover">
+      </div>
+      <div class="hidden md:block absolute -bottom-8 -left-8 w-40 h-40 border border-terracotta/40 -z-10"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROOMS ============ -->
+<section id="rooms" class="py-24 lg:py-32 bg-cream-dark">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Rooms &amp; Suites</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">Restful Spaces, Reimagined</h2>
+      <p class="text-charcoal/70 mt-5">Thirty-two rooms are being reimagined for our five-star chapter — each pairing warm, natural materials with the quiet of the garden beyond the window.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Room 1 -->
+      <div class="reveal group">
+        <div class="aspect-[4/5] overflow-hidden">
+          <img src="assets/img/rooms/room-deluxe.jpg" alt="Deluxe Garden Room interior" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        </div>
+        <div class="pt-6">
+          <h3 class="font-serif text-2xl">Deluxe Garden Room</h3>
+          <p class="text-charcoal/70 text-sm mt-2 leading-relaxed">Garden-facing rooms with warm wood tones and private balconies overlooking mature gardens.</p>
+          <a href="tarrif.html" class="inline-flex items-center gap-2 text-terracotta text-[12px] tracking-widest2 uppercase mt-5 hover:gap-3 transition-all">Rates &amp; Tariffs <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+      <!-- Room 2 -->
+      <div class="reveal group">
+        <div class="aspect-[4/5] overflow-hidden">
+          <img src="assets/img/rooms/room-premier.jpg" alt="Premier Room interior" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        </div>
+        <div class="pt-6">
+          <h3 class="font-serif text-2xl">Premier Room</h3>
+          <p class="text-charcoal/70 text-sm mt-2 leading-relaxed">Spacious interiors with elevated finishes, designed for longer, more restorative stays.</p>
+          <a href="tarrif.html" class="inline-flex items-center gap-2 text-terracotta text-[12px] tracking-widest2 uppercase mt-5 hover:gap-3 transition-all">Rates &amp; Tariffs <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+      <!-- Room 3 -->
+      <div class="reveal group">
+        <div class="aspect-[4/5] overflow-hidden">
+          <img src="assets/img/rooms/room-villa.jpg" alt="Parkland Suite interior" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        </div>
+        <div class="pt-6">
+          <h3 class="font-serif text-2xl">Parkland Suite</h3>
+          <p class="text-charcoal/70 text-sm mt-2 leading-relaxed">Our most refined address — generous living space for guests who want a little more room to unwind.</p>
+          <a href="tarrif.html" class="inline-flex items-center gap-2 text-terracotta text-[12px] tracking-widest2 uppercase mt-5 hover:gap-3 transition-all">Rates &amp; Tariffs <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DINING ============ -->
+<section id="dining" class="py-24 lg:py-32 bg-cream overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal relative">
+      <div class="aspect-[4/5] overflow-hidden">
+        <img src="assets/img/dining.jpg" alt="Outdoor dining terrace at Hotel Parkland" class="w-full h-full object-cover">
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Dining &amp; Bar</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15] mb-6">Dine Under the Sauraha Sky</h2>
+      <p class="text-charcoal/75 leading-relaxed mb-5">Take breakfast on the open-air terrace, or settle in for a full buffet spread at our restaurant after a day in the jungle. Our bar keeps the evening unhurried, with the garden as its backdrop.</p>
+      <ul class="space-y-3 text-charcoal/75 text-sm">
+        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-terracotta"></i> Indoor restaurant &amp; open-air terrace dining</li>
+        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-terracotta"></i> Daily buffet service</li>
+        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-terracotta"></i> Garden bar, open through the evening</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POOL / LEISURE ============ -->
+<section class="py-24 lg:py-32 bg-cream-dark overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="reveal order-2 lg:order-1">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Leisure &amp; Wellness</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15] mb-6">Unwind Beside the Pool</h2>
+      <p class="text-charcoal/75 leading-relaxed mb-5">Spend an unhurried afternoon at the swimming pool, or wander the mature gardens that surround it — home to indigenous trees, flowering shrubs, and the birds and butterflies they attract.</p>
+      <p class="text-charcoal/75 leading-relaxed">It's the kind of quiet that's hard to find near a national park, and one of the reasons our guests keep coming back.</p>
+    </div>
+    <div class="reveal order-1 lg:order-2 relative">
+      <div class="aspect-[4/5] overflow-hidden">
+        <img src="assets/img/pool.jpg" alt="Swimming pool surrounded by gardens" class="w-full h-full object-cover">
+      </div>
+      <div class="hidden md:block absolute -bottom-8 -right-8 w-40 h-40 border border-terracotta/40 -z-10"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACTIVITIES ============ -->
+<section id="activities" class="py-24 lg:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Activities</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">Into the Heart of Chitwan</h2>
+      <p class="text-charcoal/70 mt-5">Seven ways to meet the jungle, each arranged through the hotel with an experienced local guide.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- card template x7 -->
+      <div class="reveal relative group overflow-hidden aspect-[3/4] lg:col-span-2 lg:row-span-2">
+        <img src="assets/img/activities/elephant-bathing.jpg" alt="Elephant bathing in the river" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/10 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-6">
+          <h3 class="font-serif text-white text-2xl">Elephant Bathing</h3>
+          <p class="text-cream/80 text-sm mt-1">Join the mahouts at the riverbank</p>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/canoe.jpg" alt="Dugout canoe ride on the river" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Dugout Canoe Ride</h3>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/jungle-drive.jpg" alt="Jungle jeep drive" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Jungle Jeep Drive</h3>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/cultural.jpg" alt="Traditional cultural dance performance" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Cultural Dance Tour</h3>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/nature-walk.jpg" alt="Guided nature walk through the jungle" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Guided Nature Walk</h3>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/birdwatching.jpg" alt="Bird watching in Chitwan" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Bird Watching</h3>
+        </div>
+      </div>
+
+      <div class="reveal relative group overflow-hidden aspect-[3/4]">
+        <img src="assets/img/activities/elephant-breeding.jpg" alt="Elephant breeding center visit" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/5 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-5">
+          <h3 class="font-serif text-white text-lg leading-tight">Elephant Breeding Center</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEARBY ============ -->
+<section id="nearby" class="py-24 lg:py-32 bg-cream-dark">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Beyond The Gates</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">Worth The Trip</h2>
+      <p class="text-charcoal/70 mt-5">Sauraha's edge-of-the-jungle setting puts a handful of Chitwan's best-known sights within easy reach.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="reveal group">
+        <div class="relative aspect-[4/5] overflow-hidden">
+          <img src="assets/img/nearby/park-gate.jpg" alt="Chitwan National Park" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <span class="absolute top-4 left-4 bg-cream/95 text-charcoal text-[10px] tracking-widest2 uppercase px-3 py-1.5">2 Min Away</span>
+        </div>
+        <div class="pt-5">
+          <h3 class="font-serif text-xl">Chitwan National Park</h3>
+          <p class="text-charcoal/65 text-sm mt-2 leading-relaxed">Minutes from our door — the gateway to Nepal's first national park and a UNESCO World Heritage site.</p>
+        </div>
+      </div>
+
+      <div class="reveal group">
+        <div class="relative aspect-[4/5] overflow-hidden">
+          <img src="assets/img/nearby/rapti-river.jpg" alt="Rapti River" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <span class="absolute top-4 left-4 bg-cream/95 text-charcoal text-[10px] tracking-widest2 uppercase px-3 py-1.5">5 Min Walk</span>
+        </div>
+        <div class="pt-5">
+          <h3 class="font-serif text-xl">The Rapti River</h3>
+          <p class="text-charcoal/65 text-sm mt-2 leading-relaxed">The river that separates Sauraha from the wild — rhinos are often spotted grazing along its banks.</p>
+        </div>
+      </div>
+
+      <div class="reveal group">
+        <div class="relative aspect-[4/5] overflow-hidden">
+          <img src="assets/img/nearby/bishazari-tal.jpg" alt="Bishazari Tal wetland" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <span class="absolute top-4 left-4 bg-cream/95 text-charcoal text-[10px] tracking-widest2 uppercase px-3 py-1.5">~10 Km</span>
+        </div>
+        <div class="pt-5">
+          <h3 class="font-serif text-xl">Bishazari Tal</h3>
+          <p class="text-charcoal/65 text-sm mt-2 leading-relaxed">"Twenty Thousand Lakes" — a Ramsar-listed wetland and one of the region's best birdwatching spots.</p>
+        </div>
+      </div>
+
+      <div class="reveal group">
+        <div class="relative aspect-[4/5] overflow-hidden">
+          <img src="assets/img/nearby/tharu-museum.jpg" alt="Tharu Cultural Museum" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          <span class="absolute top-4 left-4 bg-cream/95 text-charcoal text-[10px] tracking-widest2 uppercase px-3 py-1.5">Bachhauli</span>
+        </div>
+        <div class="pt-5">
+          <h3 class="font-serif text-xl">Tharu Cultural Museum</h3>
+          <p class="text-charcoal/65 text-sm mt-2 leading-relaxed">Textiles, tools and traditions of the indigenous Tharu community, Chitwan's original inhabitants.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AMENITIES STRIP ============ -->
+<section class="py-20 bg-charcoal text-cream">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <p class="reveal eyebrow text-gold text-[12px] uppercase text-center mb-14">The Essentials, Taken Care Of</p>
+    <div class="reveal grid grid-cols-2 md:grid-cols-4 border-t border-l border-cream/10">
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="wifi" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Free Wi-Fi</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="bell" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Room Service</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="shield-check" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">24/7 Security</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="car" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Private Parking</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="bike" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Bicycle Rental</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="banknote" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Currency Exchange</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="music" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Live Music Evenings</p>
+      </div>
+      <div class="border-r border-b border-cream/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-cream/[0.04] transition-colors">
+        <i data-lucide="users" class="w-5 h-5 text-gold"></i>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/75">Conference Hall</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST / RATING ============ -->
+<section class="py-16 bg-cream border-b border-charcoal/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal grid md:grid-cols-2 gap-10 items-center">
+      <div class="flex items-center gap-6 md:border-r md:border-charcoal/15 md:pr-10">
+        <div class="shrink-0 text-center">
+          <p class="font-serif text-4xl text-terracotta leading-none">4.0</p>
+          <div class="flex gap-0.5 justify-center mt-2 text-gold">
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+            <i data-lucide="star" class="w-3.5 h-3.5 text-charcoal/20 fill-current"></i>
+          </div>
+        </div>
+        <p class="text-sm text-charcoal/70 leading-relaxed">Ranked <strong class="text-charcoal">#2 of 36</strong> specialty lodging in Sauraha, from <strong class="text-charcoal">211 traveller reviews</strong> on TripAdvisor.</p>
+      </div>
+      <div class="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6 grayscale opacity-70">
+        <img src="assets/img/trust/tripadvisor.jpg" alt="TripAdvisor" class="h-9 object-contain">
+        <img src="assets/img/trust/booking.jpg" alt="Booking.com" class="h-9 object-contain">
+        <img src="assets/img/trust/agoda.jpg" alt="Agoda" class="h-9 object-contain">
+        <img src="assets/img/trust/expedia.jpg" alt="Expedia" class="h-9 object-contain">
+        <img src="assets/img/trust/goibibo.jpg" alt="Goibibo" class="h-9 object-contain">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="py-24 lg:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Guest Stories</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">What Our Guests Are Saying</h2>
+      <p class="text-charcoal/70 mt-5">Real words from real stays, via TripAdvisor.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="reveal relative bg-cream-dark p-10">
+        <p aria-hidden="true" class="font-serif text-7xl text-terracotta/15 leading-none absolute top-4 left-6">&ldquo;</p>
+        <div class="relative flex gap-0.5 text-gold mb-5">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        </div>
+        <p class="relative text-charcoal/80 leading-relaxed mb-6">Waking up to see an elephant at the window of your room. Amazing feeling for a citygal like me!</p>
+        <p class="relative font-serif text-lg">Peinidaochuzhou</p>
+        <p class="relative text-[11px] tracking-widest2 uppercase text-charcoal/50 mt-1">Singapore</p>
+      </div>
+
+      <div class="reveal relative bg-cream-dark p-10">
+        <p aria-hidden="true" class="font-serif text-7xl text-terracotta/15 leading-none absolute top-4 left-6">&ldquo;</p>
+        <div class="relative flex gap-0.5 text-gold mb-5">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        </div>
+        <p class="relative text-charcoal/80 leading-relaxed mb-6">Staff were very helpful and the rooms were clean and comfortable. It's amazing to wake up with elephants outside the bedroom window.</p>
+        <p class="relative font-serif text-lg">Roving443250</p>
+        <p class="relative text-[11px] tracking-widest2 uppercase text-charcoal/50 mt-1">Verified Guest</p>
+      </div>
+
+      <div class="reveal relative bg-cream-dark p-10">
+        <p aria-hidden="true" class="font-serif text-7xl text-terracotta/15 leading-none absolute top-4 left-6">&ldquo;</p>
+        <div class="relative flex gap-0.5 text-gold mb-5">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        </div>
+        <p class="relative text-charcoal/80 leading-relaxed mb-6">We find it best location for family and leisure holidays in Chitwan National Park. We highly recommend the nice garden, swimming pool.</p>
+        <p class="relative font-serif text-lg">Spahari</p>
+        <p class="relative text-[11px] tracking-widest2 uppercase text-charcoal/50 mt-1">Kathmandu</p>
+      </div>
+
+      <div class="reveal relative bg-cream-dark p-10">
+        <p aria-hidden="true" class="font-serif text-7xl text-terracotta/15 leading-none absolute top-4 left-6">&ldquo;</p>
+        <div class="relative flex gap-0.5 text-gold mb-5">
+          <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+        </div>
+        <p class="relative text-charcoal/80 leading-relaxed mb-6">Very comfortable rooms and friendly, helpful staff. Hotel has nice garden, tranquil and peaceful place.</p>
+        <p class="relative font-serif text-lg">Rusowasp</p>
+        <p class="relative text-[11px] tracking-widest2 uppercase text-charcoal/50 mt-1">Tbilisi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY PREVIEW ============ -->
+<section id="gallery" class="py-24 lg:py-32 bg-cream">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal flex flex-wrap items-end justify-between gap-6 mb-14">
+      <div>
+        <p class="eyebrow text-terracotta text-[12px] uppercase mb-5">Gallery</p>
+        <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">A Glimpse of Parkland</h2>
+      </div>
+      <a href="gallery.html" class="inline-flex items-center gap-2 text-terracotta text-[12px] tracking-widest2 uppercase hover:gap-3 transition-all">View Full Gallery <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+      <img src="assets/img/garden.jpg" alt="Gardens" class="w-full h-64 object-cover md:row-span-2 md:h-full">
+      <img src="assets/img/pool.jpg" alt="Pool" class="w-full h-64 object-cover">
+      <img src="assets/img/dining.jpg" alt="Dining terrace" class="w-full h-64 object-cover">
+      <img src="assets/img/activities/elephant-bathing.jpg" alt="Elephant bathing" class="w-full h-64 object-cover md:row-span-2 md:h-full">
+      <img src="assets/img/rooms/room-deluxe.jpg" alt="Room interior" class="w-full h-64 object-cover">
+      <img src="assets/img/activities/canoe.jpg" alt="Canoe ride" class="w-full h-64 object-cover">
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section id="contact" class="relative py-24 lg:py-32 bg-charcoal text-cream overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal text-center max-w-2xl mx-auto mb-16">
+      <p class="eyebrow text-gold text-[12px] uppercase mb-5">Reservations</p>
+      <h2 class="font-serif text-4xl lg:text-[2.75rem] leading-[1.15]">Plan Your Escape to Chitwan</h2>
+      <p class="text-cream/70 mt-5">Reach us directly — our teams in Kathmandu and Chitwan are on hand to help you plan your stay.</p>
+    </div>
+
+    <div id="book" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div class="reveal border border-cream/15 p-10">
+        <p class="eyebrow text-gold text-[11px] uppercase mb-4">Kathmandu Office</p>
+        <h3 class="font-serif text-2xl mb-4">Reservations</h3>
+        <p class="text-cream/70 text-sm leading-relaxed mb-5">Citron Gardens, Thamel, Kathmandu, Nepal</p>
+        <ul class="space-y-2 text-sm text-cream/85">
+          <li class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-gold"></i> +977-01-4701888 / 4701887</li>
+          <li class="flex items-center gap-3"><i data-lucide="smartphone" class="w-4 h-4 text-gold"></i> +977-9841229970 (Biken)</li>
+          <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-gold"></i> parkland@mail.com.np</li>
+        </ul>
+      </div>
+      <div class="reveal border border-cream/15 p-10">
+        <p class="eyebrow text-gold text-[11px] uppercase mb-4">Chitwan Office</p>
+        <h3 class="font-serif text-2xl mb-4">At the Park</h3>
+        <p class="text-cream/70 text-sm leading-relaxed mb-5">Sauraha, Chitwan National Park, Nepal</p>
+        <ul class="space-y-2 text-sm text-cream/85">
+          <li class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-gold"></i> +977-056-580344</li>
+          <li class="flex items-center gap-3"><i data-lucide="smartphone" class="w-4 h-4 text-gold"></i> +977-9845043068 (Anjan)</li>
+          <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-gold"></i> parkland@mail.com.np</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4 mt-14">
+      <a href="tel:+9779841229970" class="bg-terracotta hover:bg-terracotta-dark text-white text-[12px] tracking-widest2 uppercase px-8 py-4 transition-colors">Call To Book</a>
+      <a href="mailto:parkland@mail.com.np" class="border border-cream/50 text-cream text-[12px] tracking-widest2 uppercase px-8 py-4 hover:bg-cream/10 transition-colors">Send An Inquiry</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative bg-charcoal text-cream pt-20 pb-8 overflow-hidden">
+  <!-- decorative watermark -->
+  <p aria-hidden="true" class="pointer-events-none select-none absolute -bottom-[0.12em] left-1/2 -translate-x-1/2 whitespace-nowrap font-serif text-[18vw] leading-none text-cream/[0.04] tracking-tight">Parkland</p>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- brand row -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-10 pb-12 border-b border-cream/10">
+      <div>
+        <div class="flex items-center gap-4">
+          <span class="font-serif text-3xl">Hotel Parkland</span>
+          <span class="hidden sm:flex flex-col items-center justify-center w-14 h-14 rounded-full border border-gold/50 text-gold shrink-0">
+            <span class="text-[8px] tracking-widest2 uppercase leading-none">Estd</span>
+            <span class="font-serif text-sm leading-none mt-1">1987</span>
+          </span>
+        </div>
+        <p class="text-cream/55 text-sm mt-4 leading-relaxed max-w-sm">Traditional hospitality in a sylvan setting — ten minutes from Sauraha, on the edge of Chitwan National Park.</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener" class="w-10 h-10 flex items-center justify-center rounded-full border border-cream/20 hover:border-gold hover:text-gold transition-colors" aria-label="Facebook"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/9779841229970" target="_blank" rel="noopener" class="w-10 h-10 flex items-center justify-center rounded-full border border-cream/20 hover:border-gold hover:text-gold transition-colors" aria-label="WhatsApp"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+        <a href="mailto:parkland@mail.com.np" class="w-10 h-10 flex items-center justify-center rounded-full border border-cream/20 hover:border-gold hover:text-gold transition-colors" aria-label="Email"><i data-lucide="mail" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+
+    <!-- link columns -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-14">
+      <div>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/40 mb-5">Explore</p>
+        <ul class="space-y-3 text-sm text-cream/75">
+          <li><a href="about.html" class="hover:text-gold transition-colors">About</a></li>
+          <li><a href="#rooms" class="hover:text-gold transition-colors">Rooms &amp; Suites</a></li>
+          <li><a href="tarrif.html" class="hover:text-gold transition-colors">Rate &amp; Tariffs</a></li>
+          <li><a href="#activities" class="hover:text-gold transition-colors">Activities</a></li>
+          <li><a href="gallery.html" class="hover:text-gold transition-colors">Gallery</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/40 mb-5">Property</p>
+        <ul class="space-y-3 text-sm text-cream/75">
+          <li><a href="services.html" class="hover:text-gold transition-colors">Services</a></li>
+          <li><a href="#dining" class="hover:text-gold transition-colors">Dining &amp; Bar</a></li>
+          <li><a href="faq.html" class="hover:text-gold transition-colors">FAQ</a></li>
+          <li><a href="#book" class="hover:text-gold transition-colors">Book Now</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/40 mb-5">Reservations</p>
+        <ul class="space-y-3 text-sm text-cream/75">
+          <li>
+            <span class="block text-cream/40 text-[11px] uppercase tracking-wide mb-1">Kathmandu</span>
+            <a href="tel:+97714701888" class="hover:text-gold transition-colors">+977-01-4701888</a>
+          </li>
+          <li>
+            <span class="block text-cream/40 text-[11px] uppercase tracking-wide mb-1">Chitwan</span>
+            <a href="tel:+977056580344" class="hover:text-gold transition-colors">+977-056-580344</a>
+          </li>
+          <li><a href="mailto:parkland@mail.com.np" class="hover:text-gold transition-colors">parkland@mail.com.np</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-widest2 uppercase text-cream/40 mb-5">Stay In Touch</p>
+        <p class="text-cream/55 text-sm mb-4">Notes on our five-star journey, straight to your inbox.</p>
+        <form class="flex" onsubmit="return false;">
+          <input type="email" placeholder="Email address" class="flex-1 min-w-0 bg-transparent border border-cream/25 px-4 py-3 text-sm placeholder:text-cream/40 focus:outline-none focus:border-gold">
+          <button class="shrink-0 bg-terracotta hover:bg-terracotta-dark text-white px-4 transition-colors" aria-label="Subscribe"><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-cream/40">
+      <p>&copy; 2026 Hotel Parkland, Sauraha, Chitwan National Park, Nepal.</p>
+      <p>Design direction aligned with our five-star vision.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  // Sticky header
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if (window.scrollY > 40) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu
+  const menu = document.getElementById('mobile-menu');
+  const openBtn = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const toggleMenu = (show) => {
+    menu.classList.toggle('hidden-menu', !show);
+    document.body.style.overflow = show ? 'hidden' : '';
+  };
+  openBtn.addEventListener('click', () => toggleMenu(true));
+  closeBtn.addEventListener('click', () => toggleMenu(false));
+  mobileLinks.forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
