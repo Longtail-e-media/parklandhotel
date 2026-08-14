@@ -32,6 +32,7 @@ export default function Hero() {
             Explore The Resort
           </Link>
         </div>
+        
       </div>
 
       <Link

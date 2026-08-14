@@ -4,7 +4,7 @@ import Watermark from "@/components/ui/Watermark";
 
 export default function ActivitiesSection() {
   return (
-    <section id="activities" className="relative overflow-hidden py-24 lg:py-32 scroll-mt-24">
+    <section id="activities" className="relative overflow-hidden scroll-mt-24">
       <Watermark
         motif="elephant"
         className="w-56 lg:w-80 -left-14 top-8 text-gold/6"

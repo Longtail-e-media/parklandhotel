@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ArrowRight, ExternalLink, MapPin } from "lucide-react";
 import { nearby } from "@/data/data";
 import { address, site } from "@/config/site";
-import Watermark from "@/components/ui/Watermark";
+
 
 const HOTEL_QUERY = `${site.name}, ${address.full}`;
 
@@ -24,21 +24,11 @@ export default function NearbySection() {
   const query = active ? active.query : HOTEL_QUERY;
 
   return (
-    <section id="nearby" className="relative overflow-hidden py-24 lg:py-32 scroll-mt-24">
-      <Watermark
-        motif="rhino"
-        className="w-56 lg:w-80 -right-16 bottom-12 text-gold/6"
-        rotate={4}
-        duration={23}
-        flip
-      />
-      <Watermark
-        motif="tree"
-        className="w-32 lg:w-48 left-[3%] top-20 text-luxury-charcoal/4"
-        rotate={-6}
-        duration={18}
-        delay={1.6}
-      />
+    <section id="nearby" className="relative overflow-hidden  scroll-mt-24  after:absolute after:left-0 after:bottom-0
+    after:w-40 after:h-40 after:-z-10 after:opacity-45
+    after:bg-[url('/img/map.png')]
+    after:bg-contain after:bg-no-repeat after:bg-right-bottom
+    after:pointer-events-none">
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-14 animate-fade-in-up">

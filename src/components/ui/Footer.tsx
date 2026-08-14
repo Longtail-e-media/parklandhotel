@@ -3,7 +3,11 @@ import { Facebook, Mail, MessageCircle, MapPin } from "lucide-react";
 import { site, contact, kathmanduOffice, chitwanOffice, links } from "@/config/site";
 import Newsletter from "./Newsletter";
 import Watermark from "./Watermark";
-
+import Image from "next/image";
+import { Star } from "lucide-react";
+import { trustBadges } from "@/data/data";
+import { business } from "@/config/site";
+  const rating = business.aggregateRating;
 const socials = [
   ...(links.social[0] ? [{ href: links.social[0], label: "Facebook", Icon: Facebook, external: true }] : []),
   { href: `https://wa.me/${contact.whatsapp}`, label: "WhatsApp", Icon: MessageCircle, external: true },
@@ -14,22 +18,47 @@ export default function Footer() {
   return (
     <footer
       id="contact-footer"
-      className="relative overflow-hidden bg-white text-luxury-charcoal border-t border-hairline pt-20 pb-8"
+      className="relative overflow-hidden bg-white text-luxury-charcoal  pb-8"
     >
-      <Watermark
-        motif="fern"
-        className="w-32 lg:w-44 left-[3%] top-10 text-gold/6"
-        rotate={-10}
-        duration={19}
-      />
-      <Watermark
-        motif="elephant"
-        className="w-48 lg:w-64 right-[4%] top-16 text-luxury-charcoal/4"
-        rotate={2}
-        duration={24}
-        delay={1.5}
-        flip
-      />
+
+    {/* ota */}
+        <section className="pb-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="grid md:grid-cols-2 gap-10 items-center animate-fade-in-up border-y border-hairline py-10">
+          {rating && (
+            <div className="flex items-center gap-6 md:border-r md:border-hairline md:pr-10">
+              <div className="shrink-0 text-center">
+                <p className="luxury-hero-title text-4xl text-gold leading-none">{rating.ratingValue}</p>
+                <div className="flex gap-0.5 justify-center mt-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-3.5 h-3.5"
+                      fill="currentColor"
+                      style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--luxury-gold)" : "var(--line-soft)" }}
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="text-sm text-luxury-muted leading-relaxed">
+                Ranked <strong className="text-luxury-charcoal">#2 of 36</strong> specialty lodging in
+                Sauraha, from <strong className="text-luxury-charcoal">{rating.reviewCount} traveller
+                reviews</strong> on TripAdvisor.
+              </p>
+            </div>
+          )}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6">
+            {trustBadges.map((badge) => (
+              <Image key={badge.name} src={badge.image} alt={badge.name} width={120} height={36} className="h-9 w-auto object-contain" />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+    {/* ota end */}
+
+
+
 
       {/* Oversized wordmark, sitting just below the baseline */}
       <p
@@ -45,12 +74,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-4">
               <span className="luxury-hero-title text-3xl">{site.name}</span>
-              <span className="hidden sm:flex flex-col items-center justify-center w-14 h-14 rounded-full border border-hairline text-gold shrink-0">
-                <span className="text-[8px] tracking-widest uppercase leading-none">Estd</span>
-                <span className="luxury-hero-title text-sm leading-none mt-1">1987</span>
-              </span>
             </div>
-            <p className="text-luxury-muted text-sm mt-5 leading-relaxed max-w-sm">
+            <p className="text-luxury-muted text-sm mt-5 leading-relaxed">
               Traditional hospitality in a sylvan setting — ten minutes from Sauraha, on the edge of Chitwan
               National Park.
             </p>
@@ -74,8 +99,10 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Link columns */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-14 border-t border-hairline">
+
+
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-10 ">
           <div>
             <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Explore</p>
             <ul className="space-y-3 text-sm text-luxury-muted">

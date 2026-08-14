@@ -5,7 +5,7 @@ import Watermark from "@/components/ui/Watermark";
 
 export default function DiningSection() {
   return (
-    <section id="dining" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24">
+    <section id="dining" className="relative  overflow-hidden scroll-mt-24">
       <Watermark
         motif="grass"
         className="w-56 lg:w-80 left-[4%] bottom-6 text-gold/6"

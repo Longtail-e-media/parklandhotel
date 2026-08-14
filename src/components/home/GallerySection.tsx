@@ -6,7 +6,7 @@ import Watermark from "@/components/ui/Watermark";
 
 export default function GallerySection() {
   return (
-    <section id="gallery" className="relative overflow-hidden py-24 lg:py-32 scroll-mt-24">
+    <section id="gallery" className="relative overflow-hidden  scroll-mt-24">
       <Watermark
         motif="tree"
         className="w-40 lg:w-56 -left-12 bottom-24 text-gold/6"

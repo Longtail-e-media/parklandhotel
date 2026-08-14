@@ -27,7 +27,7 @@ const ICONS: Record<string, LucideIcon> = {
 
 export default function AmenitiesSection() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-24">
+    <section className="relative overflow-hidden py-20 lg:py-32">
       <Watermark
         motif="palm"
         className="w-40 lg:w-56 left-[5%] top-4 text-gold/6"
@@ -54,7 +54,7 @@ export default function AmenitiesSection() {
               private parking to bicycles for the ride out to the elephant stables.
             </p>
             <a href="#contact" className="luxury-btn luxury-btn-accent mt-8">
-              Ask About Facilities
+              View All
             </a>
           </div>
 
@@ -65,11 +65,11 @@ export default function AmenitiesSection() {
               return (
                 <div
                   key={item.label}
-                  className="group flex flex-col items-center justify-center gap-5 text-center rounded-2xl bg-white px-5 py-10 shadow-[0_12px_40px_-22px_rgba(36,36,32,0.4)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_22px_55px_-25px_rgba(36,36,32,0.5)]"
+                  className="group flex flex-col items-center justify-center gap-5 text-center rounded-2xl  bg-[#fff5f594] px-5 py-10 transition-all duration-500 hover:-translate-y-1.5"
                 >
                   {Icon && (
                     <Icon
-                      className="w-8 h-8 text-luxury-charcoal transition-colors duration-500 group-hover:text-gold"
+                      className="w-100 h-15 opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-gold"
                       strokeWidth={1.25}
                     />
                   )}

@@ -1,6 +1,5 @@
 import { Phone, Smartphone, Mail } from "lucide-react";
 import { contact, kathmanduOffice, chitwanOffice } from "@/config/site";
-import Watermark from "@/components/ui/Watermark";
 
 const offices = [
   { ...kathmanduOffice, heading: "Reservations", delay: "" },
@@ -9,22 +8,12 @@ const offices = [
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24">
-      <Watermark
-        motif="elephant"
-        className="w-52 lg:w-72 -right-14 bottom-16 text-gold/6"
-        rotate={3}
-        duration={22}
-        flip
-      />
-      <Watermark
-        motif="grass"
-        className="w-44 lg:w-64 left-[2%] bottom-4 text-luxury-charcoal/4"
-        rotate={-3}
-        duration={17}
-        delay={1.4}
-      />
-
+    <section id="contact" className="    relative py-24 lg:py-32 overflow-hidden scroll-mt-24
+    after:absolute after:right-0 after:bottom-0
+    after:w-64 after:h-64
+    after:bg-[url('/img/travel.png')]
+    after:bg-contain after:bg-no-repeat after:bg-right-bottom
+    after:pointer-events-none after:opacity-30">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Reservations</p>
