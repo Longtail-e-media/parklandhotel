@@ -1,8 +1,35 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Bath,
+  Coffee,
+  Maximize2,
+  Tv,
+  User,
+  Wifi,
+  Wind,
+  type LucideIcon,
+} from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Keyboard } from "swiper/modules";
 import { rooms } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
+
+import "swiper/css";
+import "swiper/css/navigation";
+
+/** Feature keys used in `rooms` — the stack of icons floating over each photo. */
+const ROOM_FEATURES: Record<string, { icon: LucideIcon; label: string }> = {
+  wifi: { icon: Wifi, label: "Complimentary wi-fi" },
+  tv: { icon: Tv, label: "Flat-screen TV" },
+  breakfast: { icon: Coffee, label: "Breakfast included" },
+  ac: { icon: Wind, label: "Air conditioning" },
+  bath: { icon: Bath, label: "Ensuite bath" },
+};
 
 export default function RoomsSection() {
   return (
@@ -32,34 +59,96 @@ export default function RoomsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {rooms.map((room, i) => (
-            <article
-              key={room.name}
-              className={`group luxury-surface overflow-hidden animate-fade-in-up delay-${(i + 1) * 100}`}
-            >
-              <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
-                <Image
-                  src={room.image}
-                  alt={`${room.name} interior`}
-                  width={600}
-                  height={750}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-7">
-                <h3 className="luxury-section-title text-2xl">{room.name}</h3>
-                <p className="text-luxury-muted text-sm mt-2 leading-relaxed">{room.description}</p>
-                <Link
-                  href="#contact"
-                  className="inline-flex items-center gap-2 text-gold-text luxury-label text-[11px] mt-5 hover:gap-3 transition-all"
-                >
-                  Rates &amp; Tariffs <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </article>
+        <Swiper
+          modules={[Navigation, Keyboard]}
+          spaceBetween={32}
+          slidesPerView={1}
+          keyboard={{ enabled: true }}
+          navigation={{ prevEl: ".rooms-prev", nextEl: ".rooms-next" }}
+          breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
+          a11y={{ containerMessage: "Rooms and suites" }}
+          className="rooms-swiper animate-fade-in-up delay-100"
+        >
+          {rooms.map((room) => (
+            <SwiperSlide key={room.name} className="h-auto!">
+              <article className="group luxury-surface h-full flex flex-col overflow-hidden">
+                <div className="relative">
+                  <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
+                    <Image
+                      src={room.image}
+                      alt={`${room.name} interior`}
+                      width={600}
+                      height={750}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Rate badge — top-right corner of the photo */}
+                  <p className="absolute top-5 right-5 bg-white/95 backdrop-blur-sm rounded-xl px-4 py-2 shadow-[0_10px_30px_-16px_rgba(36,36,32,0.7)]">
+                    <span className="font-display text-lg text-luxury-charcoal">
+                      ${room.pricePerNight}
+                    </span>
+                    <span className="luxury-label text-[10px] text-luxury-muted ml-1.5">/ night</span>
+                  </p>
+
+                  {/* Feature icons — stacked down the right edge, under the badge */}
+                  <ul className="absolute top-20 right-5 flex flex-col gap-2">
+                    {room.features.map((key, i) => {
+                      const feature = ROOM_FEATURES[key];
+                      if (!feature) return null;
+                      const Icon = feature.icon;
+                      return (
+                        <li
+                          key={key}
+                          title={feature.label}
+                          style={{ transitionDelay: `${i * 70}ms` }}
+                          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/95 backdrop-blur-sm text-luxury-charcoal shadow-[0_10px_30px_-18px_rgba(36,36,32,0.8)] transition-all duration-500 hover:bg-gold hover:text-white sm:opacity-0 sm:translate-x-3 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"
+                        >
+                          <Icon className="w-4 h-4" strokeWidth={1.5} aria-hidden />
+                          <span className="sr-only">{feature.label}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+
+                <div className="p-7 flex flex-col grow">
+                  <h3 className="luxury-section-title text-2xl">{room.name}</h3>
+
+                  <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-luxury-muted">
+                    <li className="flex items-center gap-2">
+                      <Maximize2 className="w-4 h-4 text-gold" strokeWidth={1.5} aria-hidden />
+                      Size: {room.size}
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <User className="w-4 h-4 text-gold" strokeWidth={1.5} aria-hidden />
+                      Adults: {room.adults}
+                    </li>
+                  </ul>
+
+                  <p className="text-luxury-muted text-sm mt-4 leading-relaxed">{room.description}</p>
+
+                  <Link
+                    href="#contact"
+                    className="inline-flex items-center gap-2 text-gold-text luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
+                  >
+                    Rates &amp; Tariffs <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </article>
+            </SwiperSlide>
           ))}
-        </div>
+
+          {/* Sits inside the Swiper so it can hide itself when nothing can scroll */}
+          <div slot="container-end" className="rooms-nav flex items-center justify-center gap-3 mt-12">
+            <button type="button" aria-label="Previous room" className="rooms-nav-btn rooms-prev">
+              <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+            <button type="button" aria-label="Next room" className="rooms-nav-btn rooms-next">
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </button>
+          </div>
+        </Swiper>
       </div>
     </section>
   );

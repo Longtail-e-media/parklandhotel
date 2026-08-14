@@ -62,18 +62,30 @@ export const rooms: RoomType[] = [
     image: "/img/rooms/room-deluxe.jpg",
     description:
       "Garden-facing rooms with warm wood tones and private balconies overlooking mature gardens.",
+    pricePerNight: 85,
+    size: "28 Sqm",
+    adults: 2,
+    features: ["wifi", "tv", "breakfast"],
   },
   {
     name: "Premier Room",
     image: "/img/rooms/room-premier.jpg",
     description:
       "Spacious interiors with elevated finishes, designed for longer, more restorative stays.",
+    pricePerNight: 120,
+    size: "34 Sqm",
+    adults: 3,
+    features: ["wifi", "tv", "ac"],
   },
   {
     name: "Parkland Suite",
     image: "/img/rooms/room-villa.jpg",
     description:
       "Our most refined address — generous living space for guests who want a little more room to unwind.",
+    pricePerNight: 180,
+    size: "46 Sqm",
+    adults: 4,
+    features: ["wifi", "ac", "bath"],
   },
 ];
 
@@ -118,38 +130,68 @@ export const activities: ActivityItem[] = [
   },
 ];
 
+/**
+ * Distances are approximate road distances from the hotel in Sauraha and are
+ * shown to guests as a rough guide — confirm them before print use.
+ */
 export const nearby: NearbyItem[] = [
   {
-    title: "Chitwan National Park",
-    badge: "2 Min Away",
+    title: "Chitwan National Park Gate",
+    distance: "1.3 Km",
+    query: "Chitwan National Park Entrance Gate, Sauraha, Nepal",
     image: "/img/nearby/park-gate.jpg",
     description:
       "Minutes from our door — the gateway to Nepal's first national park and a UNESCO World Heritage site.",
   },
   {
     title: "The Rapti River",
-    badge: "5 Min Walk",
+    distance: "400 m",
+    query: "Rapti River, Sauraha, Chitwan, Nepal",
     image: "/img/nearby/rapti-river.jpg",
     description:
       "The river that separates Sauraha from the wild — rhinos are often spotted grazing along its banks.",
   },
   {
+    title: "Elephant Breeding Centre",
+    distance: "3.2 Km",
+    query: "Elephant Breeding Centre, Sauraha, Chitwan, Nepal",
+    description:
+      "Home to the calves of Chitwan's government elephant stables, and an easy morning cycle from the hotel.",
+  },
+  {
+    title: "Tharu Cultural Museum",
+    distance: "2.5 Km",
+    query: "Tharu Cultural Museum, Bachhauli, Chitwan, Nepal",
+    image: "/img/nearby/tharu-museum.jpg",
+    description:
+      "Textiles, tools and traditions of the indigenous Tharu community, Chitwan's original inhabitants.",
+  },
+  {
     title: "Bishazari Tal",
-    badge: "~10 Km",
+    distance: "10 Km",
+    query: "Bishazari Tal, Chitwan, Nepal",
     image: "/img/nearby/bishazari-tal.jpg",
     description:
       '"Twenty Thousand Lakes" — a Ramsar-listed wetland and one of the region\'s best birdwatching spots.',
   },
   {
-    title: "Tharu Cultural Museum",
-    badge: "Bachhauli",
-    image: "/img/nearby/tharu-museum.jpg",
+    title: "Gharial Breeding Centre",
+    distance: "26 Km",
+    query: "Gharial Breeding Center, Kasara, Chitwan, Nepal",
     description:
-      "Textiles, tools and traditions of the indigenous Tharu community, Chitwan's original inhabitants.",
+      "A conservation centre at Kasara raising the critically endangered gharial crocodile for release into the Rapti.",
+  },
+  {
+    title: "Bharatpur Airport",
+    distance: "22 Km",
+    query: "Bharatpur Airport, Chitwan, Nepal",
+    description:
+      "Twenty-five-minute flights from Kathmandu land here; we can arrange a car to meet you on arrival.",
   },
 ];
 
 export const amenities: AmenityItem[] = [
+  { label: "Swimming Pool", icon: "waves" },
   { label: "Free Wi-Fi", icon: "wifi" },
   { label: "Room Service", icon: "bell" },
   { label: "24/7 Security", icon: "shield-check" },

@@ -20,11 +20,11 @@ export default function Home() {
       <DiningSection />
       <LeisureSection />
       <ActivitiesSection />
-      <NearbySection />
       <AmenitiesSection />
-      <TrustSection />
-      <TestimonialsSection />
       <GallerySection />
+      <TestimonialsSection />
+      <NearbySection />
+      <TrustSection />
       <ContactSection />
     </main>
   );
