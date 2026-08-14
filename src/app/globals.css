@@ -44,9 +44,9 @@
 
   --background: #ffffff;
   --foreground: #242420;
-  --color-brown : #937E3B;
+  --color-dark-brown : #937E3B;
    --color-primary-green : #3B5B2F;
-  --color: #BB9C5C;
+  --color-skybrown: #BB9C5C;
 }
 
 @theme inline {
@@ -352,7 +352,7 @@ body {
      WebKit the pseudo-elements. */
   .luxury-scroll {
     scrollbar-width: thin;
-    scrollbar-color: var(--luxury-gold-light) transparent;
+    scrollbar-color: var(--color-skybrown) transparent;
   }
   .luxury-scroll::-webkit-scrollbar { width: 6px; }
   .luxury-scroll::-webkit-scrollbar-track {
@@ -360,23 +360,61 @@ body {
     border-radius: 999px;
   }
   .luxury-scroll::-webkit-scrollbar-thumb {
-    background: var(--luxury-gold-light);
+    background: var(--color-dark-brown);
     border-radius: 999px;
   }
   .luxury-scroll::-webkit-scrollbar-thumb:hover { background: var(--luxury-gold); }
 
-  /* Testimonial carousel (Swiper) pagination dots */
-  .testimonial-swiper .swiper-pagination-bullet {
+  /* Testimonial carousel (Swiper) pagination dots.
+     The pagination element lives outside .swiper (it sits between the two
+     arrow buttons), so these are scoped to the container, not the slider. */
+  .testimonial-pagination {
+    /* Swiper's own positioning rules assume the dots sit inside the slider. */
+    position: static;
+    width: auto;
+  }
+  .testimonial-pagination .swiper-pagination-bullet {
     width: 7px;
     height: 7px;
+    margin: 0;
     background: var(--luxury-charcoal);
     opacity: 0.2;
     transition: opacity 0.3s ease, background-color 0.3s ease, width 0.3s ease;
   }
-  .testimonial-swiper .swiper-pagination-bullet-active {
+  .testimonial-pagination .swiper-pagination-bullet-active {
     width: 22px;
     border-radius: 4px;
     background: var(--luxury-gold);
     opacity: 1;
+  }
+
+  /* Carousel arrows — hairline circles that fill with terracotta on hover */
+  .testimonial-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--line-hairline);
+    color: var(--luxury-charcoal);
+    background: #fff;
+    transition: color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease,
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .testimonial-nav-btn:hover {
+    background: var(--luxury-gold);
+    border-color: var(--luxury-gold);
+    color: #fff;
+    transform: scale(1.08);
+  }
+  .testimonial-nav-btn:focus-visible {
+    outline: 2px solid var(--luxury-gold);
+    outline-offset: 3px;
+  }
+  /* Swiper adds this when the slider can't move in that direction */
+  .testimonial-nav-btn.swiper-button-disabled {
+    opacity: 0.35;
+    pointer-events: none;
   }
 }

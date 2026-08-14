@@ -16,7 +16,7 @@ export default function Newsletter() {
       />
       <button
         type="submit"
-        className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-gold hover:bg-gold-dim text-white transition-colors"
+        className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-(--color-primary-green) hover:dark:bg-(--color-primary-green) text-white transition-colors"
         aria-label="Subscribe"
       >
         <ArrowRight className="w-4 h-4" />
