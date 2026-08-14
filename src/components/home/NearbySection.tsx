@@ -1,9 +1,25 @@
 import Image from "next/image";
 import { nearby } from "@/data/data";
+import Watermark from "@/components/ui/Watermark";
 
 export default function NearbySection() {
   return (
-    <section id="nearby" className="bg-luxury-cream-alt py-24 lg:py-32 scroll-mt-24">
+    <section id="nearby" className="relative overflow-hidden py-24 lg:py-32 scroll-mt-24">
+      <Watermark
+        motif="rhino"
+        className="w-56 lg:w-80 -right-16 bottom-12 text-gold/6"
+        rotate={4}
+        duration={23}
+        flip
+      />
+      <Watermark
+        motif="tree"
+        className="w-32 lg:w-48 left-[3%] top-20 text-luxury-charcoal/4"
+        rotate={-6}
+        duration={18}
+        delay={1.6}
+      />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Beyond The Gates</p>
@@ -17,7 +33,7 @@ export default function NearbySection() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {nearby.map((item) => (
             <div key={item.title} className="group animate-fade-in-up">
-              <div className="relative aspect-4/5 overflow-hidden luxury-img-zoom">
+              <div className="relative aspect-4/5 luxury-media luxury-img-zoom">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -25,7 +41,7 @@ export default function NearbySection() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
                 />
-                <span className="absolute top-4 left-4 bg-luxury-cream/95 text-luxury-charcoal luxury-label text-[10px] px-3 py-1.5">
+                <span className="absolute top-4 left-4 rounded-full bg-white/95 text-luxury-charcoal luxury-label text-[10px] px-3.5 py-1.5">
                   {item.badge}
                 </span>
               </div>

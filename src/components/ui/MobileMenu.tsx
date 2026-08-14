@@ -60,11 +60,11 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
         role="dialog"
         aria-modal="true"
         aria-label="Site navigation"
-        className={`fixed top-0 right-0 z-60 h-dvh w-80 max-w-[85vw] bg-luxury-mint text-luxury-charcoal flex flex-col shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 z-60 h-dvh w-80 max-w-[85vw] bg-white text-luxury-charcoal flex flex-col shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-black/10">
+        <div className="flex items-center justify-between px-6 h-20 shrink-0 border-b border-hairline">
           <span className="luxury-hero-title text-xl">{site.name}</span>
           <button
             onClick={onClose}
@@ -82,7 +82,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
               const isExpanded = openSubmenu === item.label;
 
               return (
-                <li key={item.label} className="border-b border-black/10 last:border-0">
+                <li key={item.label} className="border-b border-hairline last:border-0">
                   {item.children?.length ? (
                     <>
                       <button
@@ -115,7 +115,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                                 href={child.href || "#"}
                                 onClick={onClose}
                                 tabIndex={isExpanded ? undefined : -1}
-                                className="block pl-4 py-3 border-l-2 border-black/10 text-base text-luxury-charcoal/80 hover:text-gold hover:border-gold transition-colors"
+                                className="block pl-4 py-3 border-l-2 border-hairline text-base text-luxury-charcoal/80 hover:text-gold hover:border-gold transition-colors"
                               >
                                 {child.label}
                               </Link>
@@ -148,7 +148,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
           </Link>
         </nav>
 
-        <div className="px-6 pb-8 pt-4 text-sm text-luxury-charcoal/70 space-y-1 shrink-0 border-t border-black/10">
+        <div className="px-6 pb-8 pt-4 text-sm text-luxury-charcoal/70 space-y-1 shrink-0 border-t border-hairline">
           <p>{address.full}</p>
           <p>
             <a href={`tel:${contact.phoneE164}`} className="hover:text-gold transition-colors">

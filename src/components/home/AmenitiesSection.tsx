@@ -1,5 +1,6 @@
 import { Wifi, Bell, ShieldCheck, Car, Bike, Banknote, Music, Users, type LucideIcon } from "lucide-react";
 import { amenities } from "@/data/data";
+import Watermark from "@/components/ui/Watermark";
 
 const ICONS: Record<string, LucideIcon> = {
   wifi: Wifi,
@@ -14,21 +15,42 @@ const ICONS: Record<string, LucideIcon> = {
 
 export default function AmenitiesSection() {
   return (
-    <section className="bg-luxury-dark text-white py-20">
+    <section className="relative overflow-hidden py-20 lg:py-24">
+      <Watermark
+        motif="palm"
+        className="w-40 lg:w-56 left-[5%] top-4 text-gold/6"
+        rotate={-8}
+        duration={19}
+      />
+      <Watermark
+        motif="bird"
+        className="w-24 lg:w-32 right-[8%] bottom-10 text-luxury-charcoal/5"
+        rotate={8}
+        duration={12}
+        delay={0.6}
+        flip
+      />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <p className="luxury-label text-gold text-center mb-14 animate-fade-in-up">
-          The Essentials, Taken Care Of
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-white/10 animate-fade-in-up">
+        <div className="text-center mb-12 animate-fade-in-up">
+          <p className="luxury-label text-gold-text mb-4">The Essentials</p>
+          <h2 className="luxury-section-title text-luxury-charcoal text-3xl">Taken Care Of</h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up">
           {amenities.map((item) => {
             const Icon = ICONS[item.icon];
             return (
               <div
                 key={item.label}
-                className="border-r border-b border-white/10 flex flex-col items-center justify-center gap-3 text-center p-8 hover:bg-white/[0.04] transition-colors"
+                className="luxury-surface flex flex-col items-center justify-center gap-4 text-center px-6 py-9"
               >
-                {Icon && <Icon className="w-5 h-5 text-gold" />}
-                <p className="luxury-label text-[11px] text-white/75">{item.label}</p>
+                {Icon && (
+                  <span className="flex items-center justify-center w-12 h-12 rounded-full border border-hairline text-gold">
+                    <Icon className="w-5 h-5" />
+                  </span>
+                )}
+                <p className="luxury-label text-[11px] text-luxury-charcoal/70">{item.label}</p>
               </div>
             );
           })}

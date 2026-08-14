@@ -7,11 +7,11 @@ export default function TrustSection() {
   const rating = business.aggregateRating;
 
   return (
-    <section className="bg-luxury-cream border-b border-luxury-border py-16">
+    <section className="py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid md:grid-cols-2 gap-10 items-center animate-fade-in-up">
+        <div className="grid md:grid-cols-2 gap-10 items-center animate-fade-in-up border-y border-hairline py-10">
           {rating && (
-            <div className="flex items-center gap-6 md:border-r md:border-luxury-border md:pr-10">
+            <div className="flex items-center gap-6 md:border-r md:border-hairline md:pr-10">
               <div className="shrink-0 text-center">
                 <p className="luxury-hero-title text-4xl text-gold leading-none">{rating.ratingValue}</p>
                 <div className="flex gap-0.5 justify-center mt-2">
@@ -20,7 +20,7 @@ export default function TrustSection() {
                       key={i}
                       className="w-3.5 h-3.5"
                       fill="currentColor"
-                      style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--luxury-gold)" : "var(--luxury-border)" }}
+                      style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--luxury-gold)" : "var(--line-soft)" }}
                     />
                   ))}
                 </div>
@@ -32,7 +32,7 @@ export default function TrustSection() {
               </p>
             </div>
           )}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6 grayscale opacity-70">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6 grayscale opacity-60 hover:opacity-90 transition-opacity">
             {trustBadges.map((badge) => (
               <Image key={badge.name} src={badge.image} alt={badge.name} width={120} height={36} className="h-9 w-auto object-contain" />
             ))}

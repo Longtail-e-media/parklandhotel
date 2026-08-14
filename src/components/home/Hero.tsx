@@ -14,7 +14,7 @@ export default function Hero() {
         sizes="100vw"
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/25 to-black/40" />
 
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
         <p className="luxury-label text-white/90 mb-6 animate-fade-in-up">{hero.eyebrow}</p>
