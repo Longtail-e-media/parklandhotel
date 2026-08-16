@@ -121,7 +121,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                                 href={child.href || "#"}
                                 onClick={onClose}
                                 tabIndex={isExpanded ? undefined : -1}
-                                className="block pl-4 py-3 border-l-2 border-hairline text-base text-luxury-charcoal/80 hover:text-(--color-dark-brown) hover:border-(--color-dark-brown) transition-colors"
+                                className="block pl-4 py-2 border-l-2 border-hairline text-sm text-luxury-charcoal/80 hover:text-(--color-dark-brown) hover:border-(--color-dark-brown) transition-colors"
                               >
                                 {child.label}
                               </Link>

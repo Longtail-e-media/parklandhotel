@@ -11,10 +11,12 @@ import type {
   NearbyItem,
   Testimonial,
   AmenityItem,
+  FacilityItem,
 } from "@/types";
 
 export const navItems: NavItem[] = [
-  { label: "Home", href: "" },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
   {
     label: "Accommodation",
     href: "",
@@ -54,6 +56,61 @@ export const about = {
     { value: "32", label: "Rooms & Suites" },
     { value: "10 Min", label: "To Sauraha Centre" },
   ],
+};
+
+/**
+ * /about page content. Kept separate from `about` (the homepage teaser) so the
+ * two can say different things — the homepage introduces the property, this
+ * page tells the longer story.
+ */
+export const aboutPage = {
+  header: {
+    eyebrow: "About Us",
+    title: "Our Story",
+  },
+  intro: {
+    eyebrow: "About Us",
+    title: "Welcome To Hotel Parkland,\nSauraha",
+    paragraphs: [
+      "Welcome to Hotel Parkland, where traditional hospitality meets the calm of the jungle in the heart of Chitwan. Since 1987 we have been dedicated to giving our guests an exceptional stay, blending modern comfort with the sylvan character that defines this corner of Sauraha.",
+      "Our magnificent, mature gardens shelter rare indigenous trees, shrubs and flowers that draw birds and butterflies year-round. Rooms and suites open onto that greenery, ensuring a restful retreat whether you are here for the safari, for business, or simply for the quiet.",
+    ],
+    signature: "Hotel Parkland",
+    signatureRole: "The Parkland Family",
+    image: "/img/garden.jpg",
+    imageOverlap: "/img/activities/elephant-bathing.jpg",
+  },
+  facilities: {
+    eyebrow: "Facilities",
+    title: "Hotel Facilities",
+    image: "/img/rooms/room-premier.jpg",
+    items: [
+      {
+        title: "Rooms and Suites",
+        description:
+          "Varied types of rooms, from deluxe garden rooms to Parkland suites, equipped with every essential for a restful night.",
+        icon: "bed",
+      },
+      {
+        title: "24-Hour Security",
+        description:
+          "On-site security personnel and round-the-clock surveillance, with secure storage available for valuables.",
+        icon: "shield-check",
+      },
+      {
+        title: "Swimming Pool",
+        description:
+          "An outdoor pool set within the gardens — for an unhurried afternoon between morning and evening safaris.",
+        icon: "waves",
+      },
+      {
+        title: "Restaurant & Bar",
+        description:
+          "Indoor dining and an open-air terrace, a daily buffet spread, and a garden bar that keeps the evening easy.",
+        icon: "utensils",
+      },
+    ] as FacilityItem[],
+  },
 };
 
 export const rooms: RoomType[] = [

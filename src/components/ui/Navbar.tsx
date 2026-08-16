@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import { navItems } from "@/data/data";
@@ -11,6 +12,13 @@ import Image from 'next/image';
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Only the homepage opens on a full-bleed video, so only there can the header
+  // start out white-on-transparent. Inner pages begin on the white canvas and
+  // need the solid treatment from the first pixel or the nav is invisible.
+  const isTransparentPage = pathname === "/";
+  const isSolid = isScrolled || !isTransparentPage;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 40);
@@ -22,7 +30,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/85 backdrop-blur-md border-b border-hairline" : "bg-transparent"
+        isSolid ? "bg-white/85 backdrop-blur-md border-b border-hairline" : "bg-transparent"
       }`}
     >
       <div
@@ -33,7 +41,7 @@ export default function Navbar() {
         <Link
           href="/"
           className={`luxury-hero-title text-2xl lg:text-[1.7rem] transition-colors ${
-            isScrolled ? "text-luxury-charcoal" : "text-white"
+            isSolid ? "text-luxury-charcoal" : "text-white"
           }`}
         >
                 <Image
@@ -49,7 +57,7 @@ export default function Navbar() {
           <a
             href={`tel:${contact.phoneE164}`}
             className={`hidden md:inline-flex text-sm transition-colors hover:opacity-70 ${
-              isScrolled ? "text-luxury-charcoal" : "text-white"
+              isSolid ? "text-luxury-charcoal" : "text-white"
             }`}
           >
             {contact.phone}
@@ -61,7 +69,7 @@ export default function Navbar() {
               items with long labels won't fit inline without wrapping. */}
           <button
             className={`p-2 -mr-2 rounded-full cursor-pointer transition-colors duration-200 hover:text-gold ${
-              isScrolled
+              isSolid
                 ? "text-luxury-charcoal hover:bg-luxury-charcoal/5"
                 : "text-white hover:bg-white/15"
             }`}

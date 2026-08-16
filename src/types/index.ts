@@ -48,3 +48,11 @@ export interface AmenityItem {
   label: string;
   icon: string;
 }
+
+/** Facility card on the About page — an amenity with a line of explanation. */
+export interface FacilityItem {
+  title: string;
+  description: string;
+  /** Icon key resolved by ICONS in FacilitiesShowcase — keep the two in step. */
+  icon: string;
+}
