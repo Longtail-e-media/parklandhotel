@@ -283,25 +283,25 @@ export const trustBadges = [
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Waking up to see an elephant at the window of your room. Amazing feeling for a citygal like me!",
+      "Waking up to see an elephant at the window of your room. Amazing feeling for a citygal like me! Food served in the hotel are simply yummlicious. Very polite staff. Our tour guide at the hotel Mr Hari, is indeed very knowledgable, he knows simple mandarin and speaks very good english. Only thing to improve is the hair dryer. So bring your own hair dryer if you need it.",
     author: "Peinidaochuzhou",
     source: "Singapore",
   },
   {
     quote:
-      "Staff were very helpful and the rooms were clean and comfortable. It's amazing to wake up with elephants outside the bedroom window.",
+      "Staff were very helpful and the rooms were clean and comfortable. It's amazing to wake up with elephants outside the bedroom window and be so close to such a wide array of wildlife. We had an amazing guide in Bishnu who taught us so much and is clearly so passionate about the flora and fauna he lives amongst. Hope to be back",
     author: "Roving443250",
     source: "Verified Guest",
   },
   {
     quote:
-      "We find it best location for family and leisure holidays in Chitwan National Park. We highly recommend the nice garden, swimming pool.",
+      "We have been to Chitwan National Park for family visit and stayed at Hotel Parkland. We find it best location for family and leisure holidays in Chitwan National Park. We highly recommend the nice garden, swimming pool.",
     author: "Spahari",
     source: "Kathmandu",
   },
   {
     quote:
-      "Very comfortable rooms and friendly, helpful staff. Hotel has nice garden, tranquil and peaceful place.",
+      "ery comfortable rooms and friendly, helpful staff. Hotel has nice Garden, tranquil and peaceful place. We quite enjoyed food. (Mostly Nepali, Indian, Chinese kitchen). Our guide Bishnu was simply amazing, very knowledgeable.",
     author: "Rusowasp",
     source: "Tbilisi",
   },
