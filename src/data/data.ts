@@ -273,11 +273,11 @@ export const amenities: AmenityItem[] = [
 ];
 
 export const trustBadges = [
-  { name: "TripAdvisor", image: "/img/trust/trip.png" },
-  { name: "Booking.com", image: "/img/trust/bo.png" },
-  { name: "Agoda", image: "/img/trust/ag.png" },
-  { name: "Expedia", image: "/img/trust/ex.png" },
-  // { name: "Goibibo", image: "/img/trust/goibibo.png" },
+  { name: "TripAdvisor", image: "/img/trust/trip.png" , link:"https://www.tripadvisor.com/Hotel_Review-g1367591-d1896438-Reviews-Hotel_Parkland-Sauraha_Chitwan_District_Narayani_Zone_Central_Region.html"},
+  { name: "Booking.com", image: "/img/trust/bo.png", link:"https://www.booking.com/hotel/np/parkland-chitwan.html" },
+  { name: "Agoda", image: "/img/trust/ag.png", link:"https://www.agoda.com/hotel-parkland/hotel/chitwan-np.html?cid=-218" },
+  { name: "Expedia", image: "/img/trust/ex.png", link:"https://www.expedia.com/Sauraha-Hotels-Hotel-Parkland.h22518607.Hotel-Information?regionId=11702&langid=1033&semcid=US.UB.GOOGLE.PT-c-EN.HOTEL&semdtl=a1625600556.b127830482108.r1.g1dsa-287861008464.i145058999560.d1270356234835.e1c.j11011034.k19070016.f11t1.n1.l1g.h1b.m1" },
+  { name: "Goibibo", image: "/img/trust/goibibo.png", link:"https://www.goibibo.com/hotels/parkland-hotel-in-chitwan-6035664439464244233/" },
 ];
 
 export const testimonials: Testimonial[] = [

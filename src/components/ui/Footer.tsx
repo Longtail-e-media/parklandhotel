@@ -61,8 +61,8 @@ export default function Footer() {
           )}
           <div className="flex flex-wrap items-center justify-center md:justify-evenly gap-x-5 gap-y-6">
             {trustBadges.map((badge) => (
-              <a href="" target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={140} height={30} className="
-            - w-auto object-contain" /></a>
+              <a href={badge.link} target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={80} height={30} className="
+             object-contain" /></a>
             ))}
           </div>
         </div>

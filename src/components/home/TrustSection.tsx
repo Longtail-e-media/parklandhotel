@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { trustBadges } from "@/data/data";
 import { business } from "@/config/site";
 
+
 export default function TrustSection() {
   const rating = business.aggregateRating;
 
@@ -32,10 +33,14 @@ export default function TrustSection() {
               </p>
             </div>
           )}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6 grayscale opacity-60 hover:opacity-90 transition-opacity">
-            {trustBadges.map((badge) => (
-              <Image key={badge.name} src={badge.image} alt={badge.name} width={120} height={36} className="h-9 w-auto object-contain" />
-            ))}
+          <div className="hidden flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6 grayscale opacity-60 hover:opacity-90 transition-opacity">
+            {trustBadges.map((badge, i) => (
+              <a key={i} href={badge.link} target="_blank" >
+                <Image src={badge.image} alt={badge.link} width={100} height={36} className="h-9 w-auto object-contain" />
+              </a>
+            ))
+            }
+
           </div>
         </div>
       </div>
