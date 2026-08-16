@@ -55,7 +55,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
       <div
         onClick={onClose}
         aria-hidden="true"
-        className={`fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50  transition-opacity duration-300 ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       />
