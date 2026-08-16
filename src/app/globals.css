@@ -286,7 +286,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: var(--luxury-gold);
+    background:var(--color-primary-green);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);

@@ -1,21 +1,33 @@
 import Link from "next/link";
-import { Facebook, Mail, MessageCircle, MapPin } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram, faTiktok,faWhatsapp  } from "@fortawesome/free-brands-svg-icons";
 import { site, contact, kathmanduOffice, chitwanOffice, links } from "@/config/site";
 import Newsletter from "./Newsletter";
 import Watermark from "./Watermark";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { MapPin, Star } from "lucide-react";
 import { trustBadges } from "@/data/data";
 import { business } from "@/config/site";
   const rating = business.aggregateRating;
 const socials = [
-  ...(links.social[0] ? [{ href: links.social[0], label: "Facebook", Icon: Facebook, external: true }] : []),
-  { href: `https://wa.me/${contact.whatsapp}`, label: "WhatsApp", Icon: MessageCircle, external: true },
-  { href: `mailto:${contact.email}`, label: "Email", Icon: Mail, external: false },
+  { href: links.social[0], label: "Facebook", Icon: ({ className }: { className?: string }) => <FontAwesomeIcon icon={faFacebook} className={className} />, external: true },
+  { href: links.social[1], label: "Tiktok", Icon: ({ className }: { className?: string }) => <FontAwesomeIcon icon={faTiktok} className={className} />, external: true },
+  { href: links.social[2], label: "Instagram", Icon: ({ className }: { className?: string }) => <FontAwesomeIcon icon={faInstagram} className={className} />, external: true },
 ];
+
 
 export default function Footer() {
   return (
+    <>
+<a
+  href="https://wa.me/9841229970" // replace with your WhatsApp number
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-3 z-50 shadow-lg hover:bg-green-600 transition-colors flex items-center justify-center"
+>
+  <FontAwesomeIcon icon={faWhatsapp} className="w-8 h-8" />
+</a>
+
     <footer
       id="contact-footer"
       className="relative overflow-hidden bg-white text-luxury-charcoal  pb-8"
@@ -47,9 +59,9 @@ export default function Footer() {
               </p>
             </div>
           )}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6">
+          <div className="flex flex-wrap items-center justify-center md:justify-evenly gap-x-5 gap-y-6">
             {trustBadges.map((badge) => (
-              <a href="" target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={65} height={50} className="
+              <a href="" target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={140} height={30} className="
             - w-auto object-contain" /></a>
             ))}
           </div>
@@ -155,11 +167,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-hairline pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-luxury-muted">
+        <div className="border-t border-hairline pt-8 flex flex-col z-[999] sm:flex-row items-center justify-between gap-4 text-[12px] text-luxury-muted">
           <p>&copy; {new Date().getFullYear()} {site.name}, Sauraha, Chitwan National Park, Nepal.</p>
-          <p>All rights reserved.</p>
+          <p>Developed by <a href="https://longtail.info/" target="_blank" className="font-semibold">Longtail e-media</a></p>
         </div>
       </div>
     </footer>
+    </>
+
   );
 }

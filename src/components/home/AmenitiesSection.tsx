@@ -69,7 +69,7 @@ export default function AmenitiesSection() {
                 >
                   {Icon && (
                     <Icon
-                      className="w-100 h-15 opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-gold"
+                      className="w-100 h-15 opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-(--color-dark-brown)"
                       strokeWidth={1.25}
                     />
                   )}

@@ -146,6 +146,19 @@ export const rooms: RoomType[] = [
   },
 ];
 
+export const accommodations: RoomType[] = [
+    {
+    name: "Deluxe Garden Room",
+    image: "/img/rooms/room-deluxe.jpg",
+    description:
+      "Garden-facing rooms with warm wood tones and private balconies overlooking mature gardens.",
+    pricePerNight: 85,
+    size: "28 Sqm",
+    adults: 2,
+    features: ["wifi", "tv", "breakfast"],
+  },
+];
+
 export const dining = {
   eyebrow: "Dining & Bar",
   title: "Dine Under the Sauraha Sky",
@@ -180,11 +193,11 @@ export const activities: ActivityItem[] = [
   { title: "Jungle Jeep Drive", image: "/img/activities/jungle-drive.jpg" },
   { title: "Cultural Dance Tour", image: "/img/activities/cultural.jpg" },
   { title: "Guided Nature Walk", image: "/img/activities/nature-walk.jpg" },
-  { title: "Bird Watching", image: "/img/activities/birdwatching.jpg" },
-  {
-    title: "Elephant Breeding Center",
-    image: "/img/activities/elephant-breeding.jpg",
-  },
+  // { title: "Bird Watching", image: "/img/activities/birdwatching.jpg" },
+  // {
+  //   title: "Elephant Breeding Center",
+  //   image: "/img/activities/elephant-breeding.jpg",
+  // },
 ];
 
 /**
@@ -260,11 +273,11 @@ export const amenities: AmenityItem[] = [
 ];
 
 export const trustBadges = [
-  { name: "TripAdvisor", image: "/img/trust/tripadvisor.jpg" },
-  { name: "Booking.com", image: "/img/trust/booking.jpg" },
-  { name: "Agoda", image: "/img/trust/agoda.jpg" },
-  { name: "Expedia", image: "/img/trust/expedia.jpg" },
-  { name: "Goibibo", image: "/img/trust/goibibo.jpg" },
+  { name: "TripAdvisor", image: "/img/trust/trip.png" },
+  { name: "Booking.com", image: "/img/trust/bo.png" },
+  { name: "Agoda", image: "/img/trust/ag.png" },
+  { name: "Expedia", image: "/img/trust/ex.png" },
+  // { name: "Goibibo", image: "/img/trust/goibibo.png" },
 ];
 
 export const testimonials: Testimonial[] = [

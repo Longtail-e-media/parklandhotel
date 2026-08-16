@@ -26,17 +26,13 @@ export default function VideoSection() {
       {hero.title}
     </h1>
 
-    <p className="luxury-subtitle text-white/85 max-w-xl mt-6 animate-fade-in-up delay-200">
+    {/* <p className="luxury-subtitle text-white/85 max-w-xl mt-6 animate-fade-in-up delay-200">
       {hero.subtitle}
-    </p>
+    </p> */}
 
     <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up delay-300">
       <Link href="#book" className="luxury-btn luxury-btn-solid">
         Book Your Stay
-      </Link>
-
-      <Link href="#rooms" className="luxury-btn luxury-btn-light">
-        Explore The Resort
       </Link>
     </div>
   </div>

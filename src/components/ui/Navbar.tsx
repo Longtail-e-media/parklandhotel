@@ -40,7 +40,7 @@ export default function Navbar() {
       >
         <Link
           href="/"
-          className={`luxury-hero-title text-2xl lg:text-[1.7rem] transition-colors ${
+          className={`luxury-hero-title text-2xl ${ !isSolid ? "bg-white p-2" : ""} lg:text-[1.7rem] transition-colors ${
             isSolid ? "text-luxury-charcoal" : "text-white"
           }`}
         >

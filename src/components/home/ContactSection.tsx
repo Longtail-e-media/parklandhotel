@@ -51,7 +51,7 @@ export default function ContactSection() {
           <a href={`tel:${contact.phoneE164}`} className="luxury-btn luxury-btn-accent">
             Call To Book
           </a>
-          <a href={`mailto:${contact.email}`} className="luxury-btn luxury-btn-dark">
+          <a href={`mailto:${contact.email}`} className="luxury-btn">
             Send An Inquiry
           </a>
         </div>
