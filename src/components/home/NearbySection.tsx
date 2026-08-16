@@ -63,7 +63,7 @@ export default function NearbySection() {
                     <span className="mt-1.5 flex items-center gap-2 text-sm text-luxury-muted">
                       Distance: {item.distance}
                       <ArrowRight
-                        className={`w-4 h-4 text-gold transition-transform duration-300 ${
+                        className={`w-4 h-4 transition-transform duration-300 ${
                           isActive ? "translate-x-1" : "group-hover:translate-x-1"
                         }`}
                       />

@@ -39,8 +39,8 @@ export default function Navbar() {
                 <Image
               src="/img/logo.png"
               alt="Company Logo"
-              width={65}
-              height={40}
+              width={200}
+              height={200}
               priority
               />
         </Link>

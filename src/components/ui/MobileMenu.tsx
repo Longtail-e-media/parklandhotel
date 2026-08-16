@@ -22,12 +22,18 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
   // Label of the expanded submenu — only one is open at a time.
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
+  // Collapse any open submenu when the panel closes, so it reopens clean.
+  // Adjusted during render rather than in an effect — an effect would need a
+  // second render pass to apply (see react-hooks/set-state-in-effect).
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (wasOpen !== isOpen) {
+    setWasOpen(isOpen);
+    if (!isOpen) setOpenSubmenu(null);
+  }
+
   // Close on Escape, and lock body scroll while the panel is open.
   useEffect(() => {
-    if (!isOpen) {
-      setOpenSubmenu(null);
-      return;
-    }
+    if (!isOpen) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -90,7 +96,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                         onClick={() => setOpenSubmenu(isExpanded ? null : item.label)}
                         aria-expanded={isExpanded}
                         aria-controls={submenuId}
-                        className="w-full flex items-center justify-between gap-2 py-4 text-lg text-left cursor-pointer hover:text-gold transition-colors"
+                        className="w-full flex items-center justify-between gap-2 py-4 text-sm text-left cursor-pointer transition-colors"
                       >
                         {item.label}
                         <ChevronDown
@@ -115,7 +121,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                                 href={child.href || "#"}
                                 onClick={onClose}
                                 tabIndex={isExpanded ? undefined : -1}
-                                className="block pl-4 py-3 border-l-2 border-hairline text-base text-luxury-charcoal/80 hover:text-gold hover:border-gold transition-colors"
+                                className="block pl-4 py-3 border-l-2 border-hairline text-base text-luxury-charcoal/80 hover:text-(--color-dark-brown) hover:border-(--color-dark-brown) transition-colors"
                               >
                                 {child.label}
                               </Link>
@@ -129,7 +135,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                     <Link
                       href={item.href || "#"}
                       onClick={onClose}
-                      className="block py-4 text-lg hover:text-gold transition-colors"
+                      className="block py-4 text-sm hover:text-gold transition-colors"
                     >
                       {item.label}
                     </Link>

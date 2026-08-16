@@ -28,14 +28,14 @@ export default function Footer() {
           {rating && (
             <div className="flex items-center gap-6 md:border-r md:border-hairline md:pr-10">
               <div className="shrink-0 text-center">
-                <p className="luxury-hero-title text-4xl text-gold leading-none">{rating.ratingValue}</p>
+                <p className="luxury-hero-title text-4xl  leading-none">{rating.ratingValue}</p>
                 <div className="flex gap-0.5 justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       className="w-3.5 h-3.5"
                       fill="currentColor"
-                      style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--luxury-gold)" : "var(--line-soft)" }}
+                      style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--color-rating)" : "var(--line-soft)" }}
                     />
                   ))}
                 </div>
@@ -49,7 +49,8 @@ export default function Footer() {
           )}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-10 gap-y-6">
             {trustBadges.map((badge) => (
-              <Image key={badge.name} src={badge.image} alt={badge.name} width={120} height={36} className="h-9 w-auto object-contain" />
+              <a href="" target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={120} height={36} className="
+            - w-auto object-contain" /></a>
             ))}
           </div>
         </div>
@@ -80,7 +81,7 @@ export default function Footer() {
               National Park.
             </p>
             <p className="flex items-center gap-2 text-luxury-muted text-sm mt-4">
-              <MapPin className="w-4 h-4 text-gold shrink-0" /> Sauraha, Chitwan, Nepal
+              <MapPin className="w-4 h-4  shrink-0" /> Sauraha, Chitwan, Nepal
             </p>
           </div>
 
@@ -91,7 +92,7 @@ export default function Footer() {
                 href={href}
                 {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 aria-label={label}
-                className="w-11 h-11 flex items-center justify-center rounded-full border border-hairline text-luxury-charcoal/70 hover:border-soft hover:text-gold hover:-translate-y-0.5 transition-all duration-300"
+                className="w-11 h-11 flex items-center justify-center rounded-full border border-hairline text-luxury-charcoal/70 hover:border-soft hover:-translate-y-0.5 transition-all duration-300"
               >
                 <Icon className="w-4 h-4" />
               </a>
@@ -106,19 +107,19 @@ export default function Footer() {
           <div>
             <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Explore</p>
             <ul className="space-y-3 text-sm text-luxury-muted">
-              <li><Link href="#rooms" className="hover:text-gold transition-colors">Rooms &amp; Suites</Link></li>
-              <li><Link href="#dining" className="hover:text-gold transition-colors">Dining &amp; Bar</Link></li>
-              <li><Link href="#activities" className="hover:text-gold transition-colors">Activities</Link></li>
-              <li><Link href="#gallery" className="hover:text-gold transition-colors">Gallery</Link></li>
+              <li><Link href="#rooms" className="transition-colors">Rooms &amp; Suites</Link></li>
+              <li><Link href="#dining" className="transition-colors">Dining &amp; Bar</Link></li>
+              <li><Link href="#activities" className="transition-colors">Activities</Link></li>
+              <li><Link href="#gallery" className="transition-colors">Gallery</Link></li>
             </ul>
           </div>
 
           <div>
             <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Property</p>
             <ul className="space-y-3 text-sm text-luxury-muted">
-              <li><Link href="#nearby" className="hover:text-gold transition-colors">Nearby</Link></li>
-              <li><Link href="#contact" className="hover:text-gold transition-colors">Contact</Link></li>
-              <li><Link href="#book" className="hover:text-gold transition-colors">Book Now</Link></li>
+              <li><Link href="#nearby" className="transition-colors">Nearby</Link></li>
+              <li><Link href="#contact" className="transition-colors">Contact</Link></li>
+              <li><Link href="#book" className="transition-colors">Book Now</Link></li>
             </ul>
           </div>
 
@@ -127,18 +128,18 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-luxury-muted">
               <li>
                 <span className="block text-luxury-muted/70 text-[11px] uppercase tracking-wide mb-1">Kathmandu</span>
-                <a href={`tel:${kathmanduOffice.phones[0]}`} className="hover:text-gold transition-colors">
+                <a href={`tel:${kathmanduOffice.phones[0]}`} className="transition-colors">
                   {kathmanduOffice.phones[0]}
                 </a>
               </li>
               <li>
                 <span className="block text-luxury-muted/70 text-[11px] uppercase tracking-wide mb-1">Chitwan</span>
-                <a href={`tel:${chitwanOffice.phones[0]}`} className="hover:text-gold transition-colors">
+                <a href={`tel:${chitwanOffice.phones[0]}`} className="transition-colors">
                   {chitwanOffice.phones[0]}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${contact.email}`} className="hover:text-gold transition-colors">
+                <a href={`mailto:${contact.email}`} className="transition-colors">
                   {contact.email}
                 </a>
               </li>

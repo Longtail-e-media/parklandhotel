@@ -31,6 +31,7 @@
   --luxury-border: rgba(163, 68, 47, 0.2);
   /* Secondary accent: warm sand/gold, used sparingly (icons, small labels). */
   --brand-sand: #b0916a;
+  --color-rating: rgba(172, 172, 13, 0.923);
 
   /* ---- Neutral surface scale (the white canvas) ----
      Hairlines and card fills are near-invisible on purpose: on a
@@ -44,6 +45,7 @@
 
   --background: #ffffff;
   --foreground: #242420;
+
   --color-dark-brown : #937E3B;
    --color-primary-green : #3B5B2F;
   --color-skybrown: #BB9C5C;
@@ -269,9 +271,7 @@ body {
     align-items: center;
     gap: 0.75rem;
     padding: 0.95rem 2rem;
-    border: 1px solid var(--color-primary-green);
     border-radius: 999px;
-    color: var(--color-primary-green);
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -301,11 +301,11 @@ body {
   .luxury-btn-light:hover { color: var(--luxury-dark); }
 
   .luxury-btn-solid {
-    background: var(--color-primary-green);
+    background: var(--color-skybrown);
     color: #fff;
-    border-color: var(--color-primary-green);
+
   }
-  .luxury-btn-solid::before { background: var(--color-primary-green); }
+  .luxury-btn-solid::before { background: var(--color-skybrown); }
 
   /* Filled accent CTA — terracotta, deepens on hover (the ::before wipe
      paints the darker shade over the base fill). */
@@ -314,8 +314,8 @@ body {
     color: #fff;
     border-color: var(--color-primary-green);
   }
-  .luxury-btn-accent::before { background: var(--luxury-gold-dim); }
-  .luxury-btn-accent:hover { border-color: var(--luxury-gold-dim); }
+  .luxury-btn-accent::before { background: #29471e; }
+
 
   /* Outline CTA for the white canvas — charcoal hairline, inverts on hover */
   .luxury-btn-dark {
@@ -417,4 +417,11 @@ body {
     opacity: 0.35;
     pointer-events: none;
   }
+}
+
+.brown-btn{
+  color: var(--color-dark-brown);
+}
+.text-gold-text{
+  color: var(--color-dark-brown) ;
 }

@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
                 <p aria-hidden className="absolute top-5 right-8 text-7xl leading-none text-gold/15 font-serif">
                   &rdquo;
                 </p>
-                <div className="relative flex gap-0.5 text-gold mb-5">
+                <div className="relative flex gap-0.5 text-(--color-rating) mb-5">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-3.5 h-3.5" fill="currentColor" />
                   ))}

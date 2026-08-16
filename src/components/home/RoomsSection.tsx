@@ -117,11 +117,11 @@ export default function RoomsSection() {
 
                   <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-luxury-muted">
                     <li className="flex items-center gap-2">
-                      <Maximize2 className="w-4 h-4 text-gold" strokeWidth={1.5} aria-hidden />
+                      <Maximize2 className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
                       Size: {room.size}
                     </li>
                     <li className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-gold" strokeWidth={1.5} aria-hidden />
+                      <User className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
                       Adults: {room.adults}
                     </li>
                   </ul>
@@ -130,9 +130,9 @@ export default function RoomsSection() {
 
                   <Link
                     href="#contact"
-                    className="inline-flex items-center gap-2 text-gold-text luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
+                    className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
                   >
-                    Rates &amp; Tariffs <ArrowRight className="w-4 h-4" />
+                    Book Now <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </article>
