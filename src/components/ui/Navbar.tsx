@@ -46,7 +46,7 @@ export default function Navbar() {
           }`}
         >
                 <Image
-              src={isScrolled ? "/img/logo2.png" : "/img/logo.png"}
+              src={isTransparentPage ? ( isScrolled ? "/img/logo2.png" : "/img/logo.png") : "/img/logo2.png"}
               alt="Company Logo"
               width={200}
               height={200}
