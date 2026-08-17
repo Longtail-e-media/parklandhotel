@@ -142,7 +142,7 @@ export default function Footer() {
                 </div>
 
     <div>
-            <p className="luxury-label text-luxury-charcoal mb-5">Property</p>
+            <p className="luxury-label text-luxury-charcoal mb-5">Quick Links</p>
             <ul className="space-y-3">
               {quickLinks.map((link, i) => (
                 <li key={i}>

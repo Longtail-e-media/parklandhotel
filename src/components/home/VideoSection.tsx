@@ -31,7 +31,7 @@ export default function VideoSection() {
 
     <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up delay-300 mb-14">
       <Link href="#book" className="luxury-btn luxury-btn-solid">
-        Book Your Stay
+          Explore our Rooms
       </Link>
     </div>
   </div>

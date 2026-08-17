@@ -53,7 +53,7 @@ export const about = {
   image: "/img/garden.jpg",
   stats: [
     { value: "1987", label: "Est. Since" },
-    { value: "32", label: "Rooms & Suites" },
+    { value: "120", label: "Rooms & Suites" },
     { value: "10 Min", label: "To Sauraha Centre" },
   ],
 };
@@ -316,7 +316,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "ery comfortable rooms and friendly, helpful staff. Hotel has nice Garden, tranquil and peaceful place. We quite enjoyed food. (Mostly Nepali, Indian, Chinese kitchen). Our guide Bishnu was simply amazing, very knowledgeable.",
+      "Very comfortable rooms and friendly, helpful staff. Hotel has nice Garden, tranquil and peaceful place. We quite enjoyed food. (Mostly Nepali, Indian, Chinese kitchen). Our guide Bishnu was simply amazing, very knowledgeable.",
     author: "Rusowasp",
     source: "Tbilisi",
   },

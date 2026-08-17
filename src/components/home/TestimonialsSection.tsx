@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Guest Stories</p>
-          <h2 className="luxury-section-title text-luxury-charcoal">What Our Guests Are Saying</h2>
+          <h2 className="luxury-section-title text-luxury-charcoal">In their words</h2>
           <p className="text-luxury-muted mt-5">Real words from real stays, via TripAdvisor.</p>
         </div>
 
