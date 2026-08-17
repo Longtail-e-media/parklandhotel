@@ -33,10 +33,9 @@ export default function CookieConsent() {
     </h2>
 
     <p className="mb-4 text-sm leading-relaxed text-black sm:text-base">
-      We use essential cookies to help give you the best possible shopping
-      experience. With your consent, we may also use non-essential cookies to
-      improve user experience and analyse website traffic. By accepting, you
-      agree to our website&apos;s cookie use as described in our{" "}
+  We use cookies to improve your experience on our website and to understand
+  how visitors use our site. By continuing to use our website, you agree to
+  our use of cookies as described in our{" "}
       <a
         href="/cookies-policy"
         className="font-medium underline hover:text-gray-600"
