@@ -27,7 +27,7 @@ export const navItems: NavItem[] = [
       { label: "Presidential Room", href: "" },
     ],
   },
-  { label: "Dining", href: "" },
+  { label: "Dining & Bar", href: "" },
   { label: "Meeting and Events", href: "" },
   { label: "Experiences & Destination", href: "" },
   { label: "Offers & Packages", href: "" },
