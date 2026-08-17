@@ -47,11 +47,10 @@ export default function AmenitiesSection() {
         <div className="grid lg:grid-cols-[20rem_1fr] xl:grid-cols-[22rem_1fr] gap-12 lg:gap-16 items-center">
           {/* --- Intro column -------------------------------------------- */}
           <div className="animate-fade-in-up">
-            <p className="luxury-label text-gold-text mb-4">The Essentials</p>
-            <h2 className="luxury-section-title text-luxury-charcoal">Facilities</h2>
+            <p className="luxury-label text-gold-text mb-4">The parkland Experience</p>
+            <h2 className="luxury-section-title text-luxury-charcoal">Comfort in Every Details</h2>
             <p className="text-luxury-muted mt-5 leading-relaxed">
-              Everything a stay in the jungle needs, quietly taken care of — from fibre wi-fi and
-              private parking to bicycles for the ride out to the elephant stables.
+              From seamless connectivity to effortless exploration, every detail is thoughtfully taken care of — so you can simply relax and enjoy your time in Chitwan.
             </p>
             <a href="#contact" className="luxury-btn luxury-btn-accent mt-8">
               View All

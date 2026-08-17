@@ -70,7 +70,7 @@ export default function Navbar() {
           {/* Menu lives in the off-canvas drawer at every breakpoint — eight
               items with long labels won't fit inline without wrapping. */}
           <button
-            className={`p-2 -mr-2 rounded-full cursor-pointer transition-colors duration-200 hover:text-gold ${
+            className={`p-2 -mr-2 rounded-full cursor-pointer transition-colors duration-200 hover:text-amber-200 ${
               isSolid
                 ? "text-luxury-charcoal hover:bg-luxury-charcoal/5"
                 : "text-white hover:bg-white/15"

@@ -22,9 +22,9 @@ export default function ActivitiesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Activities</p>
-          <h2 className="luxury-section-title text-luxury-charcoal">Into the Heart of Chitwan</h2>
+          <h2 className="luxury-section-title text-luxury-charcoal">Into the Wild Heart of Chitwan</h2>
           <p className="text-luxury-muted mt-5">
-            Seven ways to meet the jungle, each arranged through the hotel with an experienced local guide.
+           Experience refined hospitality, embrace the untamed beauty of Chitwan, and create unforgettable memories that stay with you long after your journey.
           </p>
         </div>
 

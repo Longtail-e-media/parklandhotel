@@ -34,7 +34,7 @@ export default function AboutSection() {
           <div className="grid grid-cols-3 gap-6 border-t border-hairline pt-8">
             {about.stats.map((stat) => (
               <div key={stat.label}>
-                <p className="luxury-hero-title text-3xl">{stat.value}</p>
+                <p className="text-3xl">{stat.value}</p>
                 <p className="luxury-label text-[10px] text-luxury-muted mt-2">{stat.label}</p>
               </div>
             ))}

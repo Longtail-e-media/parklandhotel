@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { config } from "@fortawesome/fontawesome-svg-core";
 import { Playfair_Display, Manrope } from "next/font/google";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+config.autoAddCss = false;
 import "./globals.css";
 import { site, contact, address, business, SITE_URL } from "@/config/site";
 

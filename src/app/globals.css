@@ -179,7 +179,7 @@ body {
 
 @layer components {
   .luxury-hero-title {
-    /* font-family: var(--font-display-serif), Georgia, serif; */
+    font-family: var(--font-display-serif), Georgia, serif;
     /* Was clamp(0.125rem, -1.5357rem + 5.9048vw, 4rem) — the negative
        intercept collapsed the hero headline to the 2px floor on phones. */
     font-size: clamp(2.4rem, 1.84rem + 2.4vw, 3rem);

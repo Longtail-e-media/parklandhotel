@@ -6,7 +6,7 @@ import Newsletter from "./Newsletter";
 import Watermark from "./Watermark";
 import Image from "next/image";
 import { MapPin, Star } from "lucide-react";
-import { trustBadges } from "@/data/data";
+import { trustBadges, exploreLinks,quickLinks } from "@/data/data";
 import { business } from "@/config/site";
   const rating = business.aggregateRating;
 const socials = [
@@ -89,8 +89,7 @@ export default function Footer() {
               <span className="luxury-hero-title text-3xl">{site.name}</span>
             </div>
             <p className=" mt-5 leading-relaxed">
-              Traditional hospitality in a sylvan setting — ten minutes from Sauraha, on the edge of Chitwan
-              National Park.
+           Refined hospitality in a serene natural setting — just ten minutes from Sauraha, at the gateway to Chitwan National Park.
             </p>
             <p className="flex items-center gap-2  text-sm mt-4">
               <MapPin className="w-4 h-4  shrink-0" /> Sauraha, Chitwan, Nepal
@@ -116,22 +115,29 @@ export default function Footer() {
 
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-10 ">
-          <div>
-            <p className="luxury-label text-luxury-charcoal mb-5">Explore</p>
-            <ul className="space-y-3">
-              <li><Link href="#rooms" className="transition-colors">Rooms &amp; Suites</Link></li>
-              <li><Link href="#dining" className="transition-colors">Dining &amp; Bar</Link></li>
-              <li><Link href="#activities" className="transition-colors">Activities</Link></li>
-              <li><Link href="#gallery" className="transition-colors">Gallery</Link></li>
-            </ul>
-          </div>
+                <div>
+                <p className="luxury-label text-luxury-charcoal mb-5">Explore</p>
+                <ul className="space-y-3">
+                  {exploreLinks.map((link, i) => (
+                    <li key={i}>
+                      <Link href={link.href} className="transition-colors">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                </div>
 
-          <div>
+    <div>
             <p className="luxury-label text-luxury-charcoal mb-5">Property</p>
             <ul className="space-y-3">
-              <li><Link href="#nearby" className="transition-colors">Nearby</Link></li>
-              <li><Link href="#contact" className="transition-colors">Contact</Link></li>
-              <li><Link href="#book" className="transition-colors">Book Now</Link></li>
+              {quickLinks.map((link, i) => (
+                <li key={i}>
+                  <Link href={link.href} className="transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -161,7 +167,7 @@ export default function Footer() {
           <div>
             <p className="luxury-label text-luxury-charcoal mb-5">Stay in touch</p>
             <p className="mb-5">
-              Notes on our five-star journey, straight to your inbox.
+             Be the first to discover special offers, seasonal experiences and stories from Hotel Parkland.
             </p>
             <Newsletter />
           </div>

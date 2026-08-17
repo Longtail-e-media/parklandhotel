@@ -33,10 +33,9 @@ export default function NearbySection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-14 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Beyond The Gates</p>
-          <h2 className="luxury-section-title text-luxury-charcoal">Nearby Landmarks</h2>
+          <h2 className="luxury-section-title text-luxury-charcoal">Chitwan, Within Reach</h2>
           <p className="text-luxury-muted mt-5">
-            Sauraha&rsquo;s edge-of-the-jungle setting puts a handful of Chitwan&rsquo;s best-known sights
-            within easy reach. Pick a landmark to place it on the map.
+           At the gateway to Chitwan’s wilderness, some of the region’s most remarkable landmarks are just moments away. Explore the places that make this destination unforgettable.
           </p>
         </div>
 
@@ -53,7 +52,7 @@ export default function NearbySection() {
                     aria-pressed={isActive}
                     className={`group w-full text-left rounded-2xl border px-6 py-5 transition-all duration-300 ${
                       isActive
-                        ? "border-gold bg-luxury-cream-alt shadow-[0_14px_36px_-24px_rgba(36,36,32,0.45)]"
+                        ? "border-gold bg-amber-100/95 shadow-[0_14px_36px_-24px_rgba(36,36,32,0.45)]"
                         : "border-hairline bg-luxury-cream hover:border-soft hover:bg-luxury-cream-alt"
                     }`}
                   >

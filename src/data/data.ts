@@ -28,10 +28,11 @@ export const navItems: NavItem[] = [
     ],
   },
   { label: "Dining", href: "" },
+  { label: "Meeting and Events", href: "" },
   { label: "Experiences & Destination", href: "" },
   { label: "Offers & Packages", href: "" },
   { label: "Blog", href: "" },
-  { label: "Events", href: "" },
+  { label: "FAQ", href: "" },
   { label: "Contact", href: "" }
 ];
 
@@ -176,8 +177,8 @@ export const leisure = {
   eyebrow: "Leisure & Wellness",
   title: "Serenity Beneath the Chitwan Sky",
   paragraphs: [
-    "Spend an unhurried afternoon at the swimming pool, or wander the mature gardens that surround it — home to indigenous trees, flowering shrubs, and the birds and butterflies they attract.",
-    "It's the kind of quiet that's hard to find near a national park, and one of the reasons our guests keep coming back.",
+    "Spend an unhurried afternoon by the swimming pool or wander through our lush gardens, surrounded by indigenous trees, flowering shrubs, and the gentle presence of birds and butterflies.",
+    "A tranquil retreat from the excitement of Chitwan, where nature invites you to slow down, reconnect, and simply be.",
   ],
   image: "/img/pool.jpg",
 };
@@ -258,6 +259,20 @@ export const nearby: NearbyItem[] = [
     description:
       "Twenty-five-minute flights from Kathmandu land here; we can arrange a car to meet you on arrival.",
   },
+];
+
+export const exploreLinks = [
+  { label: "Rooms & Suites", href: "" },
+  { label: "Dining & Bar", href: "" },
+  { label: "Wellness & Leisure", href: "" },
+  { label: "Experiences", href: "" },
+];
+export const quickLinks = [
+  { label: "Book Your Stay", href: "" },
+  { label: "Special Offers", href: "" },
+  { label: "Getting Here", href: "" },
+  { label: "Privacy Policy", href: "" },
+  { label: "Terms & Conditions", href: "" },
 ];
 
 export const amenities: AmenityItem[] = [
