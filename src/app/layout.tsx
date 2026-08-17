@@ -3,6 +3,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { Playfair_Display, Manrope } from "next/font/google";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import CookieConsent from "@/components/ui/CookieConsent";
 config.autoAddCss = false;
 import "./globals.css";
 import { site, contact, address, business, SITE_URL } from "@/config/site";
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Navbar />
         {children}
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );
