@@ -56,7 +56,7 @@ export default function TestimonialsSection() {
                     <Star key={i} className="w-3.5 h-3.5" fill="currentColor" />
                   ))}
                 </div>
-                <blockquote className="relative text-luxury-charcoal/80 leading-relaxed mb-7">
+                <blockquote className="relative text-luxury-charcoal/80 leading-8 mb-7">
                   {t.quote}
                 </blockquote>
                 <figcaption className="relative flex items-center gap-4 border-t border-hairline pt-6">

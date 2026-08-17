@@ -37,26 +37,28 @@ export default function Navbar() {
         className={`max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? "h-20" : "h-24"
         }`}
+
       >
         <Link
           href="/"
-          className={`luxury-hero-title text-2xl ${ !isSolid ? "bg-white p-2" : ""} lg:text-[1.7rem] transition-colors ${
+          className={`luxury-hero-title text-2xl  lg:text-[1.7rem] transition-colors ${
             isSolid ? "text-luxury-charcoal" : "text-white"
           }`}
         >
                 <Image
-              src="/img/logo.png"
+              src={isScrolled ? "/img/logo2.png" : "/img/logo.png"}
               alt="Company Logo"
               width={200}
               height={200}
               priority
+               unoptimized
               />
         </Link>
 
         <div className="flex items-center gap-4">
           <a
             href={`tel:${contact.phoneE164}`}
-            className={`hidden md:inline-flex text-sm transition-colors hover:opacity-70 ${
+            className={`hidden md:inline-flex text-sm transition-colors  ${
               isSolid ? "text-luxury-charcoal" : "text-white"
             }`}
           >

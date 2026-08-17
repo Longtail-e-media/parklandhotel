@@ -88,11 +88,11 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               <span className="luxury-hero-title text-3xl">{site.name}</span>
             </div>
-            <p className="text-luxury-muted text-sm mt-5 leading-relaxed">
+            <p className=" mt-5 leading-relaxed">
               Traditional hospitality in a sylvan setting — ten minutes from Sauraha, on the edge of Chitwan
               National Park.
             </p>
-            <p className="flex items-center gap-2 text-luxury-muted text-sm mt-4">
+            <p className="flex items-center gap-2  text-sm mt-4">
               <MapPin className="w-4 h-4  shrink-0" /> Sauraha, Chitwan, Nepal
             </p>
           </div>
@@ -117,8 +117,8 @@ export default function Footer() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 py-10 ">
           <div>
-            <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Explore</p>
-            <ul className="space-y-3 text-sm text-luxury-muted">
+            <p className="luxury-label text-luxury-charcoal mb-5">Explore</p>
+            <ul className="space-y-3">
               <li><Link href="#rooms" className="transition-colors">Rooms &amp; Suites</Link></li>
               <li><Link href="#dining" className="transition-colors">Dining &amp; Bar</Link></li>
               <li><Link href="#activities" className="transition-colors">Activities</Link></li>
@@ -127,8 +127,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Property</p>
-            <ul className="space-y-3 text-sm text-luxury-muted">
+            <p className="luxury-label text-luxury-charcoal mb-5">Property</p>
+            <ul className="space-y-3">
               <li><Link href="#nearby" className="transition-colors">Nearby</Link></li>
               <li><Link href="#contact" className="transition-colors">Contact</Link></li>
               <li><Link href="#book" className="transition-colors">Book Now</Link></li>
@@ -136,16 +136,16 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Reservations</p>
-            <ul className="space-y-4 text-sm text-luxury-muted">
+            <p className="luxury-label text-luxury-charcoal mb-5">Reservations</p>
+            <ul className="space-y-4">
               <li>
-                <span className="block text-luxury-muted/70 text-[11px] uppercase tracking-wide mb-1">Kathmandu</span>
+                <span className="block text-[12px] uppercase tracking-wide mb-1">Kathmandu</span>
                 <a href={`tel:${kathmanduOffice.phones[0]}`} className="transition-colors">
                   {kathmanduOffice.phones[0]}
                 </a>
               </li>
               <li>
-                <span className="block text-luxury-muted/70 text-[11px] uppercase tracking-wide mb-1">Chitwan</span>
+                <span className="block text-[12px] uppercase tracking-wide mb-1">Chitwan</span>
                 <a href={`tel:${chitwanOffice.phones[0]}`} className="transition-colors">
                   {chitwanOffice.phones[0]}
                 </a>
@@ -159,15 +159,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="luxury-label text-[11px] text-luxury-charcoal mb-5">Stay In Touch</p>
-            <p className="text-luxury-muted text-sm mb-5">
+            <p className="luxury-label text-luxury-charcoal mb-5">Stay in touch</p>
+            <p className="mb-5">
               Notes on our five-star journey, straight to your inbox.
             </p>
             <Newsletter />
           </div>
         </div>
 
-        <div className="border-t border-hairline pt-8 flex flex-col z-[999] sm:flex-row items-center justify-between gap-4 text-[12px] text-luxury-muted">
+        <div className="border-t border-hairline pt-8 flex flex-col z-999 sm:flex-row items-center justify-between gap-4 text-[14px]">
           <p>&copy; {new Date().getFullYear()} {site.name}, Sauraha, Chitwan National Park, Nepal.</p>
           <p>Developed by <a href="https://longtail.info/" target="_blank" className="font-semibold">Longtail e-media</a></p>
         </div>

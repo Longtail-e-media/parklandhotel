@@ -5,14 +5,14 @@ import { ArrowRight } from "lucide-react";
 export default function Newsletter() {
   return (
     <form
-      className="flex items-center gap-2 rounded-full border border-hairline p-1.5 pl-5 focus-within:border-soft transition-colors"
+      className="flex items-center gap-2 rounded-full border-[0.1px] p-1.5 pl-5 focus-within:border-soft transition-colors"
       onSubmit={(e) => e.preventDefault()}
     >
       <input
         type="email"
         placeholder="Email address"
         aria-label="Email address"
-        className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-muted/70 focus:outline-none"
+        className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-dark focus:outline-none"
       />
       <button
         type="submit"

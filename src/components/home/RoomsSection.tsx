@@ -126,7 +126,7 @@ export default function RoomsSection() {
                     </li>
                   </ul>
 
-                  <p className="text-luxury-muted text-sm mt-4 leading-relaxed">{room.description}</p>
+                  <p className="text-luxury-muted  mt-4 leading-relaxed">{room.description}</p>
 
                   <Link
                     href="#contact"
