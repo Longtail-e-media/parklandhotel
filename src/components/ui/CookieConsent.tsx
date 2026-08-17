@@ -53,7 +53,7 @@ export default function CookieConsent() {
         onClick={handleReject}
         className="h-11 w-40 rounded-lg border hover:cursor-pointer border-gray-400 bg-white px-4 text-sm font-semibold text-black transition-colors hover:bg-gray-100 sm:w-48 sm:text-base"
       >
-        Reject All
+        Reject
       </button>
 
       <button
@@ -61,7 +61,7 @@ export default function CookieConsent() {
         onClick={handleAccept}
         className="h-11 w-40 rounded-lg hover:cursor-pointer bg-(--color-primary-green) px-4 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-48 sm:text-base"
       >
-        Accept Cookies
+        Accept All Cookies
       </button>
     </div>
 
