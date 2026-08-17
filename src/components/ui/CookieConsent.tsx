@@ -25,26 +25,47 @@ export default function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 px-4 pb-4 sm:px-6 sm:pb-6">
-      <div className="max-w-xl mx-auto bg-white border border-hairline rounded-xl shadow-lg px-5 py-4 flex flex-col sm:flex-row items-center gap-4">
-        <p className="text-sm leading-snug flex-1 text-center sm:text-left">
-          We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
-        </p>
-        <div className="flex gap-2.5 shrink-0">
-          <button
-            onClick={handleAccept}
-            className="px-4 py-2 bg-(--color-primary-green) hover:cursor-pointer text-white text-sm font-medium rounded-lg transition-colors"
-          >
-            Accept
-          </button>
-          <button
-            onClick={handleReject}
-            className="px-4 py-2 border border-hairline hover:cursor-pointer text-sm font-medium rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            Reject
-          </button>
-        </div>
-      </div>
+<div className="fixed inset-x-0 bottom-0 z-50 pb-4">
+  <div className="w-[80%] mx-auto rounded-md border border-gray-300 bg-white px-5 py-4 shadow-lg">
+
+    <h2 className="mb-1.5 text-lg font-bold text-black sm:text-xl">
+      We value your privacy
+    </h2>
+
+    <p className="mb-4 text-sm leading-relaxed text-black sm:text-base">
+      We use essential cookies to help give you the best possible shopping
+      experience. With your consent, we may also use non-essential cookies to
+      improve user experience and analyse website traffic. By accepting, you
+      agree to our website&apos;s cookie use as described in our{" "}
+      <a
+        href="/cookies-policy"
+        className="font-medium underline hover:text-gray-600"
+      >
+        Cookies Policy
+      </a>
+      . You can change your cookie settings at anytime by clicking
+      &quot;Reject All&quot;.
+    </p>
+
+    <div className="flex justify-center gap-3">
+      <button
+        type="button"
+        onClick={handleReject}
+        className="h-11 w-40 rounded-lg border hover:cursor-pointer border-gray-400 bg-white px-4 text-sm font-semibold text-black transition-colors hover:bg-gray-100 sm:w-48 sm:text-base"
+      >
+        Reject All
+      </button>
+
+      <button
+        type="button"
+        onClick={handleAccept}
+        className="h-11 w-40 rounded-lg hover:cursor-pointer bg-(--color-primary-green) px-4 text-sm font-semibold text-white transition-opacity hover:opacity-90 sm:w-48 sm:text-base"
+      >
+        Accept Cookies
+      </button>
     </div>
+
+  </div>
+</div>
   );
 }
