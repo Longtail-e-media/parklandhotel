@@ -35,14 +35,16 @@ export default function DiningSection() {
         <div className="animate-slide-in-right">
           <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{dining.eyebrow}</p>
           <h2 className="luxury-section-title text-luxury-charcoal mb-6">{dining.title}</h2>
-          <p className="text-luxury-muted leading-relaxed mb-8">{dining.paragraph}</p>
+          <p className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{dining.paragraph}</p>
           <ul className="grid sm:grid-cols-2 gap-3">
-            {dining.features.map((feature) => (
+            {dining.features.map((feature, i) => (
               <li
-                key={feature}
-                className="flex items-center gap-3 text-luxury-muted text-sm border border-hairline rounded-full px-5 py-3"
+                key={i}
+                className="flex  gap-3 text-luxury-muted text-sm border border-hairline rounded-full px-5 py-3"
               >
-                <Check className="w-4 h-4 text-gold shrink-0" /> {feature}
+                <div className="wrapper">
+                  <p><span className="block">{feature.title}</span>{feature.description}</p>
+                </div>
               </li>
             ))}
           </ul>

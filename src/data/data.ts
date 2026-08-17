@@ -22,9 +22,9 @@ export const navItems: NavItem[] = [
     href: "",
     // Mirrors the room types in `rooms` below — keep the two lists in step.
     children: [
-      { label: "Deluxe Garden Rooms", href: "" },
-      { label: "Premier Rooms", href: "" },
-      { label: "Parkland Suites", href: "" },
+      { label: "Deluxe Room", href: "" },
+      { label: "Suite Room", href: "" },
+      { label: "Presidential Room", href: "" },
     ],
   },
   { label: "Dining", href: "" },
@@ -39,7 +39,7 @@ export const hero = {
   eyebrow: "Sauraha · Chitwan National Park, Nepal",
   title: "A Five-Star Sanctuary\non the Edge of the Wild",
   subtitle:
-    "Traditional hospitality in a sylvan setting — ten minutes from the heart of Sauraha, and minutes from the gates of the jungle.",
+    "Refined hospitality in a serene natural setting — just minutes from the heart of Sauraha and the gateway to Chitwan National Park.",
   image: "/img/hero.jpg",
 };
 
@@ -47,8 +47,7 @@ export const about = {
   eyebrow: "Welcome To Hotel Parkland",
   title: "Where Jungle Tranquility\nMeets Refined Comfort",
   paragraphs: [
-    "Since 1987, Hotel Parkland has offered travellers a quiet and peaceful stay just ten minutes from the centre of Sauraha, and only minutes from the entrance to Chitwan National Park and its office.",
-    "Our magnificent, mature gardens shelter rare indigenous trees, shrubs and flowers that draw birds and butterflies year-round — the same sylvan calm that keeps so many of our guests returning, year after year. As we embark on our journey toward five-star hospitality, that quiet, garden-bound character remains our compass.",
+    "Welcome to Hotel Parkland, a premium destination in Sauraha designed for guests seeking comfort, sophistication and authentic Chitwan experiences.From elegantly appointed accommodations and exceptional dining to leisure facilities and curated wildlife adventures, every element is thoughtfully designed to make your stay memorable.Whether you are travelling for leisure, a family escape, a romantic getaway, a corporate retreat or an adventure into the wild, Hotel Parkland brings together the best of contemporary hospitality and the natural charm of Chitwan.",
   ],
   image: "/img/garden.jpg",
   stats: [
@@ -115,45 +114,45 @@ export const aboutPage = {
 
 export const rooms: RoomType[] = [
   {
-    name: "Deluxe Garden Room",
+    name: "Deluxe Room",
     image: "/img/rooms/room-deluxe.jpg",
     description:
       "Garden-facing rooms with warm wood tones and private balconies overlooking mature gardens.",
     pricePerNight: 85,
-    size: "28 Sqm",
-    adults: 2,
+    size: "28 Sq.m",
+    adults: 2+1,
     features: ["wifi", "tv", "breakfast"],
   },
   {
-    name: "Premier Room",
+    name: "Suite Room",
     image: "/img/rooms/room-premier.jpg",
     description:
       "Spacious interiors with elevated finishes, designed for longer, more restorative stays.",
     pricePerNight: 120,
-    size: "34 Sqm",
-    adults: 3,
+    size: "34 Sq.m",
+    adults: 2+1,
     features: ["wifi", "tv", "ac"],
   },
   {
-    name: "Parkland Suite",
+    name: "Presidential Room",
     image: "/img/rooms/room-villa.jpg",
     description:
       "Our most refined address — generous living space for guests who want a little more room to unwind.",
     pricePerNight: 180,
-    size: "46 Sqm",
-    adults: 4,
+    size: "46 Sq.m",
+    adults: 2+1,
     features: ["wifi", "ac", "bath"],
   },
 ];
 
 export const accommodations: RoomType[] = [
     {
-    name: "Deluxe Garden Room",
+    name: "Deluxe Room",
     image: "/img/rooms/room-deluxe.jpg",
     description:
       "Garden-facing rooms with warm wood tones and private balconies overlooking mature gardens.",
     pricePerNight: 85,
-    size: "28 Sqm",
+    size: "28 Sq.m",
     adults: 2,
     features: ["wifi", "tv", "breakfast"],
   },
@@ -161,20 +160,21 @@ export const accommodations: RoomType[] = [
 
 export const dining = {
   eyebrow: "Dining & Bar",
-  title: "Dine Under the Sauraha Sky",
+  title: "Flavours Under the Sauraha Sky",
   paragraph:
-    "Take breakfast on the open-air terrace, or settle in for a full buffet spread at our restaurant after a day in the jungle. Our bar keeps the evening unhurried, with the garden as its backdrop.",
+    "From authentic Nepalese flavours to international favourites, discover dining experiences crafted to delight every palate.\n\nOur culinary spaces offer sophisticated settings, quality ingredients and attentive service—from relaxed breakfasts to memorable dinners and evening gatherings.",
   features: [
-    "Indoor restaurant & open-air terrace dining",
-    "Daily buffet service",
-    "Garden bar, open through the evening",
+{title:"Outdoor Dining", description:"Al fresco dining surrounded by the beauty of Sauraha."},
+{title:"Buffet Dining", description:"A generous selection of fresh flavours for every palate."},
+{title:"Restaurant", description:"Contemporary dining featuring local and international cuisine."},
+{title:"Bar", description:"Unwind with signature drinks and a relaxed evening ambience."},
   ],
   image: "/img/dining.jpg",
 };
 
 export const leisure = {
   eyebrow: "Leisure & Wellness",
-  title: "Unwind Beside the Pool",
+  title: "Serenity Beneath the Chitwan Sky",
   paragraphs: [
     "Spend an unhurried afternoon at the swimming pool, or wander the mature gardens that surround it — home to indigenous trees, flowering shrubs, and the birds and butterflies they attract.",
     "It's the kind of quiet that's hard to find near a national park, and one of the reasons our guests keep coming back.",
