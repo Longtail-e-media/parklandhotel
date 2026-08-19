@@ -1,11 +1,11 @@
-import { accommodationsPage } from "@/data/data";
+import { meetingsPage } from "@/data/data";
 
 /**
  * Typographic page header — no banner image, so the top padding here is what
  * clears the fixed navbar (h-24 / h-20 once scrolled).
  */
-export default function RoomsHeader() {
-  const { header, intro } = accommodationsPage;
+export default function MeetingsHeader() {
+  const { header, intro } = meetingsPage;
 
   return (
     <section className="pt-36 lg:pt-44 pb-4 lg:pb-8">

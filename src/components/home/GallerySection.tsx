@@ -20,7 +20,7 @@ export default function GallerySection() {
             <p className="luxury-eyebrow luxury-label text-gold-text mb-5">Gallery</p>
             <h2 className="luxury-section-title text-luxury-charcoal">A Glimpse of Parkland</h2>
           </div>
-          <Link href="#contact" className="luxury-btn luxury-btn-dark">
+          <Link href="/gallery" className="luxury-btn luxury-btn-dark">
             View Full Gallery <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

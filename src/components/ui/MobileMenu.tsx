@@ -91,20 +91,34 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                 <li key={item.label} className="border-b border-hairline last:border-0">
                   {item.children?.length ? (
                     <>
-                      <button
-                        type="button"
-                        onClick={() => setOpenSubmenu(isExpanded ? null : item.label)}
-                        aria-expanded={isExpanded}
-                        aria-controls={submenuId}
-                        className="w-full flex items-center justify-between gap-2 py-4 text-sm text-left cursor-pointer transition-colors"
-                      >
-                        {item.label}
-                        <ChevronDown
-                          className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
-                            isExpanded ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
+                      {/* Split button (Bootstrap's split-dropdown pattern): the
+                          label navigates straight to the parent listing page,
+                          the caret is a separate control that only toggles
+                          the submenu — so both the parent link and its
+                          children stay reachable. */}
+                      <div className="flex items-stretch">
+                        <Link
+                          href={item.href || "#"}
+                          onClick={onClose}
+                          className="flex-1 py-4 text-sm text-left cursor-pointer transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => setOpenSubmenu(isExpanded ? null : item.label)}
+                          aria-expanded={isExpanded}
+                          aria-controls={submenuId}
+                          aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item.label} submenu`}
+                          className="flex items-center pl-3 -mr-2 pr-2 border-l border-hairline cursor-pointer transition-colors"
+                        >
+                          <ChevronDown
+                            className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
+                              isExpanded ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
+                      </div>
 
                       {/* 0fr → 1fr animates to the content's natural height,
                           which a plain `height: auto` transition can't do. */}

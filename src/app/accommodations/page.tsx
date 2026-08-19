@@ -1,30 +1,28 @@
 import type { Metadata } from "next";
-import AboutHeader from "@/components/about/AboutHeader";
-import AboutIntro from "@/components/about/AboutIntro";
-import FacilitiesShowcase from "@/components/about/FacilitiesShowcase";
+import RoomsHeader from "@/components/accommodations/RoomsHeader";
+import RoomsSection from "@/components/accommodations/RoomsSection";
 import { site } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: `About Us | ${site.name}`,
+  title: `Accommodation | ${site.name}`,
   description:
-    "Since 1987, Hotel Parkland has welcomed travellers to Sauraha with mature gardens, traditional hospitality and easy access to Chitwan National Park.",
-  alternates: { canonical: "/about" },
+    "Thirty-two rooms across three categories at Hotel Parkland, Sauraha — each pairing warm, natural materials with the quiet of the garden beyond the window.",
+  alternates: { canonical: "/accommodations" },
   openGraph: {
-    title: `About Us | ${site.name}`,
+    title: `Accommodation | ${site.name}`,
     description:
-      "Since 1987, Hotel Parkland has welcomed travellers to Sauraha with mature gardens, traditional hospitality and easy access to Chitwan National Park.",
-    url: "/about",
+      "Thirty-two rooms across three categories at Hotel Parkland, Sauraha — each pairing warm, natural materials with the quiet of the garden beyond the window.",
+    url: "/accommodations",
     siteName: site.name,
     type: "website",
   },
 };
 
-export default function AboutPage() {
+export default function AccommodationsPage() {
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <AboutHeader />
-      <AboutIntro />
-      <FacilitiesShowcase />
+      <RoomsHeader />
+      <RoomsSection />
     </main>
   );
 }

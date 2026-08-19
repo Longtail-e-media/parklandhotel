@@ -1,35 +1,139 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowLeft,
   ArrowRight,
-  Bath,
-  Coffee,
+  BedDouble,
+  Camera,
+  Heart,
   Maximize2,
-  Tv,
+  Star,
   User,
-  Wifi,
-  Wind,
-  type LucideIcon,
 } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Keyboard } from "swiper/modules";
 import { rooms } from "@/data/data";
+import type { RoomType } from "@/types";
 import Watermark from "@/components/ui/Watermark";
 
-import "swiper/css";
-import "swiper/css/navigation";
+/** Star rating — filled up to the nearest whole star, muted outline beyond. */
+function RoomRating({ rating }: { rating: number }) {
+  const filled = Math.round(rating);
+  return (
+    <span className="flex items-center gap-0.5" aria-label={`Rated ${rating} out of 5`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={i < filled ? "w-3.5 h-3.5 fill-gold text-gold" : "w-3.5 h-3.5 text-soft"}
+          strokeWidth={1.5}
+          aria-hidden
+        />
+      ))}
+    </span>
+  );
+}
 
-/** Feature keys used in `rooms` — the stack of icons floating over each photo. */
-const ROOM_FEATURES: Record<string, { icon: LucideIcon; label: string }> = {
-  wifi: { icon: Wifi, label: "Complimentary wi-fi" },
-  tv: { icon: Tv, label: "Flat-screen TV" },
-  breakfast: { icon: Coffee, label: "Breakfast included" },
-  ac: { icon: Wind, label: "Air conditioning" },
-  bath: { icon: Bath, label: "Ensuite bath" },
-};
+function RoomStat({
+  icon: Icon,
+  value,
+  label,
+}: {
+  icon: typeof User;
+  value: string;
+  label: string;
+}) {
+  return (
+    <div className="flex flex-col items-center text-center gap-1.5 sm:flex-row sm:items-center sm:text-left sm:gap-3 min-w-0">
+      <span className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-gold-text shrink-0">
+        <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" strokeWidth={1.5} aria-hidden />
+      </span>
+      <div className="min-w-0">
+        <p className="text-sm font-semibold text-luxury-charcoal leading-tight wrap-break-word">{value}</p>
+        <p className="text-xs text-luxury-muted mt-0.5">{label}</p>
+      </div>
+    </div>
+  );
+}
+
+function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
+  const [saved, setSaved] = useState(false);
+  const photoCount = room.images?.length ?? 1;
+
+  return (
+    <article className="group luxury-surface overflow-hidden grid md:grid-cols-2">
+      <div className="relative min-h-70 md:min-h-0 overflow-hidden luxury-img-zoom">
+        <Image
+          src={room.image}
+          alt={`${room.name} interior`}
+          fill
+          sizes="(min-width: 768px) 50vw, 100vw"
+          className="object-cover"
+          priority={priority}
+        />
+
+        {room.featured && (
+          <span className="absolute top-5 left-5 bg-white/95 backdrop-blur-sm luxury-label text-[10px] text-luxury-charcoal px-4 py-2 rounded-lg shadow-[0_10px_30px_-16px_rgba(36,36,32,0.7)]">
+            Featured
+          </span>
+        )}
+
+        <button
+          type="button"
+          onClick={() => setSaved((s) => !s)}
+          aria-pressed={saved}
+          aria-label={saved ? `Remove ${room.name} from saved rooms` : `Save ${room.name}`}
+          className="absolute top-5 right-5 flex items-center justify-center w-11 h-11 rounded-full bg-white/95 backdrop-blur-sm shadow-[0_10px_30px_-16px_rgba(36,36,32,0.7)] text-luxury-charcoal transition-colors hover:text-gold"
+        >
+          <Heart className={saved ? "w-4.5 h-4.5 fill-gold text-gold" : "w-4.5 h-4.5"} strokeWidth={1.5} aria-hidden />
+        </button>
+      </div>
+
+      <div className="p-7 sm:p-9 lg:p-10 flex flex-col">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="luxury-section-title text-2xl lg:text-[1.75rem]">{room.name}</h3>
+
+          <div className="flex items-center gap-3 shrink-0 pt-1.5">
+            <RoomRating rating={room.rating} />
+            <span className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-luxury-charcoal text-white shrink-0">
+              <Camera className="w-4 h-4" strokeWidth={1.5} aria-hidden />
+              {photoCount > 1 && (
+                <span className="absolute -top-1.5 -right-1.5 flex items-center justify-center min-w-4.5 h-4.5 px-1 rounded-full bg-gold text-[9px] font-semibold text-white">
+                  {photoCount}
+                </span>
+              )}
+              <span className="sr-only">{photoCount} photos</span>
+            </span>
+          </div>
+        </div>
+
+        <p className="mt-3">
+          <span className="font-display text-xl text-gold-text">${room.pricePerNight}.00</span>
+          <span className="luxury-label text-[11px] text-luxury-muted ml-1.5">/ Night</span>
+        </p>
+
+        <p className="text-luxury-muted text-sm mt-4 leading-relaxed">{room.description}</p>
+
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 bg-luxury-cream-alt/60 rounded-2xl px-4 sm:px-6 py-5">
+          <RoomStat icon={User} value={`${room.adults} Person`} label="Guests" />
+          <RoomStat icon={BedDouble} value={room.beds} label="Bed Type" />
+          <RoomStat icon={Maximize2} value={room.size} label="Room Size" />
+        </div>
+
+        <div className="flex items-center justify-between gap-4 mt-auto pt-6">
+          <Link
+            href={`/accommodations/${room.slug}`}
+            className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] hover:gap-3 transition-all"
+          >
+            View Details <ArrowRight className="w-4 h-4" aria-hidden />
+          </Link>
+          <Link href="/contact" className="luxury-btn luxury-btn-dark py-2.5! px-5! text-[11px]">
+            Book Now
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export default function RoomsSection() {
   return (
@@ -59,96 +163,11 @@ export default function RoomsSection() {
           </p>
         </div>
 
-        <Swiper
-          modules={[Navigation, Keyboard]}
-          spaceBetween={32}
-          slidesPerView={1}
-          keyboard={{ enabled: true }}
-          navigation={{ prevEl: ".rooms-prev", nextEl: ".rooms-next" }}
-          breakpoints={{ 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
-          a11y={{ containerMessage: "Rooms and suites" }}
-          className="rooms-swiper animate-fade-in-up delay-100"
-        >
-          {rooms.map((room) => (
-            <SwiperSlide key={room.name} className="h-auto!">
-              <article className="group luxury-surface h-full flex flex-col overflow-hidden">
-                <div className="relative">
-                  <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
-                    <Image
-                      src={room.image}
-                      alt={`${room.name} interior`}
-                      width={600}
-                      height={750}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Rate badge — top-right corner of the photo */}
-                  <p className="absolute top-5 right-5 bg-white/95 backdrop-blur-sm rounded-xl px-4 py-2 shadow-[0_10px_30px_-16px_rgba(36,36,32,0.7)]">
-                    <span className="font-display text-lg text-luxury-charcoal">
-                      ${room.pricePerNight}
-                    </span>
-                    <span className="luxury-label text-[10px] text-luxury-muted ml-1.5">/ night</span>
-                  </p>
-
-                  {/* Feature icons — stacked down the right edge, under the badge */}
-                  <ul className="absolute top-20 right-5 flex flex-col gap-2">
-                    {room.features.map((key, i) => {
-                      const feature = ROOM_FEATURES[key];
-                      if (!feature) return null;
-                      const Icon = feature.icon;
-                      return (
-                        <li
-                          key={key}
-                          title={feature.label}
-                          style={{ transitionDelay: `${i * 70}ms` }}
-                          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/95 backdrop-blur-sm text-luxury-charcoal shadow-[0_10px_30px_-18px_rgba(36,36,32,0.8)] transition-all duration-500 hover:bg-gold hover:text-white sm:opacity-0 sm:translate-x-3 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"
-                        >
-                          <Icon className="w-4 h-4" strokeWidth={1.5} aria-hidden />
-                          <span className="sr-only">{feature.label}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-
-                <div className="p-7 flex flex-col grow">
-                  <h3 className="luxury-section-title text-2xl">{room.name}</h3>
-
-                  <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-luxury-muted">
-                    <li className="flex items-center gap-2">
-                      <Maximize2 className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
-                      Size: {room.size}
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <User className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
-                      Adults: {room.adults}
-                    </li>
-                  </ul>
-
-                  <p className="text-luxury-muted text-sm mt-4 leading-relaxed">{room.description}</p>
-
-                  <Link
-                    href="#contact"
-                    className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
-                  >
-                    Book Now <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </article>
-            </SwiperSlide>
+        <div className="flex flex-col gap-8 lg:gap-10 animate-fade-in-up delay-100">
+          {rooms.map((room, i) => (
+            <RoomCard key={room.slug} room={room} priority={i === 0} />
           ))}
-
-          {/* Sits inside the Swiper so it can hide itself when nothing can scroll */}
-          <div slot="container-end" className="rooms-nav flex items-center justify-center gap-3 mt-12">
-            <button type="button" aria-label="Previous room" className="rooms-nav-btn rooms-prev">
-              <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-            </button>
-            <button type="button" aria-label="Next room" className="rooms-nav-btn rooms-next">
-              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-            </button>
-          </div>
-        </Swiper>
+        </div>
       </div>
     </section>
   );
