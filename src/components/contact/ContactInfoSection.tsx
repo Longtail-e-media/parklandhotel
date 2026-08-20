@@ -44,10 +44,10 @@ export default function ContactInfoSection() {
             <div key={block.heading}>
               <p className="luxury-label text-[11px] text-gold-text mb-3">{block.subheading}</p>
               <h2 className="luxury-section-title text-2xl text-luxury-charcoal mb-6">{block.heading}</h2>
-              <ul className="space-y-3 text-sm text-luxury-charcoal/80 border-t border-hairline pt-6">
+              <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
                 {block.lines.map((line) => (
                   <li key={line.label} className="flex gap-2">
-                    <span className="text-luxury-muted">{line.label}:</span>
+                    <span className="">{line.label}:</span>
                     {line.href ? (
                       <a href={line.href} className="hover:text-luxury-gold transition-colors">
                         {line.value}

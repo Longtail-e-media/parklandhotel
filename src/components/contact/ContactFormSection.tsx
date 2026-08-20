@@ -17,7 +17,7 @@ export default function ContactFormSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <div className="animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Contact Us</p>
-          <h1 className="luxury-section-title text-luxury-charcoal mb-10">
+          <h1 className="luxury-section-title  text-5xl leading-[1.2] text-luxury-charcoal mb-10">
             Love to Hear From You,
             <br />
             Get in Touch!
@@ -66,7 +66,7 @@ export default function ContactFormSection() {
               </div>
             </div>
 
-            <button type="submit" className="luxury-btn luxury-btn-accent w-full justify-center !py-4">
+            <button type="submit" className="luxury-btn luxury-btn-accent cursor-pointer max-w-80 justify-center !py-4">
               {submitted ? "Message Sent" : "Send Message"}
             </button>
             {submitted && (

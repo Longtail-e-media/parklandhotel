@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { faqPage } from "@/data/data";
+import Watermark from "@/components/ui/Watermark";
 
 /**
  * Single-open accordion. Uses the same 0fr/1fr grid-rows trick as
@@ -13,7 +14,13 @@ export default function FaqAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative pb-24 lg:pb-32">
+    <section className="relative overflow-hidden pb-24 lg:pb-32">
+      <Watermark
+        motif="leaf"
+        className="w-32 lg:w-48 -right-10 top-10 text-gold/7"
+        rotate={10}
+        duration={17}
+      />
       <div className="max-w-3xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col gap-4 animate-fade-in-up delay-300">
           {faqPage.items.map((item, index) => {
@@ -43,7 +50,7 @@ export default function FaqAccordion() {
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <p className="overflow-hidden text-luxury-muted leading-relaxed pb-6">
+                  <p className={`overflow-hidden text-luxury-muted leading-relaxed  ${isOpen && "pb-6"}`}>
                     {item.answer}
                   </p>
                 </div>

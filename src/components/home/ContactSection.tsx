@@ -31,8 +31,8 @@ export default function ContactSection() {
             >
               <p className="luxury-label text-[11px] mb-4">{office.label}</p>
               <h3 className="luxury-section-title text-2xl mb-4">{office.heading}</h3>
-              <p className="text-luxury-muted text-sm leading-relaxed mb-6">{office.address}</p>
-              <ul className="space-y-3 text-sm text-luxury-charcoal/80 border-t border-hairline pt-6">
+              <p className=" text-sm leading-relaxed mb-6">{office.address}</p>
+              <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
                 <li className="flex items-center gap-3">
                   <Phone className="w-4 h-4 shrink-0" /> {office.phones.join(" / ")}
                 </li>

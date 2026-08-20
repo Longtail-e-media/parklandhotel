@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "imagesloaded": "^5.0.0",
     "isotope-layout": "^3.0.6",
     "lightgallery": "^2.9.0",

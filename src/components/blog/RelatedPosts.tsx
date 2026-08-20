@@ -17,33 +17,31 @@ export default function RelatedPosts({ current }: RelatedPostsProps) {
   if (related.length === 0) return null;
 
   return (
-    <section className="relative pb-24 lg:pb-32">
-      <div className="max-w-5xl mx-auto px-6 lg:px-10">
-        <h2 className="luxury-section-title text-luxury-charcoal mb-10">Related Stories</h2>
-        <div className="grid sm:grid-cols-3 gap-8">
-          {related.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group luxury-surface overflow-hidden block"
-            >
-              <div className="aspect-4/3 overflow-hidden luxury-img-zoom">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-5">
-                <p className="luxury-label text-gold-text text-[10px] mb-2">{post.category}</p>
-                <h3 className="text-base font-medium text-luxury-charcoal leading-snug">{post.title}</h3>
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div>
+      <h2 className="luxury-section-title text-luxury-charcoal mb-8 text-2xl">Related Stories</h2>
+      <div className="flex flex-col gap-6 ">
+        {related.map((post) => (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            className="group luxury-surface  flex gap-4 items-center border-0"
+          >
+            <div className="aspect-4/3 w-28 shrink-0 overflow-hidden luxury-img-zoom">
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={200}
+                height={150}
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            <div className="py-3 pr-4">
+              <p className="luxury-label text-gold-text text-[10px] mb-1.5">{post.category}</p>
+              <h3 className="text-sm font-medium text-luxury-charcoal leading-snug">{post.title}</h3>
+            </div>
+          </Link>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

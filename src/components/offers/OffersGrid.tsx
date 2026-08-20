@@ -13,7 +13,7 @@ function OfferCard({ offer, priority, onSelect }: { offer: OfferItem; priority: 
     <button
       type="button"
       onClick={onSelect}
-      className="group luxury-surface luxury-card-hover overflow-hidden text-left cursor-pointer"
+      className="group luxury-surface luxury-card-hover rounded-2xl overflow-hidden text-left cursor-pointer"
     >
       <div className="relative aspect-4/5 overflow-hidden luxury-img-zoom">
         <Image
@@ -30,7 +30,6 @@ function OfferCard({ offer, priority, onSelect }: { offer: OfferItem; priority: 
         </span>
         <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-luxury-dark/85 via-luxury-dark/20 to-transparent px-5 pt-10 pb-5">
           <p className="text-white font-display text-lg leading-tight">{offer.name}</p>
-          {offer.price && <p className="text-white/80 text-xs mt-1">{offer.price}</p>}
         </div>
       </div>
     </button>

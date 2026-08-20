@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Mail, MessageSquare, Phone, User, X } from "lucide-react";
 import type { OfferItem } from "@/types";
-import { formatOfferExpiry } from "@/lib/offers";
 
 const fields = [
   { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", Icon: User },
@@ -21,6 +20,19 @@ export default function OfferModal({ offer, onClose }: { offer: OfferItem | null
   const [submitted, setSubmitted] = useState(false);
   const [notRobot, setNotRobot] = useState(false);
   const isOpen = offer !== null;
+
+  // Reset for the next offer once this one closes. Adjusted synchronously during
+  // render (React's documented pattern for state that depends on a prop change)
+  // instead of in an Effect, which would setState after commit and cause an
+  // extra render with the previous offer's stale submitted/notRobot values.
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  if (isOpen !== wasOpen) {
+    setWasOpen(isOpen);
+    if (!isOpen) {
+      setSubmitted(false);
+      setNotRobot(false);
+    }
+  }
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,13 +51,6 @@ export default function OfferModal({ offer, onClose }: { offer: OfferItem | null
     };
   }, [isOpen, onClose]);
 
-  // Reset for the next offer once the close transition would have finished.
-  useEffect(() => {
-    if (isOpen) return;
-    setSubmitted(false);
-    setNotRobot(false);
-  }, [isOpen]);
-
   if (!offer) return null;
 
   return (
@@ -56,7 +61,7 @@ export default function OfferModal({ offer, onClose }: { offer: OfferItem | null
         role="dialog"
         aria-modal="true"
         aria-labelledby="offer-modal-title"
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto luxury-scroll bg-white rounded-3xl shadow-2xl"
+        className="relative w-full max-w-4xl max-h-[90vh]luxury-scroll bg-white "
       >
         <div className="flex items-center justify-between px-6 sm:px-8 h-18 shrink-0 border-b border-hairline sticky top-0 bg-white/95 backdrop-blur-sm z-10">
           <h2 id="offer-modal-title" className="luxury-section-title text-xl text-luxury-charcoal truncate pr-4">
@@ -75,11 +80,6 @@ export default function OfferModal({ offer, onClose }: { offer: OfferItem | null
         <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 p-6 sm:p-8">
           <div className="relative luxury-media aspect-4/5 sm:aspect-auto sm:h-full min-h-70">
             <Image src={offer.image} alt={offer.name} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
-            <div className="absolute inset-x-0 bottom-0 bg-luxury-dark/70 backdrop-blur-sm px-5 py-4">
-              <p className="text-white text-sm font-semibold">{offer.name}</p>
-              {offer.price && <p className="text-white/80 text-xs mt-1">{offer.price}</p>}
-              <p className="text-white/70 text-xs mt-1">Valid through {formatOfferExpiry(offer.expiryDate)}</p>
-            </div>
           </div>
 
           <form
@@ -125,18 +125,9 @@ export default function OfferModal({ offer, onClose }: { offer: OfferItem | null
               </div>
             </div>
 
-            <label className="flex items-center gap-3 rounded-2xl border border-hairline px-5 py-4 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={notRobot}
-                onChange={(e) => setNotRobot(e.target.checked)}
-                required
-                className="w-4.5 h-4.5 shrink-0 accent-(--color-primary-green)"
-              />
-              <span className="text-sm text-luxury-charcoal">I&apos;m not a robot</span>
-            </label>
+              {/*  */}
 
-            <button type="submit" className="luxury-btn luxury-btn-accent w-full justify-center !py-4">
+            <button type="submit" className="luxury-btn luxury-btn-accent  !py-4">
               {submitted ? "Message Sent" : "Send Message"}
             </button>
             {submitted && (
