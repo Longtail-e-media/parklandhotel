@@ -25,7 +25,7 @@ export default function MeetingsGrid() {
               </div>
               <div className="p-7 flex flex-col grow">
                 <h3 className="luxury-section-title text-xl">{space.name}</h3>
-                <p className="text-luxury-muted text-sm mt-4 leading-relaxed grow">{space.excerpt}</p>
+                <p className="text-luxury-muted mt-4 leading-relaxed grow">{space.excerpt}</p>
                 <ul className="flex flex-col gap-2 mt-5 text-xs text-luxury-muted">
                   <li className="flex items-center gap-2">
                     <Users className="w-3.5 h-3.5 shrink-0" aria-hidden /> {space.capacity}

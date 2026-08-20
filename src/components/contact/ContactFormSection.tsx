@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { User, Mail, MessageSquare } from "lucide-react";
+import Watermark from "@/components/ui/Watermark";
 
 const fields = [
   { name: "name", label: "Your Name", placeholder: "Your Name", type: "text", Icon: User },
@@ -13,7 +14,20 @@ export default function ContactFormSection() {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <section className="pt-36 lg:pt-44 pb-16 lg:pb-24">
+    <section className="relative overflow-hidden pt-36 lg:pt-44 pb-16 lg:pb-24">
+      <Watermark
+        motif="leaf"
+        className="w-28 lg:w-40 -left-8 top-16 text-gold/7"
+        rotate={-12}
+        duration={17}
+      />
+      <Watermark
+        motif="grass"
+        className="w-40 lg:w-56 left-[8%] bottom-0 text-luxury-charcoal/4"
+        rotate={0}
+        duration={20}
+        delay={1.5}
+      />
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
         <div className="animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Contact Us</p>

@@ -24,11 +24,9 @@ export default function DiningVenuesGrid() {
                 />
               </div>
               <div className="p-7 flex flex-col grow">
-                <p className="luxury-label text-gold-text mb-3">
-                  {venue.category === "bar" ? "Bar" : "Restaurant"}
-                </p>
+
                 <h3 className="luxury-section-title text-2xl">{venue.name}</h3>
-                <p className="text-luxury-muted text-sm mt-4 leading-relaxed grow">{venue.excerpt}</p>
+                <p className="mt-4  grow">{venue.excerpt}</p>
                 <p className="flex items-center gap-2 text-xs text-luxury-muted mt-5">
                   <Clock className="w-3.5 h-3.5 shrink-0" aria-hidden /> {venue.hours}
                 </p>

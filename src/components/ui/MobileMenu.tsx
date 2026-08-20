@@ -149,7 +149,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                     <Link
                       href={item.href || "#"}
                       onClick={onClose}
-                      className="block py-4 text-sm hover:text-gold transition-colors"
+                      className="block py-4 text-sm hover:text-(--color-dark-brown) transition-colors"
                     >
                       {item.label}
                     </Link>

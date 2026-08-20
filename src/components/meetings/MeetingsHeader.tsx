@@ -1,4 +1,5 @@
 import { meetingsPage } from "@/data/data";
+import Watermark from "@/components/ui/Watermark";
 
 /**
  * Typographic page header — no banner image, so the top padding here is what
@@ -8,7 +9,21 @@ export default function MeetingsHeader() {
   const { header, intro } = meetingsPage;
 
   return (
-    <section className="pt-36 lg:pt-44 pb-4 lg:pb-8">
+    <section className="relative overflow-hidden pt-36 lg:pt-44 pb-4 lg:pb-8">
+      <Watermark
+        motif="palm"
+        className="w-36 lg:w-52 -right-10 top-8 text-gold/6"
+        rotate={8}
+        duration={19}
+        flip
+      />
+      <Watermark
+        motif="fern"
+        className="w-24 lg:w-36 left-[7%] bottom-4 text-luxury-charcoal/5"
+        rotate={-10}
+        duration={15}
+        delay={1.2}
+      />
       <div className="max-w-2xl mx-auto px-6 lg:px-10 text-center">
         <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
           {header.eyebrow}

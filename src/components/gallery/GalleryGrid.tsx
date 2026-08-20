@@ -48,7 +48,7 @@ const GalleryLightboxGrid = memo(function GalleryLightboxGrid({
               href={item.src}
               data-thumb={item.src}
               data-sub-html={`<p>${item.alt}</p>`}
-              className="gallery-link luxury-media luxury-img-zoom group relative block aspect-4/3 overflow-hidden cursor-zoom-in"
+              className="gallery-link luxury-media  rounded-2xl luxury-img-zoom group relative block aspect-4/3 overflow-hidden cursor-zoom-in"
             >
               <Image
                 src={item.src}
@@ -135,8 +135,8 @@ export default function GalleryGrid() {
               type="button"
               onClick={() => handleFilter(cat.key)}
               aria-pressed={activeFilter === cat.key}
-              className={`luxury-btn ${
-                activeFilter === cat.key ? "luxury-btn-accent" : "luxury-btn-dark"
+              className={`luxury-btn rounded-md hover:cursor-pointer ${
+                activeFilter === cat.key ? "bg-(--color-primary-green) text-white" : ""
               }`}
             >
               {cat.label}

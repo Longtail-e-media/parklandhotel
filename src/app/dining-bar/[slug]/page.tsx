@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check, Clock } from "lucide-react";
 import { diningPage } from "@/data/data";
 import { site } from "@/config/site";
+import Watermark from "@/components/ui/Watermark";
 
 export function generateStaticParams() {
   return diningPage.venues.map((venue) => ({ slug: venue.slug }));
@@ -48,7 +49,21 @@ export default async function DiningVenueDetailPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <section className="pt-36 lg:pt-44 pb-24 lg:pb-32">
+      <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
+        <Watermark
+          motif="leaf"
+          className="w-28 lg:w-40 -left-8 top-16 text-gold/6"
+          rotate={-14}
+          duration={16}
+        />
+        <Watermark
+          motif="palm"
+          className="w-40 lg:w-56 -right-12 bottom-10 text-luxury-charcoal/4"
+          rotate={6}
+          duration={20}
+          delay={1.4}
+          flip
+        />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <Link
             href="/dining-bar"
@@ -69,21 +84,6 @@ export default async function DiningVenueDetailPage({
                   priority
                 />
               </div>
-              {extraImages.length > 0 && (
-                <div className="grid grid-cols-2 gap-3 mt-3">
-                  {extraImages.map((src) => (
-                    <div key={src} className="aspect-square luxury-media">
-                      <Image
-                        src={src}
-                        alt={venue.name}
-                        width={340}
-                        height={340}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
 
             <div className="animate-slide-in-right">
@@ -143,9 +143,9 @@ export default async function DiningVenueDetailPage({
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="px-3 py-4">
                     <h3 className="luxury-section-title text-lg">{v.name}</h3>
-                    <p className="text-luxury-muted text-sm mt-2">{v.excerpt}</p>
+                    <p className="text-luxury-muted  mt-2">{v.excerpt}</p>
                   </div>
                 </Link>
               ))}

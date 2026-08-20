@@ -8,6 +8,7 @@ import { site } from "@/config/site";
 import { formatBlogDate } from "@/lib/blog";
 import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedPosts from "@/components/blog/RelatedPosts";
+import Watermark from "@/components/ui/Watermark";
 
 export function generateStaticParams() {
   return blogPage.posts.map((post) => ({ slug: post.slug }));
@@ -49,7 +50,20 @@ export default async function BlogPostPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <article className="pt-36 lg:pt-44 pb-16 lg:pb-24">
+      <article className="relative overflow-hidden pt-36 lg:pt-44 pb-16 lg:pb-24">
+        <Watermark
+          motif="fern"
+          className="w-28 lg:w-40 -right-8 top-16 text-gold/6"
+          rotate={10}
+          duration={17}
+        />
+        <Watermark
+          motif="bird"
+          className="w-24 lg:w-32 left-[6%] bottom-8 text-luxury-charcoal/5"
+          rotate={-6}
+          duration={13}
+          delay={1}
+        />
         <div className="container mx-auto px-6 lg:px-10">
           <Link
             href="/blog"

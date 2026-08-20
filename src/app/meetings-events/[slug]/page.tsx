@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check, Maximize2, Users } from "lucide-react";
 import { meetingsPage } from "@/data/data";
 import { site } from "@/config/site";
+import Watermark from "@/components/ui/Watermark";
 
 export function generateStaticParams() {
   return meetingsPage.spaces.map((space) => ({ slug: space.slug }));
@@ -48,7 +49,21 @@ export default async function MeetingSpaceDetailPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <section className="pt-36 lg:pt-44 pb-24 lg:pb-32">
+      <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
+        <Watermark
+          motif="palm"
+          className="w-40 lg:w-56 -right-10 top-14 text-gold/6"
+          rotate={8}
+          duration={19}
+          flip
+        />
+        <Watermark
+          motif="fern"
+          className="w-28 lg:w-40 left-[6%] bottom-6 text-luxury-charcoal/5"
+          rotate={-10}
+          duration={15}
+          delay={1.2}
+        />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <Link
             href="/meetings-events"

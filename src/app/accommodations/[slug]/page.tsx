@@ -18,6 +18,7 @@ import { rooms } from "@/data/data";
 import { site } from "@/config/site";
 import RoomGallery from "@/components/accommodations/RoomGallery";
 import RoomBookingWidget from "@/components/accommodations/RoomBookingWidget";
+import Watermark from "@/components/ui/Watermark";
 
 /** Mirrors ROOM_FEATURES in RoomsSection — keep the two in step. */
 const ROOM_FEATURES: Record<string, { icon: LucideIcon; label: string }> = {
@@ -70,7 +71,20 @@ export default async function RoomDetailPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <section className="pt-36 lg:pt-44 pb-24 lg:pb-32">
+      <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
+        <Watermark
+          motif="leaf"
+          className="w-28 lg:w-40 -left-8 top-20 text-gold/6"
+          rotate={-14}
+          duration={18}
+        />
+        <Watermark
+          motif="elephant"
+          className="w-40 lg:w-56 -right-10 top-1/2 text-luxury-charcoal/4"
+          rotate={0}
+          duration={22}
+          delay={1.4}
+        />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <Link
             href="/accommodations"
