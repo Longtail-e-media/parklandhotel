@@ -6,32 +6,13 @@ import Link from "next/link";
 import {
   ArrowRight,
   BedDouble,
-  Camera,
-  Heart,
   Maximize2,
-  Star,
   User,
 } from "lucide-react";
 import { rooms } from "@/data/data";
 import type { RoomType } from "@/types";
 import Watermark from "@/components/ui/Watermark";
 
-/** Star rating — filled up to the nearest whole star, muted outline beyond. */
-function RoomRating({ rating }: { rating: number }) {
-  const filled = Math.round(rating);
-  return (
-    <span className="flex items-center gap-0.5" aria-label={`Rated ${rating} out of 5`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={i < filled ? "w-3.5 h-3.5 fill-gold text-gold" : "w-3.5 h-3.5 text-soft"}
-          strokeWidth={1.5}
-          aria-hidden
-        />
-      ))}
-    </span>
-  );
-}
 
 function RoomStat({
   icon: Icon,
@@ -109,7 +90,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
 
 export default function RoomsSection() {
   return (
-    <section id="rooms" className="relative overflow-hidden py-10 lg:py-10 scroll-mt-24">
+    <section id="rooms" className="relative overflow-hidden py-10 lg:pb-30 scroll-mt-24">
       <Watermark
         motif="leaf"
         className="w-24 lg:w-36 left-[6%] top-24 text-gold/7"

@@ -173,7 +173,7 @@ export const rooms: RoomType[] = [
     pricePerNight: 180,
     size: "46 Sq.m",
     adults: 2 + 1,
-    beds: "1 King Bed + Sofa Bed",
+    beds: "1 KingBed",
     rating: 4.9,
     featured: true,
     features: ["wifi", "ac", "bath"],

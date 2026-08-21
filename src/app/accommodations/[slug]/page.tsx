@@ -71,7 +71,7 @@ export default async function RoomDetailPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
+      <section className="relative pt-36 lg:pt-44 pb-24 lg:pb-32">
         <Watermark
           motif="leaf"
           className="w-28 lg:w-40 -left-8 top-20 text-gold/6"
@@ -105,7 +105,7 @@ export default async function RoomDetailPage({
                   </h1>
                 </div>
                 <p className="pt-1">
-                  <span className="font-display text-2xl lg:text-3xl text-gold-text">
+                  <span className="text-2xl lg:text-3xl text-gold-text">
                     ${room.pricePerNight}
                   </span>
                   <span className="luxury-label text-[11px] text-luxury-muted ml-2">/ Night</span>
@@ -161,7 +161,7 @@ export default async function RoomDetailPage({
             <RoomBookingWidget
               room={room}
               rooms={rooms}
-              className="min-w-0 lg:sticky lg:top-32 animate-slide-in-right"
+              className="min-w-0 lg:sticky  top-24 animate-slide-in-right"
             />
           </div>
         </div>
@@ -170,7 +170,7 @@ export default async function RoomDetailPage({
       {otherRooms.length > 0 && (
         <section className="relative pb-24 lg:pb-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <h2 className="luxury-section-title text-luxury-charcoal mb-10">Other Rooms</h2>
+            <h2 className="luxury-section-title text-luxury-charcoal mb-10 text-4xl">Other Rooms</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherRooms.map((r) => (
                 <Link
@@ -188,7 +188,7 @@ export default async function RoomDetailPage({
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="luxury-section-title text-lg">{r.name}</h3>
+                    <h3 className="luxury-section-title text-lg  md:text-3xl">{r.name}</h3>
                     <p className="text-luxury-muted text-sm mt-2">${r.pricePerNight} / night</p>
                   </div>
                 </Link>
