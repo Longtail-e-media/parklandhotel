@@ -33,7 +33,7 @@ export default function MeetingEnquiryForm() {
     formState: { errors },
   } = useForm<MeetingEnquiryFormValues>({
     resolver: zodResolver(meetingEnquirySchema),
-    defaultValues: { name: "", email: "", mobile: "", eventName: "", message: "" },
+    defaultValues: { name: "", email: "", mobile: "", message: "" },
   });
 
   const { onChange: onMobileChange, ...mobileField } = register("mobile");
