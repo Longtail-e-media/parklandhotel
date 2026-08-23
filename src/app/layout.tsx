@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { Playfair_Display, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Work_Sans } from "next/font/google";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CookieConsent from "@/components/ui/CookieConsent";
@@ -8,7 +8,7 @@ config.autoAddCss = false;
 import "./globals.css";
 import { site, contact, address, business, SITE_URL } from "@/config/site";
 
-const playfairDisplay = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display-serif",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -16,7 +16,7 @@ const playfairDisplay = Playfair_Display({
   display: "swap",
 });
 
-const manrope = Manrope({
+const workSans = Work_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -85,7 +85,7 @@ function organizationSchema() {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={site.locale} className={`${playfairDisplay.variable} ${manrope.variable}`}>
+    <html lang={site.locale} className={`${cormorantGaramond.variable} ${workSans.variable}`}>
       <head>
         <script
           type="application/ld+json"

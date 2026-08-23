@@ -6,7 +6,6 @@ import { ArrowLeft, Calendar, User } from "lucide-react";
 import { blogPage } from "@/data/data";
 import { site } from "@/config/site";
 import { formatBlogDate } from "@/lib/blog";
-import ShareButtons from "@/components/blog/ShareButtons";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import Watermark from "@/components/ui/Watermark";
 
@@ -50,7 +49,7 @@ export default async function BlogPostPage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <article className="relative overflow-hidden pt-36 lg:pt-44 pb-16 lg:pb-24">
+      <article className="relative  pt-36 lg:pt-44 pb-16 lg:pb-24">
         <Watermark
           motif="fern"
           className="w-28 lg:w-40 -right-8 top-16 text-gold/6"
@@ -74,7 +73,7 @@ export default async function BlogPostPage({
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <div className="min-w-0 lg:col-span-8">
-              <p className="luxury-label text-gold-text mb-5">{post.category}</p>
+
               <h1 className="luxury-hero-title text-luxury-charcoal text-3xl lg:text-4xl">{post.title}</h1>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-luxury-muted mt-6">
@@ -103,10 +102,6 @@ export default async function BlogPostPage({
                 {post.content.map((para, i) => (
                   <p key={i}>{para}</p>
                 ))}
-              </div>
-
-              <div className="mt-12 pt-8 border-t border-hairline">
-                <ShareButtons slug={post.slug} title={post.title} />
               </div>
             </div>
 

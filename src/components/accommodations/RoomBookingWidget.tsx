@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CalendarCheck, CalendarX, ChevronDown, DoorOpen, Users } from "lucide-react";
 import type { RoomType } from "@/types";
+import Recaptcha from "@/components/ui/Recaptcha";
 
 export default function RoomBookingWidget({
   room,
@@ -66,7 +67,7 @@ export default function RoomBookingWidget({
           </div>
         </div>
 
-
+        <Recaptcha />
 
         <button type="submit" className="luxury-btn hover:cursor-pointer rounded-2xl luxury-btn-accent mt-4 justify-center py-4!">
           Check Availability <ArrowRight className="w-4 h-4" aria-hidden />

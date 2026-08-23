@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Check, Clock } from "lucide-react";
+import { ArrowLeft, Check, Clock } from "lucide-react";
 import { diningPage } from "@/data/data";
 import { site } from "@/config/site";
 import Watermark from "@/components/ui/Watermark";
+import DiningEnquireButton from "@/components/dining/DiningEnquireButton";
 
 export function generateStaticParams() {
   return diningPage.venues.map((venue) => ({ slug: venue.slug }));
@@ -115,9 +116,7 @@ export default async function DiningVenueDetailPage({
                 ))}
               </ul>
 
-              <Link href="/contact" className="luxury-btn luxury-btn-dark mt-10 inline-flex">
-                Enquire Now <ArrowRight className="w-4 h-4" />
-              </Link>
+              <DiningEnquireButton venueName={venue.name} />
             </div>
           </div>
         </div>

@@ -79,7 +79,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
           >
             View Details <ArrowRight className="w-4 h-4" aria-hidden />
           </Link>
-          <Link href="/contact" className="luxury-btn py-2.5! px-5! text-[11px]">
+          <Link href="/contact" className="luxury-btn py-2.5! px-5! text-[11px] bg-(--color-primary-green) text-white">
             Book Now
           </Link>
         </div>

@@ -142,9 +142,15 @@ export interface OfferItem {
   slug: string;
   name: string;
   image: string;
+  /** Extra photos shown in the detail page gallery, beyond `image`. */
+  images?: string[];
   excerpt: string;
   /** Price line as written on the card, e.g. "NPR 2,200 per person". */
   price?: string;
+  /** Numeric per-pax rate the booking form multiplies by pax count. */
+  unitPrice: number;
+  /** Currency label shown alongside unitPrice, e.g. "NPR". */
+  currency: string;
   /** ISO date string the offer is valid through, e.g. "2026-09-30". */
   expiryDate: string;
 }

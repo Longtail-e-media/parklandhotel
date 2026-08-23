@@ -6,6 +6,8 @@ import {
   ArrowLeft,
   Bath,
   BedDouble,
+  Baby,
+  Check,
   Coffee,
   Maximize2,
   Tv,
@@ -118,7 +120,7 @@ export default async function RoomDetailPage({
                 ))}
               </div>
 
-              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Room Features</h2>
+              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Room Amenities</h2>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {room.features.map((key) => {
                   const feature = ROOM_FEATURES[key];
@@ -127,35 +129,76 @@ export default async function RoomDetailPage({
                   return (
                     <li
                       key={key}
-                      className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
+                      className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
                     >
                       <Icon className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
                       {feature.label}
                     </li>
                   );
                 })}
-                <li className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
                   <User className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
                   Adults: {room.adults}
                 </li>
-                <li className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
                   <Maximize2 className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
                   Size: {room.size}
                 </li>
-                <li className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
                   <BedDouble className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
                   Bed Type: {room.beds}
                 </li>
               </ul>
 
-              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-4">Children &amp; Extra Beds</h2>
-              <p className="text-luxury-muted leading-relaxed">
-                Children are welcome in every room category — younger guests can stay using existing
-                bedding at no extra charge. Let us know the ages of any children travelling when you
-                book so we can suggest the right room and arrange activities to suit. An extra bed can
-                usually be arranged for larger families, subject to availability and the room&apos;s
-                maximum occupancy — ask our reservations team for current rates.
-              </p>
+              <div className="grid sm:grid-cols-2 gap-8 mt-12">
+                <div>
+                  <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-in</h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-center gap-3 text-luxury-muted">
+                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      Check-in from 02:00 PM
+                    </li>
+                    <li className="flex items-center gap-3 text-luxury-muted">
+                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      Early check-in subject to availability
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-out</h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-center gap-3 text-luxury-muted">
+                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      Check-out before noon
+                    </li>
+                    <li className="flex items-center gap-3 text-luxury-muted">
+                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      Express check-out
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Children &amp; Extra Beds</h2>
+              <div className="luxury-surface flex flex-col sm:flex-row gap-6 p-6 lg:p-7">
+                <div className="shrink-0 w-11 h-11 rounded-full bg-luxury-cream-alt flex items-center justify-center">
+                  <Baby className="w-5 h-5 brown-btn" strokeWidth={1.5} aria-hidden />
+                </div>
+                <ul className="space-y-3 text-luxury-muted leading-relaxed">
+                  <li className="flex gap-3">
+                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <span>Children are welcome — kids stay free when using existing bedding.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <span>Children may not be eligible for complimentary breakfast.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <span>Rollaway / extra beds are available for $10 per day, subject to availability.</span>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <RoomBookingWidget

@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
     "@fortawesome/free-brands-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
+    "@hookform/resolvers": "^5.9.1",
     "@tailwindcss/line-clamp": "^0.4.4",
     "imagesloaded": "^5.0.0",
     "isotope-layout": "^3.0.6",
@@ -21,7 +22,9 @@
     "next-video": "^2.8.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "swiper": "^14.1.0"
+    "react-hook-form": "^7.86.0",
+    "swiper": "^14.1.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

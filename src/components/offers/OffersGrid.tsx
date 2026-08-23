@@ -1,19 +1,15 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { CalendarClock } from "lucide-react";
 import { offersPage } from "@/data/data";
 import type { OfferItem } from "@/types";
 import { formatOfferExpiry } from "@/lib/offers";
-import OfferModal from "./OfferModal";
 
-function OfferCard({ offer, priority, onSelect }: { offer: OfferItem; priority: boolean; onSelect: () => void }) {
+function OfferCard({ offer, priority }: { offer: OfferItem; priority: boolean }) {
   return (
-    <button
-      type="button"
-      onClick={onSelect}
-      className="group luxury-surface luxury-card-hover rounded-2xl overflow-hidden text-left cursor-pointer"
+    <Link
+      href={`/offers/${offer.slug}`}
+      className="group luxury-surface luxury-card-hover rounded-2xl overflow-hidden text-left"
     >
       <div className="relative aspect-4/5 overflow-hidden luxury-img-zoom">
         <Image
@@ -32,24 +28,20 @@ function OfferCard({ offer, priority, onSelect }: { offer: OfferItem; priority: 
           <p className="text-white font-display text-lg leading-tight">{offer.name}</p>
         </div>
       </div>
-    </button>
+    </Link>
   );
 }
 
 export default function OffersGrid() {
-  const [selected, setSelected] = useState<OfferItem | null>(null);
-
   return (
     <section className="relative pb-24 lg:pb-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 animate-fade-in-up delay-100">
           {offersPage.items.map((offer, i) => (
-            <OfferCard key={offer.slug} offer={offer} priority={i === 0} onSelect={() => setSelected(offer)} />
+            <OfferCard key={offer.slug} offer={offer} priority={i === 0} />
           ))}
         </div>
       </div>
-
-      <OfferModal offer={selected} onClose={() => setSelected(null)} />
     </section>
   );
 }

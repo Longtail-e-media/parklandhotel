@@ -75,7 +75,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), "Manrope", system-ui, sans-serif;
+  font-family: var(--font-body), "Work Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -235,8 +235,8 @@ body {
 
   /* Rounded media frame — replaces the hard-cornered image blocks */
   .luxury-media {
-    border-radius: var(--radius-media);
     overflow: hidden;
+
   }
 
   /* Outlined surface card: hairline + generous radius, no fill */
