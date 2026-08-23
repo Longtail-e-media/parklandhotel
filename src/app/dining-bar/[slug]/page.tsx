@@ -7,6 +7,7 @@ import { diningPage } from "@/data/data";
 import { site } from "@/config/site";
 import Watermark from "@/components/ui/Watermark";
 import DiningEnquireButton from "@/components/dining/DiningEnquireButton";
+import DiningGallery from "@/components/dining/DiningGallery";
 
 export function generateStaticParams() {
   return diningPage.venues.map((venue) => ({ slug: venue.slug }));
@@ -46,7 +47,7 @@ export default async function DiningVenueDetailPage({
   if (!venue) notFound();
 
   const otherVenues = diningPage.venues.filter((v) => v.slug !== venue.slug);
-  const extraImages = venue.images?.filter((src) => src !== venue.image) ?? [];
+  const galleryImages = venue.images && venue.images.length > 0 ? venue.images : [venue.image];
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
@@ -75,16 +76,7 @@ export default async function DiningVenueDetailPage({
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div className="animate-slide-in-left">
-              <div className="aspect-4/5 luxury-media luxury-img-zoom">
-                <Image
-                  src={venue.image}
-                  alt={venue.name}
-                  width={700}
-                  height={875}
-                  className="w-full h-full object-cover"
-                  priority
-                />
-              </div>
+              <DiningGallery images={galleryImages} name={venue.name} />
             </div>
 
             <div className="animate-slide-in-right">
