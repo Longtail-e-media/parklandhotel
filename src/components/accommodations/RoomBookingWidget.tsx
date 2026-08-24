@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowRight, CalendarCheck, CalendarX, ChevronDown, DoorOpen, Users } from "lucide-react";
 import type { RoomType } from "@/types";
-import Recaptcha from "@/components/ui/Recaptcha";
+import { ArrowRight, CalendarCheck, CalendarX } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function RoomBookingWidget({
   room,
@@ -22,7 +21,8 @@ export default function RoomBookingWidget({
 
   return (
     <aside className={`luxury-surface p-7 sm:p-8 ${className}`}>
-      <h2 className="luxury-section-title text-xl mb-7">Book a Room</h2>
+      <h2 className="luxury-section-title text-3-xl md:text-4xl mb-5">Reserve Your Stay</h2>
+     <p className="md:mb-10">Enjoy warm hospitality designed to make your visit effortless. Relax and recharge with comfort that feels personal.</p>
 
       <form
         className="space-y-5"
@@ -67,7 +67,7 @@ export default function RoomBookingWidget({
           </div>
         </div>
 
-        <Recaptcha />
+        {/* <Recaptcha /> */}
 
         <button type="submit" className="luxury-btn hover:cursor-pointer rounded-2xl luxury-btn-accent mt-4 justify-center py-4!">
           Check Availability <ArrowRight className="w-4 h-4" aria-hidden />

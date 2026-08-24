@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Mail, MessageSquare, Phone,  User, Users } from "lucide-react";
+import { Calendar, Check, ChevronDown, Clock, Mail, MessageSquare, Minus, Phone, Plus, User } from "lucide-react";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+
 
 const fields = [
   { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", Icon: User },
@@ -14,10 +15,18 @@ const fields = [
   { name: "mobile", label: "Mobile No.", placeholder: "Mobile No.", type: "tel", Icon: Phone },
 ] as const;
 
+const EVENT_SLOTS = [
+  { value: "morning", label: "Morning" },
+  { value: "afternoon", label: "Afternoon" },
+  { value: "evening", label: "Evening" },
+  { value: "all-day", label: "All Day" },
+] as const;
+
 const meetingEnquirySchema = z.object({
   name: nameSchema,
   email: emailSchema,
   mobile: phoneSchema,
+  eventSlot: z.string().min(1, "Please select an event slot."),
   message: z.string(),
 });
 
@@ -26,17 +35,23 @@ type MeetingEnquiryFormValues = z.infer<typeof meetingEnquirySchema>;
 export default function MeetingEnquiryForm() {
   const [submitted, setSubmitted] = useState(false);
   const today = new Date().toISOString().slice(0, 10);
-
+    const [pax, setPax] = useState(1);
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<MeetingEnquiryFormValues>({
     resolver: zodResolver(meetingEnquirySchema),
-    defaultValues: { name: "", email: "", mobile: "", message: "" },
+    defaultValues: { name: "", email: "", mobile: "", eventSlot: "", message: "" },
   });
 
   const { onChange: onMobileChange, ...mobileField } = register("mobile");
+
+  const onPaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.floor(Number(e.target.value));
+    setPax(Number.isFinite(value) && value >= 1 ? Math.min(value, 10) : 1);
+  };
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
@@ -44,6 +59,7 @@ export default function MeetingEnquiryForm() {
         <div key={name}>
           <label htmlFor={`hall-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             {label}
+            <span className="text-red-500">*</span>
           </label>
           <div
             className={`flex items-center gap-3 rounded-2xl border px-5 py-4 focus-within:border-soft transition-colors ${
@@ -83,6 +99,7 @@ export default function MeetingEnquiryForm() {
         <div>
           <label htmlFor="hall-date" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             Date
+            <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
             <Calendar className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
@@ -100,20 +117,59 @@ export default function MeetingEnquiryForm() {
         <div>
           <label htmlFor="hall-pax" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             Pax
+            <span className="text-red-500">*</span>
           </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
-            <Users className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+          <div className="flex items-center gap-1 rounded-2xl border border-hairline pl-1.5 pr-1.5 py-1.5 focus-within:border-soft transition-colors">
+            <button
+              type="button"
+              onClick={() => setPax((p) => Math.max(1, p - 1))}
+              disabled={pax <= 1}
+              aria-label="Decrease pax"
+              className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              <Minus className="w-3.5 h-3.5" />
+            </button>
             <input
               id="hall-pax"
               name="pax"
               type="number"
               min={1}
+              max={10}
               required
-              placeholder="Pax"
-              className="w-full min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-muted focus:outline-none"
+              value={pax}
+              onChange={onPaxChange}
+              className="w-full min-w-0 text-center bg-transparent text-sm text-luxury-charcoal focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             />
+            <button
+              type="button"
+              onClick={() => setPax((p) => Math.min(10, p + 1))}
+              disabled={pax >= 10}
+              aria-label="Increase pax"
+              className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            >
+              <Plus className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="hall-eventSlot" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          Event Slot
+          <span className="text-red-500">*</span>
+        </label>
+        <Controller
+          control={control}
+          name="eventSlot"
+          render={({ field }) => (
+            <EventSlotSelect value={field.value} onChange={field.onChange} hasError={!!errors.eventSlot} />
+          )}
+        />
+        {errors.eventSlot && (
+          <p id="hall-eventSlot-error" className="text-xs text-red-500 mt-2">
+            {errors.eventSlot.message}
+          </p>
+        )}
       </div>
 
       <div>
@@ -143,5 +199,94 @@ export default function MeetingEnquiryForm() {
         </p>
       )}
     </form>
+  );
+}
+
+function EventSlotSelect({
+  value,
+  onChange,
+  hasError,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  hasError: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  const selected = EVENT_SLOTS.find((slot) => slot.value === value);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        id="hall-eventSlot"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`flex w-full items-center gap-3 rounded-2xl border px-5 py-4 text-left transition-colors cursor-pointer ${
+          open ? "border-soft" : hasError ? "border-red-400" : "border-hairline"
+        }`}
+      >
+        <Clock className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+        <span className={`flex-1 min-w-0 text-sm ${selected ? "text-luxury-charcoal" : "text-luxury-muted"}`}>
+          {selected ? selected.label : "Select slot"}
+        </span>
+        <ChevronDown
+          className={`w-4 h-4 text-luxury-muted shrink-0 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+          aria-hidden
+        />
+      </button>
+
+      <div
+        role="listbox"
+        aria-label="Event Slot"
+        className={`absolute left-0 right-0 top-[calc(100%+0.5rem)] z-20 origin-top rounded-2xl border border-hairline bg-white py-1.5 shadow-xl transition-all duration-150 ${
+          open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        {EVENT_SLOTS.map((slot) => {
+          const isSelected = slot.value === value;
+          return (
+            <button
+              key={slot.value}
+              type="button"
+              role="option"
+              aria-selected={isSelected}
+              onClick={() => {
+                onChange(slot.value);
+                setOpen(false);
+              }}
+              className={`flex w-full cursor-pointer items-center justify-between gap-3 px-5 py-3 text-left text-sm transition-colors hover:bg-luxury-charcoal/5 ${
+                isSelected ? "text-luxury-charcoal font-medium" : "text-luxury-charcoal/80"
+              }`}
+            >
+              {slot.label}
+              {isSelected && <Check className="w-4 h-4 text-gold" aria-hidden />}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }

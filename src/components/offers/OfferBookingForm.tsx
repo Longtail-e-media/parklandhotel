@@ -11,7 +11,7 @@ import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
 
 const contactFields = [
-  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", Icon: User },
+  { name: "name", label: "Full Name ", placeholder: "Full Name", type: "text", Icon: User },
   { name: "email", label: "Email Address", placeholder: "Your valid email address", type: "email", Icon: Mail },
   { name: "phone", label: "Phone Number", placeholder: "Your phone no.", type: "tel", Icon: Phone },
 ] as const;
@@ -80,6 +80,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
         <div key={name}>
           <label htmlFor={`booking-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             {label}
+            <span className="text-red-500">*</span>
           </label>
           <div
             className={`flex items-center gap-3 rounded-2xl border px-5 py-4 focus-within:border-soft transition-colors ${
@@ -118,7 +119,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label htmlFor="booking-checkin" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
-            Check-In
+            Check-In <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
 

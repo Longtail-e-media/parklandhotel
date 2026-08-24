@@ -16,6 +16,7 @@ export default function DiningEnquireButton({ venueName }: { venueName: string }
         className="luxury-btn  mt-10 inline-flex cursor-pointer bg-(--color-primary-green) text-white"
       >
         Enquire Now <ArrowRight className="w-4 h-4" />
+        
       </button>
 
       <EnquiryModal title={`Enquire — ${venueName}`} isOpen={isOpen} onClose={() => setIsOpen(false)}>

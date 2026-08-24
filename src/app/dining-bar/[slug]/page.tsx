@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, Check, Clock } from "lucide-react";
-import { diningPage } from "@/data/data";
-import { site } from "@/config/site";
-import Watermark from "@/components/ui/Watermark";
 import DiningEnquireButton from "@/components/dining/DiningEnquireButton";
 import DiningGallery from "@/components/dining/DiningGallery";
+import Watermark from "@/components/ui/Watermark";
+import { site } from "@/config/site";
+import { diningPage } from "@/data/data";
+import { ArrowLeft, Check, Clock, QrCode } from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import qr from "../../../../assets/img/qr.png";
 
 export function generateStaticParams() {
   return diningPage.venues.map((venue) => ({ slug: venue.slug }));
@@ -109,6 +110,18 @@ export default async function DiningVenueDetailPage({
               </ul>
 
               <DiningEnquireButton venueName={venue.name} />
+              <div className="mt-8 flex items-center gap-5 mt-15">
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl  bg-luxury-cream text-gold-text">
+               <Image src={qr} alt="qr" />
+                </div>
+                <div>
+                  <p className="luxury-label text-gold-text">Scan QR CODE</p>
+                  <p className="mt-2 text-sm leading-relaxed text-luxury-muted w-[250px]">
+                    Scan to explore our menu and discover more.
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

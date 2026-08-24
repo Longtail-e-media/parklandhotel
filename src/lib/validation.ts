@@ -5,6 +5,7 @@ export const PHONE_MAX_LENGTH = 14;
 export const PHONE_ALLOWED_CHARS = /[^0-9+-]/g;
 
 export const nameSchema = z.string().trim().min(1, "Please enter your full name.");
+export const eventSchema = z.string().trim().min(1, "Please enter your event name.");
 
 export const emailSchema = z
   .string()

@@ -66,7 +66,7 @@ export default function ContactFormSection() {
             {fields.map(({ name, label, placeholder, type, Icon }) => (
               <div key={name}>
                 <label htmlFor={name} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
-                  {label}
+                  {label} <span className="text-red-500">*</span>
                 </label>
                 <div
                   className={`flex items-center gap-3 rounded-2xl border px-5 py-4 focus-within:border-soft transition-colors ${
@@ -104,7 +104,7 @@ export default function ContactFormSection() {
 
             <div>
               <label htmlFor="message" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
-                Your Message
+                Your Message <span className="text-red-500">*</span>
               </label>
               <div
                 className={`flex items-start gap-3 rounded-2xl border px-5 py-4 focus-within:border-soft transition-colors ${
