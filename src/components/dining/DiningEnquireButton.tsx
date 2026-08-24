@@ -13,7 +13,7 @@ export default function DiningEnquireButton({ venueName }: { venueName: string }
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="luxury-btn  mt-10 inline-flex cursor-pointer"
+        className="luxury-btn  mt-10 inline-flex cursor-pointer bg-(--color-primary-green) text-white"
       >
         Enquire Now <ArrowRight className="w-4 h-4" />
       </button>

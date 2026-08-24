@@ -113,37 +113,6 @@ export default async function DiningVenueDetailPage({
           </div>
         </div>
       </section>
-
-      {otherVenues.length > 0 && (
-        <section className="relative pb-24 lg:pb-32">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <h2 className="luxury-section-title text-luxury-charcoal mb-10">Others</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {otherVenues.map((v) => (
-                <Link
-                  key={v.slug}
-                  href={`/dining-bar/${v.slug}`}
-                  className="group luxury-surface overflow-hidden block"
-                >
-                  <div className="aspect-4/3 overflow-hidden luxury-img-zoom">
-                    <Image
-                      src={v.image}
-                      alt={v.name}
-                      width={500}
-                      height={375}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="px-3 py-4">
-                    <h3 className="luxury-section-title text-lg">{v.name}</h3>
-                    <p className="text-luxury-muted  mt-2">{v.excerpt}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   );
 }
