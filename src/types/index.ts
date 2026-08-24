@@ -59,6 +59,8 @@ export interface MeetingSpace {
   capacity: string;
   size: string;
   features: string[];
+  /** Max pax per seating configuration, shown as the Occupancy and Setup Style table. Omit for spaces with a fixed single layout. */
+  setupStyles?: { style: string; pax: number }[];
 }
 
 /** A post on the /blog listing and detail pages. */

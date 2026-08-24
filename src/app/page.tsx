@@ -10,10 +10,12 @@ import AmenitiesSection from "@/components/home/AmenitiesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import GallerySection from "@/components/home/GallerySection";
 import ContactSection from "@/components/home/ContactSection";
+import HomePromoPopup from "@/components/home/HomePromoPopup";
 
 export default function Home() {
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
+      <HomePromoPopup />
       {/* <Hero /> */}
       <VideoSection />
       <AboutSection />

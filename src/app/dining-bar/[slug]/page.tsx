@@ -117,7 +117,7 @@ export default async function DiningVenueDetailPage({
       {otherVenues.length > 0 && (
         <section className="relative pb-24 lg:pb-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <h2 className="luxury-section-title text-luxury-charcoal mb-10">More Dining & Bar</h2>
+            <h2 className="luxury-section-title text-luxury-charcoal mb-10">Others</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherVenues.map((v) => (
                 <Link

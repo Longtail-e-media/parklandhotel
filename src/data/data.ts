@@ -602,6 +602,14 @@ export const meetingsPage = {
       capacity: "Up to 120 guests, theatre-style",
       size: "150 Sq.m",
       features: ["Theatre, classroom & banquet layouts", "AV equipment included", "High-speed wi-fi", "On-site catering"],
+      setupStyles: [
+        { style: "U-Shape Style", pax: 40 },
+        { style: "Classroom Style", pax: 60 },
+        { style: "Theatre Style", pax: 120 },
+        { style: "Banquet Style", pax: 70 },
+        { style: "Cluster Style", pax: 60 },
+        { style: "Cocktail Style", pax: 150 },
+      ],
     },
     {
       slug: "garden-pavilion",
@@ -616,6 +624,14 @@ export const meetingsPage = {
       capacity: "Up to 200 guests, reception-style",
       size: "300 Sq.m open lawn",
       features: ["Open-air garden setting", "Wedding & reception ready", "String lighting", "Dedicated events team"],
+      setupStyles: [
+        { style: "U-Shape Style", pax: 60 },
+        { style: "Classroom Style", pax: 90 },
+        { style: "Theatre Style", pax: 180 },
+        { style: "Banquet Style", pax: 150 },
+        { style: "Cluster Style", pax: 120 },
+        { style: "Cocktail Style", pax: 200 },
+      ],
     },
     {
       slug: "the-boardroom",

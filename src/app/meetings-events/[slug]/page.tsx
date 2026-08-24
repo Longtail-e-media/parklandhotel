@@ -1,13 +1,34 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, Check, Maximize2, Users } from "lucide-react";
-import { meetingsPage } from "@/data/data";
-import { site } from "@/config/site";
-import Watermark from "@/components/ui/Watermark";
-import MeetingGallery from "@/components/meetings/MeetingGallery";
 import MeetingEnquireButton from "@/components/meetings/MeetingEnquireButton";
+import MeetingGallery from "@/components/meetings/MeetingGallery";
+import Watermark from "@/components/ui/Watermark";
+import { site } from "@/config/site";
+import { meetingsPage } from "@/data/data";
+import {
+  ArrowLeft,
+  Check,
+  GraduationCap,
+  Martini,
+  Maximize2,
+  Presentation,
+  Table2,
+  Users,
+  UsersRound,
+  UtensilsCrossed,
+  type LucideIcon,
+} from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+/** Icon shown per setup style in the Occupancy and Setup Style table. */
+const SETUP_STYLE_ICONS: Record<string, LucideIcon> = {
+  "U-Shape Style": Table2,
+  "Classroom Style": GraduationCap,
+  "Theatre Style": Presentation,
+  "Banquet Style": UtensilsCrossed,
+  "Cluster Style": UsersRound,
+  "Cocktail Style": Martini,
+};
 
 export function generateStaticParams() {
   return meetingsPage.spaces.map((space) => ({ slug: space.slug }));
@@ -117,6 +138,52 @@ export default async function MeetingSpaceDetailPage({
           </div>
         </div>
       </section>
+
+      {space.setupStyles && space.setupStyles.length > 0 && (
+        <section className="relative pb-24 lg:pb-32">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
+              Occupancy and Setup Style
+            </h2>
+
+            <div className="w-full overflow-x-auto border border-hairline rounded-xl">
+              <table className="w-full min-w-180 table-fixed border-collapse text-center">
+                <thead>
+                  <tr className="bg-luxury-cream-alt">
+                    {space.setupStyles.map(({ style }) => {
+                      const Icon = SETUP_STYLE_ICONS[style];
+                      return (
+                        <th
+                          key={style}
+                          scope="col"
+                          className="border-b border-hairline px-4 py-5 font-normal align-top"
+                        >
+                          <div className="flex flex-col items-center gap-2">
+                            {Icon && (
+                              <Icon className="w-6 h-6 brown-btn" strokeWidth={1.5} aria-hidden />
+                            )}
+                            <span className="luxury-label text-[11px] text-gold-text">{style}</span>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {space.setupStyles.map(({ style, pax }) => (
+                      <td key={style} className="px-4 py-6 text-luxury-charcoal">
+                        <span className="text-2xl lg:text-3xl text-gold-text">{pax}</span>{" "}
+                        <span className="text-sm text-luxury-muted">pax</span>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
