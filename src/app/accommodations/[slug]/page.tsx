@@ -2,36 +2,30 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowLeft,
-  Bath,
-  BedDouble,
-  Baby,
-  Check,
-  Coffee,
-  Maximize2,
-  Tv,
-  User,
-  Wifi,
-  Wind,
-  type LucideIcon,
-} from "lucide-react";
-import { rooms } from "@/data/data";
+import { rooms as fallbackRooms } from "@/data/data";
+import { getRooms } from "@/lib/data";
 import { site } from "@/config/site";
 import RoomGallery from "@/components/accommodations/RoomGallery";
 import RoomBookingWidget from "@/components/accommodations/RoomBookingWidget";
 import Watermark from "@/components/ui/Watermark";
 
-/** Mirrors ROOM_FEATURES in RoomsSection — keep the two in step. */
-const ROOM_FEATURES: Record<string, { icon: LucideIcon; label: string }> = {
-  wifi: { icon: Wifi, label: "Free Wifi" },
-  tv: { icon: Tv, label: "TV" },
-  breakfast: { icon: Coffee, label: "Breakfast Included" },
-  ac: { icon: Wind, label: "Air Condition" },
-  bath: { icon: Bath, label: "Ensuite Bath" },
+/** Mirrors ROOM_FEATURES in RoomsSectionClient — keep the two in step. Unrecognised
+ * CMS amenity titles still render, just with the generic `check` icon. */
+const ROOM_FEATURES: Record<string, { icon: string; label: string }> = {
+  wifi: { icon: "wifi", label: "Free Wifi" },
+  tv: { icon: "tv", label: "TV" },
+  breakfast: { icon: "mug-saucer", label: "Breakfast Included" },
+  ac: { icon: "wind", label: "Air Condition" },
+  bath: { icon: "bath", label: "Ensuite Bath" },
 };
 
-export function generateStaticParams() {
+async function getRoomsWithFallback() {
+  const apiRooms = await getRooms();
+  return apiRooms.length > 0 ? apiRooms : fallbackRooms;
+}
+
+export async function generateStaticParams() {
+  const rooms = await getRoomsWithFallback();
   return rooms.map((room) => ({ slug: room.slug }));
 }
 
@@ -41,6 +35,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const rooms = await getRoomsWithFallback();
   const room = rooms.find((r) => r.slug === slug);
   if (!room) return {};
 
@@ -65,6 +60,7 @@ export default async function RoomDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const rooms = await getRoomsWithFallback();
   const room = rooms.find((r) => r.slug === slug);
   if (!room) notFound();
 
@@ -92,7 +88,7 @@ export default async function RoomDetailPage({
             href="/accommodations"
             className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
           >
-            <ArrowLeft className="w-4 h-4" /> All Rooms
+            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Rooms
           </Link>
 
           <div className="grid lg:grid-cols-3 gap-12 lg:gap-16 items-start">
@@ -123,29 +119,28 @@ export default async function RoomDetailPage({
               <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Room Amenities</h2>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {room.features.map((key) => {
-                  const feature = ROOM_FEATURES[key];
-                  if (!feature) return null;
-                  const Icon = feature.icon;
+                  const feature = ROOM_FEATURES[key.toLowerCase()];
+                  const icon = feature?.icon ?? "check";
                   return (
                     <li
                       key={key}
                       className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
                     >
-                      <Icon className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
-                      {feature.label}
+                      <i className={`fa-solid fa-${icon} text-base brown-btn shrink-0`} aria-hidden="true" />
+                      {feature?.label ?? key}
                     </li>
                   );
                 })}
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <User className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-user text-base brown-btn shrink-0" aria-hidden="true" />
                   Adults: {room.adults}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <Maximize2 className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-expand text-base brown-btn shrink-0" aria-hidden="true" />
                   Size: {room.size}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <BedDouble className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-bed text-base brown-btn shrink-0" aria-hidden="true" />
                   Bed Type: {room.beds}
                 </li>
               </ul>
@@ -155,11 +150,11 @@ export default async function RoomDetailPage({
                   <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-in</h2>
                   <ul className="space-y-3">
                     <li className="flex items-center gap-3 text-luxury-muted">
-                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                       Check-in from 02:00 PM
                     </li>
                     <li className="flex items-center gap-3 text-luxury-muted">
-                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                       Early check-in subject to availability
                     </li>
                   </ul>
@@ -168,11 +163,11 @@ export default async function RoomDetailPage({
                   <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-out</h2>
                   <ul className="space-y-3">
                     <li className="flex items-center gap-3 text-luxury-muted">
-                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                       Check-out before noon
                     </li>
                     <li className="flex items-center gap-3 text-luxury-muted">
-                      <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                       Express check-out
                     </li>
                   </ul>
@@ -182,19 +177,19 @@ export default async function RoomDetailPage({
               <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Children &amp; Extra Beds</h2>
               <div className="luxury-surface flex flex-col sm:flex-row gap-6 p-6 lg:p-7">
                 <div className="shrink-0 w-11 h-11 rounded-full bg-luxury-cream-alt flex items-center justify-center">
-                  <Baby className="w-5 h-5 brown-btn" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-baby text-xl brown-btn" aria-hidden="true" />
                 </div>
                 <ul className="space-y-3 text-luxury-muted leading-relaxed">
                   <li className="flex gap-3">
-                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
                     <span>Children are welcome — kids stay free when using existing bedding.</span>
                   </li>
                   <li className="flex gap-3">
-                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
                     <span>Children may not be eligible for complimentary breakfast.</span>
                   </li>
                   <li className="flex gap-3">
-                    <Check className="w-4 h-4 brown-btn shrink-0 mt-0.5" strokeWidth={1.5} aria-hidden />
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
                     <span>Rollaway / extra beds are available for $10 per day, subject to availability.</span>
                   </li>
                 </ul>

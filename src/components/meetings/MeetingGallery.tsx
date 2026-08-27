@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Keyboard, Pagination } from "swiper/modules";
 
@@ -53,14 +52,14 @@ export default function MeetingGallery({ images, name }: { images: string[]; nam
                 aria-label="Previous photo"
                 className="testimonial-nav-btn meeting-gallery-prev w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer"
               >
-                <ArrowLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden />
+                <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" />
               </button>
               <button
                 type="button"
                 aria-label="Next photo"
                 className="testimonial-nav-btn meeting-gallery-next w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer border-0"
               >
-                <ArrowRight className="w-4 h-4" strokeWidth={1.5} aria-hidden />
+                <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
               </button>
             </div>
           </div>

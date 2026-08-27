@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { about } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
+import { GethomeArticleById } from "@/lib/data";
 
-export default function AboutSection() {
+
+export default async function AboutSection() {
+   const article = await GethomeArticleById(2);
   return (
     <section id="about" className="relative overflow-hidden pt-30  scroll-mt-24">
       <Watermark
@@ -19,7 +22,9 @@ export default function AboutSection() {
         delay={1.5}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center pb-10">
+
+         <div dangerouslySetInnerHTML={{ __html: article?.description || "" }} />
+      {/* <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center pb-10">
         <div className="order-2 lg:order-1 animate-slide-in-left">
           <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{about.eyebrow}</p>
           <h2 className="luxury-section-title text-luxury-charcoal mb-6">
@@ -51,13 +56,13 @@ export default function AboutSection() {
               className="w-full h-full object-cover"
             />
           </div>
-          {/* floating stat chip instead of the old offset square outline */}
+
           <div className="hidden md:flex absolute -bottom-7 -left-7 flex-col items-center justify-center w-32 h-32 rounded-full bg-white border border-hairline shadow-[0_18px_50px_-24px_rgba(36,36,32,0.35)]">
             <span className="luxury-hero-title text-2xl leading-none">1987</span>
             <span className="luxury-label text-[9px] text-luxury-muted mt-2">Established</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

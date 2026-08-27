@@ -234,6 +234,8 @@ export const nearby: NearbyItem[] = [
     image: "/img/nearby/park-gate.jpg",
     description:
       "Minutes from our door — the gateway to Nepal's first national park and a UNESCO World Heritage site.",
+    mapUrl:
+      "https://www.google.com/maps?q=Chitwan%20National%20Park%20Entrance%20Gate%2C%20Sauraha%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "The Rapti River",
@@ -242,6 +244,8 @@ export const nearby: NearbyItem[] = [
     image: "/img/nearby/rapti-river.jpg",
     description:
       "The river that separates Sauraha from the wild — rhinos are often spotted grazing along its banks.",
+    mapUrl:
+      "https://www.google.com/maps?q=Rapti%20River%2C%20Sauraha%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "Elephant Breeding Centre",
@@ -249,6 +253,8 @@ export const nearby: NearbyItem[] = [
     query: "Elephant Breeding Centre, Sauraha, Chitwan, Nepal",
     description:
       "Home to the calves of Chitwan's government elephant stables, and an easy morning cycle from the hotel.",
+    mapUrl:
+      "https://www.google.com/maps?q=Elephant%20Breeding%20Centre%2C%20Sauraha%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "Tharu Cultural Museum",
@@ -257,6 +263,8 @@ export const nearby: NearbyItem[] = [
     image: "/img/nearby/tharu-museum.jpg",
     description:
       "Textiles, tools and traditions of the indigenous Tharu community, Chitwan's original inhabitants.",
+    mapUrl:
+      "https://www.google.com/maps?q=Tharu%20Cultural%20Museum%2C%20Bachhauli%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "Bishazari Tal",
@@ -265,6 +273,8 @@ export const nearby: NearbyItem[] = [
     image: "/img/nearby/bishazari-tal.jpg",
     description:
       '"Twenty Thousand Lakes" — a Ramsar-listed wetland and one of the region\'s best birdwatching spots.',
+    mapUrl:
+      "https://www.google.com/maps?q=Bishazari%20Tal%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "Gharial Breeding Centre",
@@ -272,6 +282,8 @@ export const nearby: NearbyItem[] = [
     query: "Gharial Breeding Center, Kasara, Chitwan, Nepal",
     description:
       "A conservation centre at Kasara raising the critically endangered gharial crocodile for release into the Rapti.",
+    mapUrl:
+      "https://www.google.com/maps?q=Gharial%20Breeding%20Center%2C%20Kasara%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
   {
     title: "Bharatpur Airport",
@@ -279,6 +291,8 @@ export const nearby: NearbyItem[] = [
     query: "Bharatpur Airport, Chitwan, Nepal",
     description:
       "Twenty-five-minute flights from Kathmandu land here; we can arrange a car to meet you on arrival.",
+    mapUrl:
+      "https://www.google.com/maps?q=Bharatpur%20Airport%2C%20Chitwan%2C%20Nepal&z=14&hl=en&output=embed",
   },
 ];
 

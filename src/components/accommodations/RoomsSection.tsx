@@ -1,32 +1,24 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BedDouble,
-  Maximize2,
-  User,
-} from "lucide-react";
-import { rooms } from "@/data/data";
+import { getRooms } from "@/lib/data";
+import { rooms as fallbackRooms } from "@/data/data";
 import type { RoomType } from "@/types";
 import Watermark from "@/components/ui/Watermark";
 
 
 function RoomStat({
-  icon: Icon,
+  icon,
   value,
   label,
 }: {
-  icon: typeof User;
+  icon: string;
   value: string;
   label: string;
 }) {
   return (
     <div className="flex flex-col items-center text-center gap-1.5 sm:flex-row sm:items-center sm:text-left sm:gap-3 min-w-0">
       <span className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white text-gold-text shrink-0">
-        <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" strokeWidth={1.5} aria-hidden />
+        <i className={`fa-solid fa-${icon} text-base sm:text-lg`} aria-hidden="true" />
       </span>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-luxury-charcoal leading-tight wrap-break-word">{value}</p>
@@ -37,8 +29,6 @@ function RoomStat({
 }
 
 function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
-  const [saved, setSaved] = useState(false);
-
   return (
     <article className="group luxury-surface overflow-hidden grid md:grid-cols-2">
       <div className="relative min-h-70 md:min-h-0 overflow-hidden luxury-img-zoom">
@@ -67,9 +57,9 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
         <p className="text-luxury-muted mt-4 leading-relaxed">{room.description}</p>
 
         <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 bg-luxury-cream-alt/60 rounded-2xl px-4 sm:px-6 py-5">
-          <RoomStat icon={User} value={`${room.adults} Person`} label="Guests" />
-          <RoomStat icon={BedDouble} value={room.beds} label="Bed Type" />
-          <RoomStat icon={Maximize2} value={room.size} label="Room Size" />
+          <RoomStat icon="user" value={`${room.adults} Person`} label="Guests" />
+          <RoomStat icon="bed" value={room.beds} label="Bed Type" />
+          <RoomStat icon="expand" value={room.size} label="Room Size" />
         </div>
 
         <div className="flex items-center justify-between gap-4 mt-auto pt-6">
@@ -77,7 +67,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
             href={`/accommodations/${room.slug}`}
             className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] hover:gap-3 transition-all"
           >
-            View Details <ArrowRight className="w-4 h-4" aria-hidden />
+            View Details <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
           </Link>
           <Link href="/contact" className="luxury-btn py-2.5! px-5! text-[11px] bg-(--color-primary-green) text-white">
             Book Now
@@ -88,7 +78,10 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
   );
 }
 
-export default function RoomsSection() {
+export default async function RoomsSection() {
+  const apiRooms = await getRooms();
+  const rooms = apiRooms.length > 0 ? apiRooms : fallbackRooms;
+
   return (
     <section id="rooms" className="relative overflow-hidden py-10 lg:pb-30 scroll-mt-24">
       <Watermark

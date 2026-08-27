@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
 import { hero } from "@/data/data";
 
 export default function Hero() {
@@ -40,7 +39,7 @@ export default function Hero() {
         aria-label="Scroll down"
         className="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/80"
       >
-        <ChevronDown className="w-7 h-7" />
+        <i className="fa-solid fa-chevron-down text-[28px]" aria-hidden="true" />
       </Link>
     </section>
   );

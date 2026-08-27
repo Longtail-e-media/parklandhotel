@@ -4,15 +4,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Mail, MessageSquare, Minus, Phone, Plus, User, Users } from "lucide-react";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH, eventSchema } from "@/lib/validation";
 
 const fields = [
-  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", Icon: User },
-  { name: "email", label: "Email Address", placeholder: "Email Address", type: "email", Icon: Mail },
-  { name: "event", label: "Event Name", placeholder: "Enter your event name", type: "text", Icon: Calendar },
-  { name: "phone", label: "Phone Number", placeholder: "Phone Number", type: "tel", Icon: Phone },
+  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", icon: "user" },
+  { name: "email", label: "Email Address", placeholder: "Email Address", type: "email", icon: "envelope" },
+  { name: "event", label: "Event Name", placeholder: "Enter your event name", type: "text", icon: "calendar" },
+  { name: "phone", label: "Phone Number", placeholder: "Phone Number", type: "tel", icon: "phone" },
 ] as const;
 
 const enquirySchema = z.object({
@@ -52,7 +51,7 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
-      {fields.map(({ name, label, placeholder, type, Icon }) => (
+      {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
           <label htmlFor={`enquiry-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             {label}
@@ -63,7 +62,7 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
               errors[name] ? "border-red-400" : "border-hairline"
             }`}
           >
-            <Icon className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
             <input
               id={`enquiry-${name}`}
               type={type}
@@ -99,7 +98,7 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
               <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
-            <Calendar className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="enquiry-date"
               name="date"
@@ -124,9 +123,9 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
               aria-label="Decrease pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Minus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-minus text-sm" aria-hidden="true" />
             </button>
-            <Users className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-users text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="enquiry-pax"
               name="pax"
@@ -143,7 +142,7 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
               aria-label="Increase pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 transition-colors cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-plus text-sm" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -154,7 +153,7 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
           Special Request
         </label>
         <div className="flex items-start gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-          <MessageSquare className="w-4 h-4 text-luxury-muted shrink-0 mt-0.5" aria-hidden />
+          <i className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5" aria-hidden="true" />
           <textarea
             id="enquiry-request"
             rows={3}

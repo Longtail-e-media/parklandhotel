@@ -1,10 +1,14 @@
 import { hero } from "@/data/data";
 import Link from "next/link";
-export default function VideoSection() {
+import { getHeroVideoSrc } from "@/lib/data";
+
+export default async function VideoSection() {
+  const videoSrc = (await getHeroVideoSrc()) || "/videos/park.mp4";
+
   return (
 <section className="relative w-full h-screen overflow-hidden">
   <video
-    src="/videos/park.mp4"
+    src={videoSrc}
     autoPlay
     muted
     loop

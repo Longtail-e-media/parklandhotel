@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { blogPage } from "@/data/data";
 import type { BlogPost } from "@/types";
 import ShareButtons from "@/components/blog/ShareButtons";
 
 interface RelatedPostsProps {
   current: BlogPost;
+  posts: BlogPost[];
 }
 
 /** Same-category posts first, padded out with the latest others, capped at 3. */
-export default function RelatedPosts({ current }: RelatedPostsProps) {
-  const others = blogPage.posts.filter((p) => p.slug !== current.slug);
+export default function RelatedPosts({ current, posts }: RelatedPostsProps) {
+  const others = posts.filter((p) => p.slug !== current.slug);
   const sameCategory = others.filter((p) => p.category === current.category);
   const rest = others.filter((p) => p.category !== current.category);
   const related = [...sameCategory, ...rest].slice(0, 3);
@@ -41,7 +41,9 @@ export default function RelatedPosts({ current }: RelatedPostsProps) {
                   />
                 </div>
                 <div className="py-3 pr-4">
-                  <p className="luxury-label text-gold-text text-[10px] mb-1.5">{post.category}</p>
+                  {post.category && (
+                    <p className="luxury-label text-gold-text text-[10px] mb-1.5">{post.category}</p>
+                  )}
                   <h3 className="text-sm font-medium text-luxury-charcoal leading-snug">{post.title}</h3>
                 </div>
               </Link>

@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
 
 /**
  * Popup dialog shell for an "Enquire Now" button — supplies the backdrop,
@@ -68,7 +67,7 @@ export default function EnquiryModal({
             className="p-2 -mr-2 rounded-full cursor-pointer text-luxury-charcoal hover:bg-luxury-charcoal/5 transition-colors shrink-0"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <i className="fa-solid fa-xmark text-xl" aria-hidden="true" />
           </button>
         </div>
 

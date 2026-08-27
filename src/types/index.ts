@@ -72,10 +72,11 @@ export interface BlogPost {
   /** Body copy, one paragraph per entry. */
   content: string[];
   image: string;
-  /** ISO date string, e.g. "2026-06-12". */
+  /** Date string, e.g. "2026-06-12" (static data) or "August 27, 2026" (CMS) — anything Date-parseable. */
   date: string;
   author: string;
-  category: string;
+  /** Not set for CMS-sourced posts — the CMS `blog` endpoint has no category field. */
+  category?: string;
 }
 
 export interface ActivityItem {
@@ -95,12 +96,16 @@ export interface NearbyItem {
   description: string;
   /** Kept for the old card layout / future use; the map list doesn't render it. */
   image?: string;
+  /** CMS-provided Google Maps embed URL — used directly as the <iframe src> instead of building one from `query`. */
+  mapUrl?: string;
 }
 
 export interface Testimonial {
   quote: string;
   author: string;
   source: string;
+  /** Guest rating out of 5, shown as stars on the card. */
+  rating?: number;
 }
 
 export interface AmenityItem {
@@ -116,13 +121,11 @@ export interface FacilityItem {
   icon: string;
 }
 
-/** Category key for a gallery photo — must match a `key` in galleryPage.categories. */
-export type GalleryCategory = "hotel" | "rooms" | "dining" | "wellness" | "experiences";
-
 export interface GalleryItem {
   src: string;
   alt: string;
-  category: GalleryCategory;
+  /** Filter-pill key — a CSS-safe slug (see `getGalleryPage` in lib/data.ts for CMS items, or a static key from galleryPage.categories for the fallback). */
+  category: string;
 }
 
 export interface FaqItem {
@@ -137,6 +140,31 @@ export interface ExperienceItem {
   description: string;
   image: string;
   imageAlt: string;
+}
+
+/** A nearby attraction on the /experiences-destination page, from the CMS `nearby` endpoint. */
+export interface Landmark {
+  id: string;
+  title: string;
+  subtitle: string;
+  /** Rich-text HTML body. */
+  content: string;
+  distance: string;
+  /** Google Maps embed URL — used directly as an <iframe src>. */
+  map_url: string;
+}
+
+/** Raw shape of one `blog` entry, as returned by the CMS `api_blog.php`. */
+export interface NewsData {
+  id?: number;
+  slug: string;
+  title: string;
+  author?: string;
+  date: string;
+  image?: string;
+  banner_image?: string | null;
+  content?: string;
+  meta_description?: string;
 }
 
 /** An offer/package on the /offers listing page. */

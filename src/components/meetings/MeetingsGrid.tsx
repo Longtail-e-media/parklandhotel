@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Maximize2, Users } from "lucide-react";
 import { meetingsPage } from "@/data/data";
 
 export default function MeetingsGrid() {
@@ -28,14 +27,14 @@ export default function MeetingsGrid() {
                 <p className="text-luxury-muted mt-4 leading-relaxed grow">{space.excerpt}</p>
                 <ul className="flex flex-col gap-2 mt-5 text-xs text-luxury-muted">
                   <li className="flex items-center gap-2">
-                    <Users className="w-3.5 h-3.5 shrink-0" aria-hidden /> {space.capacity}
+                    <i className="fa-solid fa-users text-sm shrink-0" aria-hidden="true" /> {space.capacity}
                   </li>
                   <li className="flex items-center gap-2">
-                    <Maximize2 className="w-3.5 h-3.5 shrink-0" aria-hidden /> {space.size}
+                    <i className="fa-solid fa-expand text-sm shrink-0" aria-hidden="true" /> {space.size}
                   </li>
                 </ul>
                 <span className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-5 group-hover:gap-3 transition-all">
-                  View Details <ArrowRight className="w-4 h-4" />
+                  View Details <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
                 </span>
               </div>
             </Link>

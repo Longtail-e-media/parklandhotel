@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Star } from "lucide-react";
 import { trustBadges } from "@/data/data";
 import { business } from "@/config/site";
 
@@ -17,10 +16,10 @@ export default function TrustSection() {
                 <p className="luxury-hero-title text-4xl text-gold leading-none">{rating.ratingValue}</p>
                 <div className="flex gap-0.5 justify-center mt-2">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+                    <i
                       key={i}
-                      className="w-3.5 h-3.5"
-                      fill="currentColor"
+                      aria-hidden="true"
+                      className="fa-solid fa-star text-sm"
                       style={{ color: i < Math.round(Number(rating.ratingValue)) ? "var(--luxury-gold)" : "var(--line-soft)" }}
                     />
                   ))}

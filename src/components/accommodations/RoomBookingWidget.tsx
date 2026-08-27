@@ -1,7 +1,6 @@
 "use client";
 
 import type { RoomType } from "@/types";
-import { ArrowRight, CalendarCheck, CalendarX } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -36,7 +35,7 @@ export default function RoomBookingWidget({
             Check In Date
           </label>
           <div className="flex items-center gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-            <CalendarCheck className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-calendar-check text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="check-in"
               type="date"
@@ -54,7 +53,7 @@ export default function RoomBookingWidget({
             Check Out Date
           </label>
           <div className="flex items-center gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-            <CalendarX className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-calendar-xmark text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="check-out"
               type="date"
@@ -70,7 +69,7 @@ export default function RoomBookingWidget({
         {/* <Recaptcha /> */}
 
         <button type="submit" className="luxury-btn hover:cursor-pointer rounded-2xl luxury-btn-accent mt-4 justify-center py-4!">
-          Check Availability <ArrowRight className="w-4 h-4" aria-hidden />
+          Check Availability <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
         </button>
       </form>
     </aside>

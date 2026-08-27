@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Check } from "lucide-react";
 import { dining } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
 

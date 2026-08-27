@@ -2,16 +2,15 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, CalendarClock, Tag } from "lucide-react";
-import { offersPage } from "@/data/data";
 import { site } from "@/config/site";
-import { formatOfferExpiry } from "@/lib/offers";
+import { getOffersList } from "@/lib/offers";
 import Watermark from "@/components/ui/Watermark";
 import OfferBookingWidget from "@/components/offers/OfferBookingWidget";
 import OfferGallery from "@/components/offers/OfferGallery";
 
-export function generateStaticParams() {
-  return offersPage.items.map((offer) => ({ slug: offer.slug }));
+export async function generateStaticParams() {
+  const items = await getOffersList();
+  return items.map((offer) => ({ slug: offer.slug }));
 }
 
 export async function generateMetadata({
@@ -20,7 +19,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const offer = offersPage.items.find((o) => o.slug === slug);
+  const items = await getOffersList();
+  const offer = items.find((o) => o.slug === slug);
   if (!offer) return {};
 
   const title = `${offer.name} | Offers & Packages | ${site.name}`;
@@ -44,10 +44,11 @@ export default async function OfferDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const offer = offersPage.items.find((o) => o.slug === slug);
+  const items = await getOffersList();
+  const offer = items.find((o) => o.slug === slug);
   if (!offer) notFound();
 
-  const otherOffers = offersPage.items.filter((o) => o.slug !== offer.slug);
+  const otherOffers = items.filter((o) => o.slug !== offer.slug);
   const galleryImages = offer.images && offer.images.length > 0 ? offer.images : [offer.image];
 
   return (
@@ -71,7 +72,7 @@ export default async function OfferDetailPage({
             href="/offers"
             className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
           >
-            <ArrowLeft className="w-4 h-4" /> All Offers
+            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Offers
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">

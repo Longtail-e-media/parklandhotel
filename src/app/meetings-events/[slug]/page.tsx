@@ -3,31 +3,18 @@ import MeetingGallery from "@/components/meetings/MeetingGallery";
 import Watermark from "@/components/ui/Watermark";
 import { site } from "@/config/site";
 import { meetingsPage } from "@/data/data";
-import {
-  ArrowLeft,
-  Check,
-  GraduationCap,
-  Martini,
-  Maximize2,
-  Presentation,
-  Table2,
-  Users,
-  UsersRound,
-  UtensilsCrossed,
-  type LucideIcon,
-} from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 /** Icon shown per setup style in the Occupancy and Setup Style table. */
-const SETUP_STYLE_ICONS: Record<string, LucideIcon> = {
-  "U-Shape Style": Table2,
-  "Classroom Style": GraduationCap,
-  "Theatre Style": Presentation,
-  "Banquet Style": UtensilsCrossed,
-  "Cluster Style": UsersRound,
-  "Cocktail Style": Martini,
+const SETUP_STYLE_ICONS: Record<string, string> = {
+  "U-Shape Style": "table-cells",
+  "Classroom Style": "graduation-cap",
+  "Theatre Style": "chalkboard-user",
+  "Banquet Style": "utensils",
+  "Cluster Style": "user-group",
+  "Cocktail Style": "martini-glass",
 };
 
 export function generateStaticParams() {
@@ -92,7 +79,7 @@ export default async function MeetingSpaceDetailPage({
             href="/meetings-events"
             className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
           >
-            <ArrowLeft className="w-4 h-4" /> All Meetings & Events
+            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Meetings & Events
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -106,11 +93,11 @@ export default async function MeetingSpaceDetailPage({
 
               <ul className="flex flex-wrap items-center gap-x-8 gap-y-2 mt-6 text-sm text-luxury-muted">
                 <li className="flex items-center gap-2">
-                  <Users className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-users text-base brown-btn" aria-hidden="true" />
                   {space.capacity}
                 </li>
                 <li className="flex items-center gap-2">
-                  <Maximize2 className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-expand text-base brown-btn" aria-hidden="true" />
                   {space.size}
                 </li>
               </ul>
@@ -127,7 +114,7 @@ export default async function MeetingSpaceDetailPage({
                     key={feature}
                     className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-full px-5 py-3"
                   >
-                    <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                     {feature}
                   </li>
                 ))}
@@ -151,7 +138,7 @@ export default async function MeetingSpaceDetailPage({
                 <thead>
                   <tr className="bg-luxury-cream-alt">
                     {space.setupStyles.map(({ style }) => {
-                      const Icon = SETUP_STYLE_ICONS[style];
+                      const icon = SETUP_STYLE_ICONS[style];
                       return (
                         <th
                           key={style}
@@ -159,8 +146,8 @@ export default async function MeetingSpaceDetailPage({
                           className="border-b border-hairline px-4 py-5 font-normal align-top"
                         >
                           <div className="flex flex-col items-center gap-2">
-                            {Icon && (
-                              <Icon className="w-6 h-6 brown-btn" strokeWidth={1.5} aria-hidden />
+                            {icon && (
+                              <i className={`fa-solid fa-${icon} text-2xl brown-btn`} aria-hidden="true" />
                             )}
                             <span className="luxury-label text-[11px] text-gold-text">{style}</span>
                           </div>

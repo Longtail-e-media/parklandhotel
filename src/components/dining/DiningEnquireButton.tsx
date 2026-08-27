@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
 import EnquiryModal from "@/components/ui/EnquiryModal";
 import EnquiryForm from "@/components/ui/EnquiryForm";
 
@@ -15,8 +14,7 @@ export default function DiningEnquireButton({ venueName }: { venueName: string }
         onClick={() => setIsOpen(true)}
         className="luxury-btn  mt-10 inline-flex cursor-pointer bg-(--color-primary-green) text-white"
       >
-        Enquire Now <ArrowRight className="w-4 h-4" />
-        
+        Enquire Now <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
       </button>
 
       <EnquiryModal title={`Enquire — ${venueName}`} isOpen={isOpen} onClose={() => setIsOpen(false)}>

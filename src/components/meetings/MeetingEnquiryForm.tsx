@@ -4,15 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Check, ChevronDown, Clock, Mail, MessageSquare, Minus, Phone, Plus, User } from "lucide-react";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
 
 
 const fields = [
-  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", Icon: User },
-  { name: "email", label: "Email", placeholder: "Email", type: "email", Icon: Mail },
-  { name: "mobile", label: "Mobile No.", placeholder: "Mobile No.", type: "tel", Icon: Phone },
+  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", icon: "user" },
+  { name: "email", label: "Email", placeholder: "Email", type: "email", icon: "envelope" },
+  { name: "mobile", label: "Mobile No.", placeholder: "Mobile No.", type: "tel", icon: "phone" },
 ] as const;
 
 const EVENT_SLOTS = [
@@ -55,7 +54,7 @@ export default function MeetingEnquiryForm() {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
-      {fields.map(({ name, label, placeholder, type, Icon }) => (
+      {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
           <label htmlFor={`hall-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             {label}
@@ -66,7 +65,7 @@ export default function MeetingEnquiryForm() {
               errors[name] ? "border-red-400" : "border-hairline"
             }`}
           >
-            <Icon className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
             <input
               id={`hall-${name}`}
               type={type}
@@ -102,7 +101,7 @@ export default function MeetingEnquiryForm() {
             <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
-            <Calendar className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="hall-date"
               name="date"
@@ -127,7 +126,7 @@ export default function MeetingEnquiryForm() {
               aria-label="Decrease pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Minus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-minus text-sm" aria-hidden="true" />
             </button>
             <input
               id="hall-pax"
@@ -147,7 +146,7 @@ export default function MeetingEnquiryForm() {
               aria-label="Increase pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-plus text-sm" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -177,7 +176,7 @@ export default function MeetingEnquiryForm() {
           Message
         </label>
         <div className="flex items-start gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-          <MessageSquare className="w-4 h-4 text-luxury-muted shrink-0 mt-0.5" aria-hidden />
+          <i className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5" aria-hidden="true" />
           <textarea
             id="hall-message"
             rows={3}
@@ -246,15 +245,15 @@ function EventSlotSelect({
           open ? "border-soft" : hasError ? "border-red-400" : "border-hairline"
         }`}
       >
-        <Clock className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+        <i className="fa-solid fa-clock text-base text-luxury-muted shrink-0" aria-hidden="true" />
         <span className={`flex-1 min-w-0 text-sm ${selected ? "text-luxury-charcoal" : "text-luxury-muted"}`}>
           {selected ? selected.label : "Select slot"}
         </span>
-        <ChevronDown
-          className={`w-4 h-4 text-luxury-muted shrink-0 transition-transform duration-200 ${
+        <i
+          aria-hidden="true"
+          className={`fa-solid fa-chevron-down text-base text-luxury-muted shrink-0 transition-transform duration-200 ${
             open ? "rotate-180" : ""
           }`}
-          aria-hidden
         />
       </button>
 
@@ -282,7 +281,7 @@ function EventSlotSelect({
               }`}
             >
               {slot.label}
-              {isSelected && <Check className="w-4 h-4 text-gold" aria-hidden />}
+              {isSelected && <i className="fa-solid fa-check text-base text-gold" aria-hidden="true" />}
             </button>
           );
         })}

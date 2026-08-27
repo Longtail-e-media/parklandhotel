@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Calendar, User } from "lucide-react";
+import { getBlogPosts, findBlogPostIndex } from "@/lib/data";
 import { blogPage } from "@/data/data";
 import { site } from "@/config/site";
 import { formatBlogDate } from "@/lib/blog";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import Watermark from "@/components/ui/Watermark";
 
-export function generateStaticParams() {
-  return blogPage.posts.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  const posts = await getBlogPosts();
+  const items = posts.length > 0 ? posts : blogPage.posts;
+  return items.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -19,7 +21,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPage.posts.find((p) => p.slug === slug);
+  const posts = await getBlogPosts();
+  const items = posts.length > 0 ? posts : blogPage.posts;
+  const post = items[findBlogPostIndex(items, slug)];
   if (!post) return {};
 
   const title = `${post.title} | Blog | ${site.name}`;
@@ -44,7 +48,9 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = blogPage.posts.find((p) => p.slug === slug);
+  const posts = await getBlogPosts();
+  const items = posts.length > 0 ? posts : blogPage.posts;
+  const post = items[findBlogPostIndex(items, slug)];
   if (!post) notFound();
 
   return (
@@ -68,7 +74,7 @@ export default async function BlogPostPage({
             href="/blog"
             className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
           >
-            <ArrowLeft className="w-4 h-4" /> All Stories
+            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Stories
           </Link>
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -78,11 +84,11 @@ export default async function BlogPostPage({
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-luxury-muted mt-6">
                 <span className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-calendar text-base brown-btn" aria-hidden="true" />
                   {formatBlogDate(post.date)}
                 </span>
                 <span className="flex items-center gap-2">
-                  <User className="w-4 h-4 brown-btn" strokeWidth={1.5} aria-hidden />
+                  <i className="fa-solid fa-user text-base brown-btn" aria-hidden="true" />
                   {post.author}
                 </span>
               </div>
@@ -106,7 +112,7 @@ export default async function BlogPostPage({
             </div>
 
             <div className="lg:col-span-4 lg:sticky top-25">
-              <RelatedPosts current={post} />
+              <RelatedPosts current={post} posts={items} />
             </div>
           </div>
         </div>

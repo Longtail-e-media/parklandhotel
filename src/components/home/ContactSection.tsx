@@ -1,4 +1,3 @@
-import { Phone, Smartphone, Mail } from "lucide-react";
 import { contact, kathmanduOffice, chitwanOffice } from "@/config/site";
 
 const offices = [
@@ -34,13 +33,13 @@ export default function ContactSection() {
               <p className=" text-sm leading-relaxed mb-6">{office.address}</p>
               <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
                 <li className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 shrink-0" /> {office.phones.join(" / ")}
+                  <i className="fa-solid fa-phone text-base shrink-0" aria-hidden="true" /> {office.phones.join(" / ")}
                 </li>
                 <li className="flex items-center gap-3">
-                  <Smartphone className="w-4 h-4 shrink-0" /> {office.mobile.number} ({office.mobile.name})
+                  <i className="fa-solid fa-mobile-screen text-base shrink-0" aria-hidden="true" /> {office.mobile.number} ({office.mobile.name})
                 </li>
                 <li className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 shrink-0" /> {office.email}
+                  <i className="fa-solid fa-envelope text-base shrink-0" aria-hidden="true" /> {office.email}
                 </li>
               </ul>
             </div>

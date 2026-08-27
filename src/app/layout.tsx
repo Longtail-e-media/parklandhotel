@@ -87,6 +87,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang={site.locale} className={`${cormorantGaramond.variable} ${workSans.variable}`}>
       <head>
+        {/* CMS rich-text (CKEditor) content can't embed Lucide's React icons,
+            so authors mark icons up as plain `<i class="fa-solid fa-...">`
+            tags — loading the Font Awesome 7 web-font kit from cdnjs (no
+            self-hosted icon assets) is what turns those into glyphs. */}
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+          integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}

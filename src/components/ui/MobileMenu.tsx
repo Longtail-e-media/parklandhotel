@@ -2,14 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, X } from "lucide-react";
 import type { NavItem } from "@/types";
-import { site, contact, address } from "@/config/site";
+import { site, contact, address, links } from "@/config/site";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   menu: NavItem[];
+  phone?: string;
+  phoneHref?: string;
+  bookingUrl?: string;
+  email?: string;
 }
 
 /**
@@ -18,7 +21,16 @@ interface MobileMenuProps {
  * dimmed backdrop. Used at every breakpoint — the nav has too many items, and
  * long labels like "Experiences & Destination", to sit inline in the header.
  */
-export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
+export default function MobileMenu({
+  isOpen,
+  onClose,
+  menu,
+  phone = contact.phone,
+  phoneHref = `tel:${contact.phoneE164}`,
+  bookingUrl = links.booking,
+  email = contact.email,
+}: MobileMenuProps) {
+  const isExternalBooking = bookingUrl.startsWith("http");
   // Label of the expanded submenu — only one is open at a time.
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
@@ -77,7 +89,7 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
             className="p-2 -mr-2 cursor-pointer hover:opacity-70 transition-opacity"
             aria-label="Close menu"
           >
-            <X className="w-6 h-6" />
+            <i className="fa-solid fa-xmark text-2xl" aria-hidden="true" />
           </button>
         </div>
 
@@ -112,8 +124,9 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
                           aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item.label} submenu`}
                           className="flex items-center pl-3 -mr-2 pr-2 border-l border-hairline cursor-pointer transition-colors"
                         >
-                          <ChevronDown
-                            className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
+                          <i
+                            aria-hidden="true"
+                            className={`fa-solid fa-chevron-down text-xl shrink-0 transition-transform duration-300 ${
                               isExpanded ? "rotate-180" : ""
                             }`}
                           />
@@ -159,25 +172,26 @@ export default function MobileMenu({ isOpen, onClose, menu }: MobileMenuProps) {
             })}
           </ul>
 
-          <Link
-            href="#book"
+          <a
+            href={bookingUrl}
             onClick={onClose}
+            {...(isExternalBooking ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             className="luxury-btn luxury-btn-solid mt-8 w-full justify-center text-center"
           >
             Book Now
-          </Link>
+          </a>
         </nav>
 
         <div className="px-6 pb-8 pt-4 text-sm text-luxury-charcoal/70 space-y-1 shrink-0 border-t border-hairline">
           <p>{address.full}</p>
           <p>
-            <a href={`tel:${contact.phoneE164}`} className="hover:text-gold transition-colors">
-              {contact.phone}
+            <a href={phoneHref} className="hover:text-gold transition-colors">
+              {phone}
             </a>
           </p>
           <p>
-            <a href={`mailto:${contact.email}`} className="hover:text-gold transition-colors">
-              {contact.email}
+            <a href={`mailto:${email}`} className="hover:text-gold transition-colors">
+              {email}
             </a>
           </p>
         </div>

@@ -5,15 +5,14 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Calendar, Check, Clock, CreditCard, Mail, Minus, Phone, Plus, Tag, User } from "lucide-react";
 import type { OfferItem } from "@/types";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
 
 const contactFields = [
-  { name: "name", label: "Full Name ", placeholder: "Full Name", type: "text", Icon: User },
-  { name: "email", label: "Email Address", placeholder: "Your valid email address", type: "email", Icon: Mail },
-  { name: "phone", label: "Phone Number", placeholder: "Your phone no.", type: "tel", Icon: Phone },
+  { name: "name", label: "Full Name ", placeholder: "Full Name", type: "text", icon: "user" },
+  { name: "email", label: "Email Address", placeholder: "Your valid email address", type: "email", icon: "envelope" },
+  { name: "phone", label: "Phone Number", placeholder: "Your phone no.", type: "tel", icon: "phone" },
 ] as const;
 
 const paymentOptions = [
@@ -21,13 +20,13 @@ const paymentOptions = [
     value: "now" as const,
     label: "Pay Now",
     description: "Secure your booking with payment today",
-    Icon: CreditCard,
+    icon: "credit-card",
   },
   {
     value: "later" as const,
     label: "Pay Later",
     description: "Reserve now, settle payment at check-in",
-    Icon: Clock,
+    icon: "clock",
   },
 ];
 
@@ -76,7 +75,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onValid)} noValidate>
-      {contactFields.map(({ name, label, placeholder, type, Icon }) => (
+      {contactFields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
           <label htmlFor={`booking-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
             {label}
@@ -87,7 +86,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
               errors[name] ? "border-red-400" : "border-hairline"
             }`}
           >
-            <Icon className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
             <input
               id={`booking-${name}`}
               type={type}
@@ -147,7 +146,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
               aria-label="Decrease pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Minus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-minus text-sm" aria-hidden="true" />
             </button>
             <input
               id="booking-pax"
@@ -165,7 +164,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
               aria-label="Increase pax"
               className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-luxury-charcoal hover:bg-luxury-charcoal/5 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <i className="fa-solid fa-plus text-sm" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -175,7 +174,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
             Price
           </label>
           <div id="booking-price" className="flex items-center gap-2 h-13">
-            <Tag className="w-4 h-4 text-luxury-muted shrink-0" aria-hidden />
+            <i className="fa-solid fa-tag text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <span className="text-sm text-luxury-charcoal">
               {offer.currency} {offer.unitPrice.toLocaleString()}
             </span>
@@ -193,7 +192,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
       <div>
         <span className="luxury-label text-[11px] text-luxury-charcoal block mb-3">Choose Payment Method</span>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {paymentOptions.map(({ value, label, description, Icon }) => {
+          {paymentOptions.map(({ value, label, description, icon }) => {
             const active = payment === value;
             return (
               <button
@@ -210,7 +209,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
                     active ? "bg-(--color-primary-green) text-white" : "bg-luxury-cream text-luxury-muted"
                   }`}
                 >
-                  <Icon className="w-4 h-4" aria-hidden />
+                  <i className={`fa-solid fa-${icon} text-base`} aria-hidden="true" />
                 </span>
                 <span className="flex-1 min-w-0 pr-2">
                   <span className="block text-sm font-medium text-luxury-charcoal">{label}</span>
@@ -221,7 +220,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
                     active ? "border-(--color-primary-green) bg-(--color-primary-green)" : "border-hairline"
                   }`}
                 >
-                  {active && <Check className="w-3 h-3 text-white" aria-hidden />}
+                  {active && <i className="fa-solid fa-check text-xs text-white" aria-hidden="true" />}
                 </span>
               </button>
             );

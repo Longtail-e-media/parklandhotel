@@ -1,28 +1,16 @@
-import {
-  Wifi,
-  Bell,
-  ShieldCheck,
-  Car,
-  Bike,
-  Banknote,
-  Music,
-  Users,
-  Waves,
-  type LucideIcon,
-} from "lucide-react";
 import { amenities } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
 
-const ICONS: Record<string, LucideIcon> = {
-  wifi: Wifi,
-  bell: Bell,
-  "shield-check": ShieldCheck,
-  car: Car,
-  bike: Bike,
-  banknote: Banknote,
-  music: Music,
-  users: Users,
-  waves: Waves,
+const ICONS: Record<string, string> = {
+  wifi: "wifi",
+  bell: "bell",
+  "shield-check": "shield-halved",
+  car: "car",
+  bike: "bicycle",
+  banknote: "money-bill",
+  music: "music",
+  users: "users",
+  waves: "water",
 };
 
 export default function AmenitiesSection() {
@@ -60,16 +48,16 @@ export default function AmenitiesSection() {
           {/* --- Amenity cards ------------------------------------------- */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 animate-fade-in-up delay-100">
             {amenities.map((item) => {
-              const Icon = ICONS[item.icon];
+              const icon = ICONS[item.icon];
               return (
                 <div
                   key={item.label}
                   className="group flex flex-col items-center justify-center gap-5 text-center rounded-2xl  bg-[#fff5f594] px-5 py-10 transition-all duration-500 hover:-translate-y-1.5"
                 >
-                  {Icon && (
-                    <Icon
-                      className="w-100 h-15 opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-(--color-dark-brown)"
-                      strokeWidth={1.25}
+                  {icon && (
+                    <i
+                      className={`fa-solid fa-${icon} text-[60px] opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-(--color-dark-brown)`}
+                      aria-hidden="true"
                     />
                   )}
                   <p className="font-display text-lg text-luxury-charcoal leading-snug">

@@ -1,7 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-
 export default function Newsletter() {
   return (
     <form
@@ -19,7 +17,7 @@ export default function Newsletter() {
         className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-(--color-primary-green) hover:dark:bg-(--color-primary-green) text-white transition-colors"
         aria-label="Subscribe"
       >
-        <ArrowRight className="w-4 h-4" />
+        <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
       </button>
     </form>
   );

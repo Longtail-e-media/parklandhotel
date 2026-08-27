@@ -3,7 +3,6 @@ import DiningGallery from "@/components/dining/DiningGallery";
 import Watermark from "@/components/ui/Watermark";
 import { site } from "@/config/site";
 import { diningPage } from "@/data/data";
-import { ArrowLeft, Check, Clock, QrCode } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,7 +71,7 @@ export default async function DiningVenueDetailPage({
             href="/dining-bar"
             className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
           >
-            <ArrowLeft className="w-4 h-4" /> All Dining & Bar
+            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Dining & Bar
           </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -87,7 +86,7 @@ export default async function DiningVenueDetailPage({
               <h1 className="luxury-section-title text-luxury-charcoal">{venue.name}</h1>
 
               <p className="flex items-center gap-2 text-sm text-luxury-muted mt-6">
-                <Clock className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                <i className="fa-solid fa-clock text-base brown-btn shrink-0" aria-hidden="true" />
                 {venue.hours}
               </p>
 
@@ -103,7 +102,7 @@ export default async function DiningVenueDetailPage({
                     key={feature}
                     className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-full px-5 py-3"
                   >
-                    <Check className="w-4 h-4 brown-btn shrink-0" strokeWidth={1.5} aria-hidden />
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
                     {feature}
                   </li>
                 ))}

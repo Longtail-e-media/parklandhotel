@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
 import { diningPage } from "@/data/data";
 
 export default function DiningVenuesGrid() {
@@ -28,10 +27,10 @@ export default function DiningVenuesGrid() {
                 <h3 className="luxury-section-title text-2xl">{venue.name}</h3>
                 <p className="mt-4  grow">{venue.excerpt}</p>
                 <p className="flex items-center gap-2 text-xs text-luxury-muted mt-5">
-                  <Clock className="w-3.5 h-3.5 shrink-0" aria-hidden /> {venue.hours}
+                  <i className="fa-solid fa-clock text-sm shrink-0" aria-hidden="true" /> {venue.hours}
                 </p>
                 <span className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-5 group-hover:gap-3 transition-all">
-                  View Details <ArrowRight className="w-4 h-4" />
+                  View Details <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
                 </span>
               </div>
             </Link>
