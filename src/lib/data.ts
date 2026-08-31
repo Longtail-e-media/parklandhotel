@@ -238,6 +238,10 @@ export function getRoomsPackage(): Promise<any | null> {
 export function getArticles(): Promise<any[] | null> {
   return fetchAPI<any[]>("article_all");
 }
+export async function findArticleById(): Promise<number | null> {
+  const articlesinner = await getArticles();
+  return articlesinner?.find((item:any) => item.id === 3) ?? null;
+}
 
 export async function findArticleBySlug(slug: string): Promise<any | null> {
   const articles = await getArticles();

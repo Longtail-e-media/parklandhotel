@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-const RECAPTCHA_SITE_KEY = "6LfmqM8qAAAAAP2rcnIbVUSu0mnVnBqLdFiI2nj9";
+const RECAPTCHA_SITE_KEY = "6LeWHZstAAAAACEuWRj2UgkHxhSTsHAhohi24175";
 
 export default function Recaptcha() {
   return (

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getArticles, findArticleBySlug } from "@/lib/data";
+import { getArticles, findArticleBySlug, findArticleById } from "@/lib/data";
 import { site } from "@/config/site";
+import { deflate } from "zlib";
 
 /**
  * Top-level segments already owned by a static route (`src/app/<segment>`).
@@ -38,6 +39,7 @@ export async function generateStaticParams() {
     .map((a: any) => ({ slug: a.slug as string }));
 }
 
+
 export async function generateMetadata({
   params,
 }: {
@@ -66,6 +68,8 @@ export async function generateMetadata({
     },
   };
 }
+
+
 
 export default async function CmsArticlePage({
   params,
@@ -96,6 +100,7 @@ export default async function CmsArticlePage({
           className="container mx-auto px-6 lg:px-10"
           dangerouslySetInnerHTML={{ __html: article.content }}
         />
+
       </section>
     </main>
   );
