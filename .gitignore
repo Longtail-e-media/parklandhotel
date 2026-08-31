@@ -5,7 +5,7 @@
 /.next/
 /out/
 /.vercel/
-
+.gitold
 # production builds
 /build
 /dist
