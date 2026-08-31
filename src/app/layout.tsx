@@ -7,6 +7,7 @@ import CookieConsent from "@/components/ui/CookieConsent";
 config.autoAddCss = false;
 import "./globals.css";
 import { site, contact, address, business, SITE_URL } from "@/config/site";
+import { buildMetadata } from "@/lib/metadata";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display-serif",
@@ -23,26 +24,9 @@ const workSans = Work_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: site.title,
-  description: site.description,
-  keywords: site.keywords,
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: site.title,
-    description: site.description,
-    url: SITE_URL,
-    siteName: site.name,
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: site.title,
-    description: site.description,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata("home", { openGraph: { locale: "en_US" } }, "/");
+}
 
 function organizationSchema() {
   return {

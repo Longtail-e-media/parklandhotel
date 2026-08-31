@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import { submitEnquiry } from "@/lib/enquiry";
 
 
 const fields = [
@@ -26,23 +27,28 @@ const meetingEnquirySchema = z.object({
   email: emailSchema,
   mobile: phoneSchema,
   eventSlot: z.string().min(1, "Please select an event slot."),
+  eventDate: z.string().min(1, "Please select a date."),
   message: z.string(),
 });
 
 type MeetingEnquiryFormValues = z.infer<typeof meetingEnquirySchema>;
 
-export default function MeetingEnquiryForm() {
+export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string } = {}) {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const today = new Date().toISOString().slice(0, 10);
-    const [pax, setPax] = useState(1);
+  const [pax, setPax] = useState(1);
   const {
     register,
     handleSubmit,
+    reset,
     control,
     formState: { errors },
   } = useForm<MeetingEnquiryFormValues>({
     resolver: zodResolver(meetingEnquirySchema),
-    defaultValues: { name: "", email: "", mobile: "", eventSlot: "", message: "" },
+    defaultValues: { name: "", email: "", mobile: "", eventSlot: "", eventDate: "", message: "" },
   });
 
   const { onChange: onMobileChange, ...mobileField } = register("mobile");
@@ -52,8 +58,41 @@ export default function MeetingEnquiryForm() {
     setPax(Number.isFinite(value) && value >= 1 ? Math.min(value, 10) : 1);
   };
 
+  const onSubmit = async (data: MeetingEnquiryFormValues) => {
+    if (!captchaToken) {
+      setSubmitError("Please complete the reCAPTCHA.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const result = await submitEnquiry("enquery_mail_hall.php", {
+      full_name: data.name,
+      email: data.email,
+      phone: data.mobile,
+      schedule_slot: data.eventSlot,
+      event_date: data.eventDate,
+      pax: String(pax),
+      special_request: data.message,
+      package_name: spaceName || "General Enquiry",
+    }, captchaToken);
+
+    setIsSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
+      return;
+    }
+
+    setSubmitted(true);
+    reset();
+    setPax(1);
+    setCaptchaToken(null);
+  };
+
   return (
-    <form className="space-y-5" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
+    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
       {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
           <label htmlFor={`hall-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
@@ -100,17 +139,27 @@ export default function MeetingEnquiryForm() {
             Date
             <span className="text-red-500">*</span>
           </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
+          <div
+            className={`flex items-center gap-2 rounded-2xl border px-4 py-4 focus-within:border-soft transition-colors ${
+              errors.eventDate ? "border-red-400" : "border-hairline"
+            }`}
+          >
             <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="hall-date"
-              name="date"
               type="date"
-              required
               min={today}
+              aria-invalid={!!errors.eventDate}
+              aria-describedby={errors.eventDate ? "hall-date-error" : undefined}
               className="w-full min-w-0 bg-transparent text-sm text-luxury-charcoal focus:outline-none"
+              {...register("eventDate")}
             />
           </div>
+          {errors.eventDate && (
+            <p id="hall-date-error" className="text-xs text-red-500 mt-2">
+              {errors.eventDate.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -187,10 +236,16 @@ export default function MeetingEnquiryForm() {
         </div>
       </div>
 
-      <Recaptcha />
+      <Recaptcha onChange={setCaptchaToken} />
 
-      <button type="submit" className="luxury-btn luxury-btn-accent !py-4">
-        {submitted ? "Message Sent" : "Submit"}
+      {submitError && <p className="text-xs text-red-500 font-medium">{submitError}</p>}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="luxury-btn luxury-btn-accent !py-4 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isSubmitting ? "Sending…" : submitted ? "Message Sent" : "Submit"}
       </button>
       {submitted && (
         <p className="text-sm text-luxury-muted text-center">

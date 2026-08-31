@@ -1,8 +1,12 @@
 import Image from "next/image";
-import { activities } from "@/data/data";
+import { activities as fallbackActivities } from "@/data/data";
+import { getActivities } from "@/lib/data";
 import Watermark from "@/components/ui/Watermark";
 
-export default function ActivitiesSection() {
+export default async function ActivitiesSection() {
+  const items = await getActivities();
+  const activities = items.length > 0 ? items : fallbackActivities;
+
   return (
     <section id="activities" className="relative overflow-hidden scroll-mt-24">
       <Watermark

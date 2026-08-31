@@ -1,12 +1,19 @@
 import { diningPage } from "@/data/data";
+import { getDiningPackage, stripHtml } from "@/lib/data";
 import Watermark from "@/components/ui/Watermark";
 
 /**
  * Typographic page header — no banner image, so the top padding here is what
- * clears the fixed navbar (h-24 / h-20 once scrolled).
+ * clears the fixed navbar (h-24 / h-20 once scrolled). Title/intro prefer the
+ * Dining & Bar category record from `package` once populated; falls back to
+ * the static copy below until then.
  */
-export default function DiningHeader() {
-  const { header, intro } = diningPage;
+export default async function DiningHeader() {
+  const { header, intro: fallbackIntro } = diningPage;
+  const diningPackage = await getDiningPackage();
+
+  const title = diningPackage?.title ? stripHtml(diningPackage.title) : header.title;
+  const intro = diningPackage?.description ? stripHtml(diningPackage.description) : fallbackIntro;
 
   return (
     <section className="relative overflow-hidden pt-36 lg:pt-44 pb-4 lg:pb-8">
@@ -29,7 +36,7 @@ export default function DiningHeader() {
           {header.eyebrow}
         </p>
         <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
-          {header.title}
+          {title}
         </h2>
         <p className="text-luxury-muted mt-5 whitespace-pre-line animate-fade-in-up delay-300">{intro}</p>
       </div>

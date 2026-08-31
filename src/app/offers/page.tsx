@@ -2,21 +2,15 @@ import type { Metadata } from "next";
 import OffersHeader from "@/components/offers/OffersHeader";
 import OffersGrid from "@/components/offers/OffersGrid";
 import { site } from "@/config/site";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: `Offers & Packages | ${site.name}`,
-  description:
-    "Seasonal dining events and stay packages at Hotel Parkland in Sauraha, Chitwan National Park — limited-time offers, reserved online.",
-  alternates: { canonical: "/offers" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata("offers", {}, "/offers", {
     title: `Offers & Packages | ${site.name}`,
     description:
       "Seasonal dining events and stay packages at Hotel Parkland in Sauraha, Chitwan National Park — limited-time offers, reserved online.",
-    url: "/offers",
-    siteName: site.name,
-    type: "website",
-  },
-};
+  });
+}
 
 export default function OffersPage() {
   return (

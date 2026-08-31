@@ -6,6 +6,7 @@ import { getBlogPosts, findBlogPostIndex } from "@/lib/data";
 import { blogPage } from "@/data/data";
 import { site } from "@/config/site";
 import { formatBlogDate } from "@/lib/blog";
+import { buildMetadata } from "@/lib/metadata";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import Watermark from "@/components/ui/Watermark";
 
@@ -27,19 +28,15 @@ export async function generateMetadata({
   if (!post) return {};
 
   const title = `${post.title} | Blog | ${site.name}`;
-  return {
-    title,
-    description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: {
+  return buildMetadata(
+    "blog",
+    {
       title,
       description: post.excerpt,
-      url: `/blog/${post.slug}`,
-      siteName: site.name,
-      type: "article",
-      images: [post.image],
+      openGraph: { title, description: post.excerpt, type: "article", images: [post.image] },
     },
-  };
+    `/blog/${post.slug}`
+  );
 }
 
 export default async function BlogPostPage({

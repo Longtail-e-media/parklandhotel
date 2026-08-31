@@ -1,31 +1,39 @@
 import { contact, kathmanduOffice, chitwanOffice, address } from "@/config/site";
+import { getSiteRegulars, splitContactList } from "@/lib/data";
 
 const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address.full)}&output=embed`;
 
-const infoBlocks = [
-  {
-    heading: "Reservations Office",
-    subheading: kathmanduOffice.label,
-    lines: [
-      { label: "Address", value: kathmanduOffice.address },
-      { label: "Telephone", value: kathmanduOffice.phones.join(" / ") },
-      { label: "Mobile", value: `${kathmanduOffice.mobile.number} (${kathmanduOffice.mobile.name})` },
-      { label: "Email", value: kathmanduOffice.email, href: `mailto:${kathmanduOffice.email}` },
-    ],
-  },
-  {
-    heading: "Hotel Location",
-    subheading: chitwanOffice.label,
-    lines: [
-      { label: "Address", value: chitwanOffice.address },
-      { label: "Telephone", value: chitwanOffice.phones.join(" / ") },
-      { label: "Mobile", value: `${chitwanOffice.mobile.number} (${chitwanOffice.mobile.name})` },
-      { label: "Email", value: contact.email, href: `mailto:${contact.email}` },
-    ],
-  },
-];
+export default async function ContactInfoSection() {
+  const siteRegulars = await getSiteRegulars();
+  // The CMS models one site-wide phone/email, not one per office — both
+  // blocks share this single dynamic value once set, same as the homepage's
+  // ContactSection.
+  const phone = splitContactList(siteRegulars?.contact_info)[0] || contact.phone;
+  const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
 
-export default function ContactInfoSection() {
+  const infoBlocks = [
+    {
+      heading: "Reservations Office",
+      subheading: kathmanduOffice.label,
+      lines: [
+        { label: "Address", value: kathmanduOffice.address },
+        { label: "Telephone", value: phone },
+        { label: "Mobile", value: `${kathmanduOffice.mobile.number} (${kathmanduOffice.mobile.name})` },
+        { label: "Email", value: email, href: `mailto:${email}` },
+      ],
+    },
+    {
+      heading: "Hotel Location",
+      subheading: chitwanOffice.label,
+      lines: [
+        { label: "Address", value: chitwanOffice.address },
+        { label: "Telephone", value: phone },
+        { label: "Mobile", value: `${chitwanOffice.mobile.number} (${chitwanOffice.mobile.name})` },
+        { label: "Email", value: email, href: `mailto:${email}` },
+      ],
+    },
+  ];
+
   return (
     <section className="pb-24 lg:pb-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">

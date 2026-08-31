@@ -7,8 +7,14 @@ import { SITE_URL, site, contact, address, business, links } from "@/config/site
  * Builds a complete Next.js `Metadata` object for any page.
  *
  * @param pageKey  - "home" reads `home_meta`; any other key reads `pages_meta[pageKey]`
- * @param overrides - Partial<Metadata> merged on top (page-level values win)
+ * @param overrides - Partial<Metadata> merged on top, unconditionally (e.g. a detail
+ *   page's item-specific title/og:image, which should always win over generic page meta)
  * @param pathSegment - URL path, e.g. "/about-us". Used to generate the canonical URL.
+ * @param fallback - title/description/keywords used only when the CMS has no
+ *   `pages_meta` entry for this page yet — sits between the CMS value and the
+ *   generic site-wide default, so an already-well-written static description
+ *   isn't replaced by generic copy just because the admin hasn't filled in
+ *   this page's meta fields.
  *
  * @example — static page
  *   export async function generateMetadata(): Promise<Metadata> {
@@ -21,7 +27,8 @@ import { SITE_URL, site, contact, address, business, links } from "@/config/site
 export async function buildMetadata(
   pageKey: PageMetaKey | string,
   overrides: Partial<Metadata> = {},
-  pathSegment: string = ""
+  pathSegment: string = "",
+  fallback: { title?: string; description?: string; keywords?: string } = {}
 ): Promise<Metadata> {
   const meta = await getSiteMetadata();
 
@@ -45,16 +52,19 @@ export async function buildMetadata(
 
   const title =
     pageMeta?.meta_title ??
+    fallback.title ??
     meta.site?.title ??
     site.title;
 
   const description =
     pageMeta?.meta_description ??
+    fallback.description ??
     meta.site?.title ??
     site.description;
 
   const keywords =
     pageMeta?.meta_keywords ??
+    fallback.keywords ??
     site.keywords;
 
   const ogImage = meta.social?.fb_img ?? meta.social?.x_img ?? "";

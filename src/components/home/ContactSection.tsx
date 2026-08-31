@@ -1,11 +1,19 @@
 import { contact, kathmanduOffice, chitwanOffice } from "@/config/site";
+import { getSiteRegulars, splitContactList } from "@/lib/data";
 
 const offices = [
   { ...kathmanduOffice, heading: "Reservations", delay: "" },
   { ...chitwanOffice, heading: "At the Park", delay: "delay-100" },
 ];
 
-export default function ContactSection() {
+export default async function ContactSection() {
+  const siteRegulars = await getSiteRegulars();
+  // The CMS models one site-wide phone/email, not one per office — both cards
+  // (and the CTA buttons below) share this single dynamic value once set.
+  const phone = splitContactList(siteRegulars?.contact_info)[0] || contact.phone;
+  const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
+  const phoneHref = phone.replace(/[^\d+]/g, "");
+
   return (
     <section id="contact" className="    relative py-24 lg:py-32 overflow-hidden scroll-mt-24
     after:absolute after:right-0 after:bottom-0
@@ -33,13 +41,13 @@ export default function ContactSection() {
               <p className=" text-sm leading-relaxed mb-6">{office.address}</p>
               <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
                 <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-phone text-base shrink-0" aria-hidden="true" /> {office.phones.join(" / ")}
+                  <i className="fa-solid fa-phone text-base shrink-0" aria-hidden="true" /> {phone}
                 </li>
                 <li className="flex items-center gap-3">
                   <i className="fa-solid fa-mobile-screen text-base shrink-0" aria-hidden="true" /> {office.mobile.number} ({office.mobile.name})
                 </li>
                 <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-envelope text-base shrink-0" aria-hidden="true" /> {office.email}
+                  <i className="fa-solid fa-envelope text-base shrink-0" aria-hidden="true" /> {email}
                 </li>
               </ul>
             </div>
@@ -47,10 +55,10 @@ export default function ContactSection() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14 animate-fade-in-up delay-200">
-          <a href={`tel:${contact.phoneE164}`} className="luxury-btn luxury-btn-accent">
+          <a href={`tel:${phoneHref}`} className="luxury-btn luxury-btn-accent">
             Call To Book
           </a>
-          <a href={`mailto:${contact.email}`} className="luxury-btn">
+          <a href={`mailto:${email}`} className="luxury-btn">
             Send An Inquiry
           </a>
         </div>

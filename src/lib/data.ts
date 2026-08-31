@@ -6,7 +6,7 @@
 
 import { fetchAPI } from "./api";
 import { resolveHeroImages } from "./images";
-import type { BlogPost, FaqItem, GalleryItem, Landmark, NavItem, NearbyItem, NewsData, OfferItem, RoomType, Testimonial } from "@/types";
+import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomType, Testimonial } from "@/types";
 import type { SiteMetadata } from "@/types/metadata";
 import { business } from "@/config/site";
 
@@ -107,7 +107,10 @@ export function getSubpackages(): Promise<any[] | null> {
 /** Items (rooms/venues/outlets) of one `subpackage` category. */
 export async function getCategoryItems(parentId: string): Promise<any[]> {
   const subpackage = await getSubpackages();
-  const category = subpackage?.find(
+  // The CMS returns `{ action: "error", message: "no data found" }` instead
+  // of `[]` when a category has no data — guard against the non-array shape.
+  if (!Array.isArray(subpackage)) return [];
+  const category = subpackage.find(
     (c: any) => String(c.parent_id) === parentId,
   );
   return category?.items ?? [];
@@ -233,14 +236,129 @@ export function getRoomsPackage(): Promise<any | null> {
   return getPackage(ROOMS_CATEGORY_ID);
 }
 
+// ── Dining & Bar (`subpackage` parent_id "2") ────────────────────────────────
+
+const DINING_CATEGORY_ID = "2";
+
+/** Raw shape of one `subpackage` dining/meeting item — same schema is reused across categories. */
+interface CmsVenueItem {
+  slug: string;
+  title: string;
+  img?: { src: string; title: string }[];
+  gallery_images?: { src: string; title: string }[];
+  description?: string;
+  content_1?: string | null;
+  /** Each amenity is a `tbl_features` record, not a plain string. */
+  amenities?: { title: string; icon?: string; img?: string }[];
+}
+
+/** Maps one CMS `subpackage` item onto the `DiningVenue` shape the UI expects. */
+function mapDiningVenue(item: CmsVenueItem): DiningVenue {
+  const images = resolveHeroImages(item);
+  const paragraphs = stripHtml([item.description, item.content_1].filter(Boolean).join("\n\n"))
+    .split(/\r?\n\r?\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  return {
+    slug: item.slug,
+    name: item.title,
+    // The CMS has no dedicated restaurant/bar field yet — infer it from the slug.
+    category: /bar/i.test(item.slug) ? "bar" : "restaurant",
+    image: images[0] ?? "",
+    images,
+    excerpt: truncate(paragraphs[0] ?? "", 160),
+    description: paragraphs.length > 0 ? paragraphs : [""],
+    // Not modelled by the CMS yet — no opening-hours field on `subpackage`.
+    hours: undefined,
+    features: Array.isArray(item.amenities)
+      ? item.amenities.map((a) => a?.title).filter((title): title is string => Boolean(title))
+      : [],
+  };
+}
+
+/** Dining/bar venues shown on the homepage/dining-bar pages, from `subpackage`. */
+export async function getDiningVenues(): Promise<DiningVenue[]> {
+  const items = await getCategoryItems(DINING_CATEGORY_ID);
+  return items.map(mapDiningVenue);
+}
+
+/** Dining & Bar category record (banner/title/description) for the listing page, from `package`. */
+export function getDiningPackage(): Promise<any | null> {
+  return getPackage(DINING_CATEGORY_ID);
+}
+
+// ── Meetings & Events (`subpackage` parent_id "3") ───────────────────────────
+
+const MEETINGS_CATEGORY_ID = "3";
+
+/** Raw shape of one `subpackage` meeting-space item's setup-style pax fields. */
+interface CmsMeetingItem extends CmsVenueItem {
+  theater?: string | null;
+  class_room_style?: string | null;
+  u_shape?: string | null;
+  round_table?: string | null;
+  rooms_Size?: string | null;
+  size?: string | null;
+}
+
+/** Pulls the leading integer out of a free-text pax field, e.g. "120 pax" -> 120. */
+function parsePax(value?: string | null): number | null {
+  const match = value?.match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
+/** Maps one CMS `subpackage` item onto the `MeetingSpace` shape the UI expects. */
+function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
+  const images = resolveHeroImages(item);
+  const paragraphs = stripHtml([item.description, item.content_1].filter(Boolean).join("\n\n"))
+    .split(/\r?\n\r?\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  const setupStyleFields: [string, string | null | undefined][] = [
+    ["U-Shape Style", item.u_shape],
+    ["Classroom Style", item.class_room_style],
+    ["Theatre Style", item.theater],
+    ["Round Table", item.round_table],
+  ];
+  const setupStyles = setupStyleFields
+    .map(([style, value]) => ({ style, pax: parsePax(value) }))
+    .filter((s): s is { style: string; pax: number } => s.pax !== null);
+  const maxPax = setupStyles.reduce((max, s) => Math.max(max, s.pax), 0);
+
+  return {
+    slug: item.slug,
+    name: item.title,
+    image: images[0] ?? "",
+    images,
+    excerpt: truncate(paragraphs[0] ?? "", 160),
+    description: paragraphs.length > 0 ? paragraphs : [""],
+    // Not a distinct CMS field — derived from the largest configured setup-style pax count.
+    capacity: maxPax > 0 ? `Up to ${maxPax} guests` : undefined,
+    size: item.rooms_Size?.trim() || item.size?.trim() || undefined,
+    features: Array.isArray(item.amenities)
+      ? item.amenities.map((a) => a?.title).filter((title): title is string => Boolean(title))
+      : [],
+    setupStyles: setupStyles.length > 0 ? setupStyles : undefined,
+  };
+}
+
+/** Meeting/event spaces shown on the homepage/meetings-events pages, from `subpackage`. */
+export async function getMeetingSpaces(): Promise<MeetingSpace[]> {
+  const items = await getCategoryItems(MEETINGS_CATEGORY_ID);
+  return items.map(mapMeetingSpace);
+}
+
+/** Meetings & Events category record (banner/title/description) for the listing page, from `package`. */
+export function getMeetingsPackage(): Promise<any | null> {
+  return getPackage(MEETINGS_CATEGORY_ID);
+}
+
 // ── CMS articles (`article_all`) ─────────────────────────────────────────────
 
 export function getArticles(): Promise<any[] | null> {
   return fetchAPI<any[]>("article_all");
-}
-export async function findArticleById(): Promise<number | null> {
-  const articlesinner = await getArticles();
-  return articlesinner?.find((item:any) => item.id === 3) ?? null;
 }
 
 export async function findArticleBySlug(slug: string): Promise<any | null> {
@@ -340,6 +458,27 @@ export async function findServiceBySlug(slug: string): Promise<any | null> {
     }
   }
   return null;
+}
+
+/** Homepage amenity icons, from the `services` type-1 (facilities) group — icon is resolved from `slug` by the UI. */
+export async function getAmenities(): Promise<AmenityItem[]> {
+  const groups = await getServices(1);
+  if (!Array.isArray(groups)) return [];
+  const items = groups.flatMap((group: any) => group?.items ?? []);
+  return items.map((item: any) => ({ label: item.title, icon: item.slug }));
+}
+
+/** Homepage activity tiles, from the `services` type-2 (activities) group — the first item is the featured tile. */
+export async function getActivities(): Promise<ActivityItem[]> {
+  const groups = await getServices(2);
+  if (!Array.isArray(groups)) return [];
+  const items = groups.flatMap((group: any) => group?.items ?? []);
+  return items.map((item: any, index: number) => ({
+    title: item.title,
+    subtitle: item.content_0 ? stripHtml(item.content_0) || undefined : undefined,
+    image: resolveHeroImages(item)[0] ?? "",
+    featured: index === 0,
+  }));
 }
 
 // ── Simple endpoints ─────────────────────────────────────────────────────────
@@ -615,12 +754,12 @@ function isPopupActive(item: CmsPopupItem): boolean {
 }
 
 /**
- * The CMS stores the link target as a bare domain ("www.booking.com") rather
+ * The CMS stores link targets as a bare domain ("www.booking.com") rather
  * than a full URL, so a naive `/${link}` (as if it were a site route) would
  * produce a broken internal path. Treat anything with a "." and no leading
  * slash as an external host and add the missing protocol.
  */
-function resolvePopupHref(link?: string): string | undefined {
+export function resolveExternalHref(link?: string): string | undefined {
   if (!link) return undefined;
   if (/^https?:\/\//i.test(link)) return link;
   if (link.startsWith("/")) return link;
@@ -641,7 +780,7 @@ function mapPopupSlide(item: CmsPopupItem, group: CmsPopupGroup): PopupSlide {
     image: !isVideo ? item.imglink?.[0]?.url : undefined,
     alt: item.imglink?.[0]?.alt || item.title,
     videoSrc: isVideo ? item.src : undefined,
-    href: resolvePopupHref(item.link),
+    href: resolveExternalHref(item.link),
   };
 }
 

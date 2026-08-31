@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
 import { site, contact, address, kathmanduOffice, chitwanOffice, links, business } from "@/config/site";
-import { getMenuItems, getSiteRegulars, getSocialGroup, splitContactList } from "@/lib/data";
+import { getMenuItems, getSiteRegulars, getSocialGroup, resolveExternalHref, splitContactList } from "@/lib/data";
 import Newsletter from "./Newsletter";
 import WhatsAppButton from "./WhatsAppButton";
 import Image from "next/image";
@@ -18,11 +18,12 @@ const fallbackSocials = [
 ].filter((s): s is typeof s & { href: string } => Boolean(s.href));
 
 export default async function Footer() {
-  const [exploreMenu, quickMenu, siteRegulars, socialGroup] = await Promise.all([
+  const [exploreMenu, quickMenu, siteRegulars, socialGroup, otaGroup] = await Promise.all([
     getMenuItems(2), // "Other Links" container — closest CMS match for the "Explore" column
     getMenuItems(3), // "Quick Links" container — matches the column name directly
     getSiteRegulars(),
     getSocialGroup(1),
+    getSocialGroup(2), // OTA/partner logos
   ]);
 
   const explore = exploreMenu.length > 0 ? exploreMenu : exploreLinks;
@@ -31,6 +32,20 @@ export default async function Footer() {
   const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
   const whatsappNumber = siteRegulars?.whatsapp_a || contact.whatsapp;
   const socialItems = socialGroup?.items?.length ? socialGroup.items : null;
+
+  // Only entries with a logo image render as a badge — CMS entries without one
+  // (e.g. a bare TripAdvisor link) have nothing to show in this slot.
+  const otaItems: { title?: string; url?: string; image: string }[] = (otaGroup?.items ?? []).filter(
+    (item: { image?: string | null }): item is { title?: string; url?: string; image: string } => Boolean(item?.image),
+  );
+  const badges =
+    otaItems.length > 0
+      ? otaItems.map((item) => ({
+          name: item.title || "Partner",
+          image: item.image,
+          link: resolveExternalHref(item.url) || "#",
+        }))
+      : trustBadges;
 
   return (
     <>
@@ -66,7 +81,7 @@ export default async function Footer() {
               </div>
             )}
             <div className="flex flex-wrap items-center justify-center md:justify-evenly gap-x-5 gap-y-6">
-              {trustBadges.map((badge) => (
+              {badges.map((badge) => (
                 <a href={badge.link} target="_blank" key={badge.name}><Image key={badge.name} src={badge.image} alt={badge.name} width={80} height={30} className="
                object-contain" /></a>
               ))}

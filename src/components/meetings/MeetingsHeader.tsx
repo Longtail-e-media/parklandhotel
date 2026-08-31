@@ -1,12 +1,19 @@
 import { meetingsPage } from "@/data/data";
+import { getMeetingsPackage, stripHtml } from "@/lib/data";
 import Watermark from "@/components/ui/Watermark";
 
 /**
  * Typographic page header — no banner image, so the top padding here is what
- * clears the fixed navbar (h-24 / h-20 once scrolled).
+ * clears the fixed navbar (h-24 / h-20 once scrolled). Title/intro prefer the
+ * Meetings & Events category record from `package` once populated; falls back
+ * to the static copy below until then.
  */
-export default function MeetingsHeader() {
-  const { header, intro } = meetingsPage;
+export default async function MeetingsHeader() {
+  const { header, intro: fallbackIntro } = meetingsPage;
+  const meetingsPackage = await getMeetingsPackage();
+
+  const title = meetingsPackage?.title ? stripHtml(meetingsPackage.title) : header.title;
+  const intro = meetingsPackage?.description ? stripHtml(meetingsPackage.description) : fallbackIntro;
 
   return (
     <section className="relative overflow-hidden pt-36 lg:pt-44 pb-4 lg:pb-8">
@@ -29,7 +36,7 @@ export default function MeetingsHeader() {
           {header.eyebrow}
         </p>
         <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
-          {header.title}
+          {title}
         </h2>
         <p className="text-luxury-muted mt-5 animate-fade-in-up delay-300">{intro}</p>
       </div>

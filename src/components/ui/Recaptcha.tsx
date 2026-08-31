@@ -1,14 +1,17 @@
 "use client";
 
-import Script from "next/script";
+import ReCAPTCHA from "react-google-recaptcha";
 
-const RECAPTCHA_SITE_KEY = "6LeWHZstAAAAACEuWRj2UgkHxhSTsHAhohi24175";
+interface RecaptchaProps {
+  onChange: (token: string | null) => void;
+}
 
-export default function Recaptcha() {
+export default function Recaptcha({ onChange }: RecaptchaProps) {
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
+
   return (
-    <>
-      <Script src="https://www.google.com/recaptcha/api.js" strategy="lazyOnload" />
-      <div className="g-recaptcha" data-sitekey={RECAPTCHA_SITE_KEY} />
-    </>
+    <div className="flex justify-start my-4">
+      <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
+    </div>
   );
 }

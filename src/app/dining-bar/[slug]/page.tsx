@@ -3,14 +3,22 @@ import DiningGallery from "@/components/dining/DiningGallery";
 import Watermark from "@/components/ui/Watermark";
 import { site } from "@/config/site";
 import { diningPage } from "@/data/data";
+import { getDiningVenues } from "@/lib/data";
+import { buildMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import qr from "../../../../assets/img/qr.png";
 
-export function generateStaticParams() {
-  return diningPage.venues.map((venue) => ({ slug: venue.slug }));
+async function getDiningVenuesWithFallback() {
+  const apiVenues = await getDiningVenues();
+  return apiVenues.length > 0 ? apiVenues : diningPage.venues;
+}
+
+export async function generateStaticParams() {
+  const venues = await getDiningVenuesWithFallback();
+  return venues.map((venue) => ({ slug: venue.slug }));
 }
 
 export async function generateMetadata({
@@ -19,22 +27,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const venue = diningPage.venues.find((v) => v.slug === slug);
+  const venues = await getDiningVenuesWithFallback();
+  const venue = venues.find((v) => v.slug === slug);
   if (!venue) return {};
 
   const title = `${venue.name} | Dining & Bar | ${site.name}`;
-  return {
-    title,
-    description: venue.excerpt,
-    alternates: { canonical: `/dining-bar/${venue.slug}` },
-    openGraph: {
-      title,
-      description: venue.excerpt,
-      url: `/dining-bar/${venue.slug}`,
-      siteName: site.name,
-      type: "website",
-    },
-  };
+  return buildMetadata(
+    "dining-bar",
+    { title, description: venue.excerpt, openGraph: { title, description: venue.excerpt } },
+    `/dining-bar/${venue.slug}`
+  );
 }
 
 export default async function DiningVenueDetailPage({
@@ -43,10 +45,11 @@ export default async function DiningVenueDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const venue = diningPage.venues.find((v) => v.slug === slug);
+  const venues = await getDiningVenuesWithFallback();
+  const venue = venues.find((v) => v.slug === slug);
   if (!venue) notFound();
 
-  const otherVenues = diningPage.venues.filter((v) => v.slug !== venue.slug);
+  const otherVenues = venues.filter((v) => v.slug !== venue.slug);
   const galleryImages = venue.images && venue.images.length > 0 ? venue.images : [venue.image];
 
   return (
@@ -85,10 +88,12 @@ export default async function DiningVenueDetailPage({
               </p>
               <h1 className="luxury-section-title text-luxury-charcoal">{venue.name}</h1>
 
-              <p className="flex items-center gap-2 text-sm text-luxury-muted mt-6">
-                <i className="fa-solid fa-clock text-base brown-btn shrink-0" aria-hidden="true" />
-                {venue.hours}
-              </p>
+              {venue.hours && (
+                <p className="flex items-center gap-2 text-sm text-luxury-muted mt-6">
+                  <i className="fa-solid fa-clock text-base brown-btn shrink-0" aria-hidden="true" />
+                  {venue.hours}
+                </p>
+              )}
 
               <div className="mt-8 space-y-4 text-luxury-muted leading-relaxed">
                 {venue.description.map((para, i) => (

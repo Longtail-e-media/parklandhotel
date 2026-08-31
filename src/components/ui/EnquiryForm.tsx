@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH, eventSchema } from "@/lib/validation";
+import { submitEnquiry } from "@/lib/enquiry";
 
 const fields = [
   { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", icon: "user" },
@@ -19,6 +20,7 @@ const enquirySchema = z.object({
   event: eventSchema,
   email: emailSchema,
   phone: phoneSchema,
+  eventDate: z.string().min(1, "Please select a date."),
   request: z.string(),
 });
 
@@ -27,19 +29,30 @@ type EnquiryFormValues = z.infer<typeof enquirySchema>;
 /**
  * Shared name / email / phone / special-request enquiry form. Used standalone
  * (e.g. the offer detail page's booking widget) and inside EnquiryModal for
- * "Enquire Now" popups elsewhere on the site.
+ * "Enquire Now" popups elsewhere on the site. `subject` names what the
+ * enquiry is about (e.g. a dining venue) for the emailed message.
  */
-export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLabel?: string }) {
+export default function EnquiryForm({
+  submitLabel = "Send Message",
+  subject,
+}: {
+  submitLabel?: string;
+  subject?: string;
+}) {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [pax, setPax] = useState(1);
   const today = new Date().toISOString().slice(0, 10);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<EnquiryFormValues>({
     resolver: zodResolver(enquirySchema),
-    defaultValues: { name: "", email: "", phone: "", request: "" },
+    defaultValues: { name: "", email: "", phone: "", event: "", eventDate: "", request: "" },
   });
 
   const { onChange: onPhoneChange, ...phoneField } = register("phone");
@@ -49,8 +62,47 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
     setPax(Number.isFinite(value) && value >= 1 ? value : 1);
   };
 
+  const onSubmit = async (data: EnquiryFormValues) => {
+    if (!captchaToken) {
+      setSubmitError("Please complete the reCAPTCHA.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const message = [
+      subject ? `Enquiry about: ${subject}` : null,
+      `Event: ${data.event}`,
+      `Date: ${data.eventDate}`,
+      `Pax: ${pax}`,
+      data.request,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const result = await submitEnquiry("enquery_mail_contact.php", {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      message,
+    }, captchaToken);
+
+    setIsSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
+      return;
+    }
+
+    setSubmitted(true);
+    reset();
+    setPax(1);
+    setCaptchaToken(null);
+  };
+
   return (
-    <form className="space-y-5" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
+    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
       {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
           <label htmlFor={`enquiry-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
@@ -97,17 +149,27 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
             Date
               <span className="text-red-500">*</span>
           </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-hairline px-4 py-4 focus-within:border-soft transition-colors">
+          <div
+            className={`flex items-center gap-2 rounded-2xl border px-4 py-4 focus-within:border-soft transition-colors ${
+              errors.eventDate ? "border-red-400" : "border-hairline"
+            }`}
+          >
             <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <input
               id="enquiry-date"
-              name="date"
               type="date"
-              required
               min={today}
+              aria-invalid={!!errors.eventDate}
+              aria-describedby={errors.eventDate ? "enquiry-date-error" : undefined}
               className="w-full min-w-0 bg-transparent text-sm text-luxury-charcoal focus:outline-none"
+              {...register("eventDate")}
             />
           </div>
+          {errors.eventDate && (
+            <p id="enquiry-date-error" className="text-xs text-red-500 mt-2">
+              {errors.eventDate.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -164,10 +226,16 @@ export default function EnquiryForm({ submitLabel = "Send Message" }: { submitLa
         </div>
       </div>
 
-      <Recaptcha />
+      <Recaptcha onChange={setCaptchaToken} />
 
-      <button type="submit" className="luxury-btn luxury-btn-accent !py-4">
-        {submitted ? "Message Sent" : submitLabel}
+      {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="luxury-btn luxury-btn-accent !py-4 disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isSubmitting ? "Sending…" : submitted ? "Message Sent" : submitLabel}
       </button>
       {submitted && (
         <p className="text-sm text-luxury-muted text-center">

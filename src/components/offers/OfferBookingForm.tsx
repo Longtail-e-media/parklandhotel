@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import { z } from "zod";
 import type { OfferItem } from "@/types";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import { cmsEndpointUrl } from "@/lib/enquiry";
 
 const contactFields = [
   { name: "name", label: "Full Name ", placeholder: "Full Name", type: "text", icon: "user" },
@@ -45,7 +46,24 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
   const [checkIn, setCheckIn] = useState("");
   const [pax, setPax] = useState(1);
   const [payment, setPayment] = useState<"now" | "later">("now");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // When booking_mail.php answers "Pay Now" with a payment form, it hands
+  // back a hidden <form> + inline auto-submit <script> that POSTs to
+  // hbl_request.php, which redirects the browser to the real HBL gateway.
+  // dangerouslySetInnerHTML never runs embedded <script> tags, so we submit
+  // the injected form ourselves once it lands in the DOM.
+  const [paymentFormHtml, setPaymentFormHtml] = useState<string | null>(null);
+  const paymentFormRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!paymentFormHtml) return;
+    const form = paymentFormRef.current?.querySelector<HTMLFormElement>('form[name="hblform"]');
+    form?.submit();
+  }, [paymentFormHtml]);
 
   const {
     register,
@@ -65,15 +83,64 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
     setPax(Number.isFinite(value) && value >= 1 ? Math.min(value, 10) : 1);
   };
 
-  const onValid = () => {
-    if (payment === "later") {
-      router.push("/contact");
+  const onValid = async (data: BookingFormValues) => {
+    if (!captchaToken) {
+      setSubmitError("Please complete the reCAPTCHA.");
       return;
     }
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Same endpoint + field names for both payment options — booking_mail.php
+      // itself decides whether "pay_now" gets a gateway hand-off or "pay_later"
+      // just saves the booking and emails a confirmation.
+      const res = await fetch(cmsEndpointUrl("booking_mail.php"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullname: data.name,
+          email: data.email,
+          phone: data.phone,
+          offer_title: offer.name,
+          check_in: checkIn,
+          no_of_people: String(pax),
+          adults_book: String(pax),
+          total__pax: String(pax),
+          room_price: offer.unitPrice.toFixed(2),
+          total_amount: totalAmount.toFixed(2),
+          currency: offer.currency,
+          payment_type: payment === "later" ? "pay_later" : "pay_now",
+          "g-recaptcha-response": captchaToken,
+        }),
+      });
+
+      const json = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        setSubmitError(json?.message || "Something went wrong. Please try again later.");
+        return;
+      }
+
+      if (json?.payment_form && json?.payment_content) {
+        // Pay Now: hand off to the HBL gateway via a real browser navigation.
+        setPaymentFormHtml(json.payment_content);
+        return;
+      }
+
+      setSubmitted(true);
+      if (payment === "later") router.push("/contact");
+    } catch (err) {
+      console.warn("[OfferBookingForm] booking submission failed:", err);
+      setSubmitError("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
+    <>
     <form className="space-y-5" onSubmit={handleSubmit(onValid)} noValidate>
       {contactFields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
@@ -228,16 +295,28 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
         </div>
       </div>
 
-      <Recaptcha />
+      <Recaptcha onChange={setCaptchaToken} />
 
-      <button type="submit" className="luxury-btn bg-green-700 mt-7 text-white justify-center !py-4 hover:cursor-pointer">
-        {submitted ? "Booking Received" : "Proceed to Booking"}
+      {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="luxury-btn bg-green-700 mt-7 text-white justify-center !py-4 hover:cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {isSubmitting ? "Sending…" : submitted ? "Booking Received" : "Proceed to Booking"}
       </button>
       {submitted && (
         <p className="text-sm text-luxury-muted text-center">
-          Thank you — you&apos;ll be redirected to our secure payment partner to complete the booking.
+          Thank you — your booking request has been received. We&apos;ll be in touch shortly to confirm.
         </p>
       )}
     </form>
+
+    {/* Injected + auto-submitted for Pay Now — hands off to the HBL gateway. */}
+    {paymentFormHtml && (
+      <div ref={paymentFormRef} dangerouslySetInnerHTML={{ __html: paymentFormHtml }} />
+    )}
+    </>
   );
 }

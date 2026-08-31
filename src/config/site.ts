@@ -14,7 +14,7 @@
  */
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.hotelparkland.com.np"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://parkland.sambajracharya.com.np"
 ).replace(/\/$/, "");
 
 export const site = {
@@ -100,7 +100,12 @@ export const business = {
 } as const;
 
 export const links = {
-  /** No live booking engine yet — CTAs fall back to a phone call. */
-  booking: `tel:${contact.phoneE164}`,
+  /**
+   * External booking engine URL ("Book Now") — same `result.php?hotel_code=`
+   * pattern as the manakamanahillcrest reference site, and the CMS's own
+   * `booking_code` (siteregulars) already resolves to this same URL. Used
+   * only as a fallback for when that CMS field is unavailable.
+   */
+  booking: `${SITE_URL}/result.php?hotel_code=QmLox96`,
   social: ["https://www.facebook.com/Hotel-Parkland-Chitwan-National-Park-Sauraha"] as string[],
 } as const;

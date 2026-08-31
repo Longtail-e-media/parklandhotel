@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/config/site";
 import { getOffersList } from "@/lib/offers";
+import { buildMetadata } from "@/lib/metadata";
 import Watermark from "@/components/ui/Watermark";
 import OfferBookingWidget from "@/components/offers/OfferBookingWidget";
 import OfferGallery from "@/components/offers/OfferGallery";
@@ -24,18 +25,11 @@ export async function generateMetadata({
   if (!offer) return {};
 
   const title = `${offer.name} | Offers & Packages | ${site.name}`;
-  return {
-    title,
-    description: offer.excerpt,
-    alternates: { canonical: `/offers/${offer.slug}` },
-    openGraph: {
-      title,
-      description: offer.excerpt,
-      url: `/offers/${offer.slug}`,
-      siteName: site.name,
-      type: "website",
-    },
-  };
+  return buildMetadata(
+    "offers",
+    { title, description: offer.excerpt, openGraph: { title, description: offer.excerpt } },
+    `/offers/${offer.slug}`
+  );
 }
 
 export default async function OfferDetailPage({

@@ -3,11 +3,14 @@ import MeetingGallery from "@/components/meetings/MeetingGallery";
 import Watermark from "@/components/ui/Watermark";
 import { site } from "@/config/site";
 import { meetingsPage } from "@/data/data";
+import { getMeetingSpaces } from "@/lib/data";
+import { buildMetadata } from "@/lib/metadata";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-/** Icon shown per setup style in the Occupancy and Setup Style table. */
+/** Icon shown per setup style in the Occupancy and Setup Style table. Unrecognised
+ * CMS setup-style names still render, just without an icon. */
 const SETUP_STYLE_ICONS: Record<string, string> = {
   "U-Shape Style": "table-cells",
   "Classroom Style": "graduation-cap",
@@ -15,10 +18,17 @@ const SETUP_STYLE_ICONS: Record<string, string> = {
   "Banquet Style": "utensils",
   "Cluster Style": "user-group",
   "Cocktail Style": "martini-glass",
+  "Round Table": "circle",
 };
 
-export function generateStaticParams() {
-  return meetingsPage.spaces.map((space) => ({ slug: space.slug }));
+async function getMeetingSpacesWithFallback() {
+  const apiSpaces = await getMeetingSpaces();
+  return apiSpaces.length > 0 ? apiSpaces : meetingsPage.spaces;
+}
+
+export async function generateStaticParams() {
+  const spaces = await getMeetingSpacesWithFallback();
+  return spaces.map((space) => ({ slug: space.slug }));
 }
 
 export async function generateMetadata({
@@ -27,22 +37,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const space = meetingsPage.spaces.find((s) => s.slug === slug);
+  const spaces = await getMeetingSpacesWithFallback();
+  const space = spaces.find((s) => s.slug === slug);
   if (!space) return {};
 
   const title = `${space.name} | Meetings & Events | ${site.name}`;
-  return {
-    title,
-    description: space.excerpt,
-    alternates: { canonical: `/meetings-events/${space.slug}` },
-    openGraph: {
-      title,
-      description: space.excerpt,
-      url: `/meetings-events/${space.slug}`,
-      siteName: site.name,
-      type: "website",
-    },
-  };
+  return buildMetadata(
+    "meetings-events",
+    { title, description: space.excerpt, openGraph: { title, description: space.excerpt } },
+    `/meetings-events/${space.slug}`
+  );
 }
 
 export default async function MeetingSpaceDetailPage({
@@ -51,10 +55,11 @@ export default async function MeetingSpaceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const space = meetingsPage.spaces.find((s) => s.slug === slug);
+  const spaces = await getMeetingSpacesWithFallback();
+  const space = spaces.find((s) => s.slug === slug);
   if (!space) notFound();
 
-  const otherSpaces = meetingsPage.spaces.filter((s) => s.slug !== space.slug);
+  const otherSpaces = spaces.filter((s) => s.slug !== space.slug);
   const galleryImages = space.images && space.images.length > 0 ? space.images : [space.image];
 
   return (
@@ -92,14 +97,18 @@ export default async function MeetingSpaceDetailPage({
               <h1 className="luxury-section-title text-luxury-charcoal">{space.name}</h1>
 
               <ul className="flex flex-wrap items-center gap-x-8 gap-y-2 mt-6 text-sm text-luxury-muted">
-                <li className="flex items-center gap-2">
-                  <i className="fa-solid fa-users text-base brown-btn" aria-hidden="true" />
-                  {space.capacity}
-                </li>
-                <li className="flex items-center gap-2">
-                  <i className="fa-solid fa-expand text-base brown-btn" aria-hidden="true" />
-                  {space.size}
-                </li>
+                {space.capacity && (
+                  <li className="flex items-center gap-2">
+                    <i className="fa-solid fa-users text-base brown-btn" aria-hidden="true" />
+                    {space.capacity}
+                  </li>
+                )}
+                {space.size && (
+                  <li className="flex items-center gap-2">
+                    <i className="fa-solid fa-expand text-base brown-btn" aria-hidden="true" />
+                    {space.size}
+                  </li>
+                )}
               </ul>
 
               <div className="mt-8 space-y-4 text-luxury-muted leading-relaxed">

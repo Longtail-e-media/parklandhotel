@@ -8,6 +8,7 @@ import { z } from "zod";
 import Watermark from "@/components/ui/Watermark";
 import Recaptcha from "@/components/ui/Recaptcha";
 import { nameSchema, emailSchema, phoneSchema, messageSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import { submitEnquiry } from "@/lib/enquiry";
 
 const fields = [
   { name: "name", label: "Full Name", placeholder: "Your Name", type: "text", icon: "user" },
@@ -25,10 +26,14 @@ const contactSchema = z.object({
 type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function ContactFormSection() {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -36,6 +41,34 @@ export default function ContactFormSection() {
   });
 
   const { onChange: onNumberChange, ...numberField } = register("number");
+
+  const onSubmit = async (data: ContactFormValues) => {
+    if (!captchaToken) {
+      setSubmitError("Please complete the reCAPTCHA.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    const result = await submitEnquiry("enquery_mail_contact.php", {
+      name: data.name,
+      email: data.email,
+      phone: data.number,
+      message: data.message,
+    }, captchaToken);
+
+    setIsSubmitting(false);
+
+    if (!result.ok) {
+      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
+      return;
+    }
+
+    setSubmitted(true);
+    reset();
+    setCaptchaToken(null);
+  };
 
   return (
     <section className="relative overflow-hidden pt-36 lg:pt-44 pb-16 lg:pb-24">
@@ -61,7 +94,7 @@ export default function ContactFormSection() {
             Get in Touch!
           </h1>
 
-          <form className="space-y-6" onSubmit={handleSubmit(() => setSubmitted(true))} noValidate>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
             {fields.map(({ name, label, placeholder, type, icon }) => (
               <div key={name}>
                 <label htmlFor={name} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
@@ -128,10 +161,16 @@ export default function ContactFormSection() {
               )}
             </div>
 
-            <Recaptcha />
+            <Recaptcha onChange={setCaptchaToken} />
 
-            <button type="submit" className="luxury-btn luxury-btn-accent cursor-pointer max-w-80 justify-center !py-4">
-              {submitted ? "Message Sent" : "Send Message"}
+            {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="luxury-btn luxury-btn-accent cursor-pointer max-w-80 justify-center !py-4 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "Sending…" : submitted ? "Message Sent" : "Send Message"}
             </button>
             {submitted && (
               <p className="text-sm text-luxury-muted text-center">

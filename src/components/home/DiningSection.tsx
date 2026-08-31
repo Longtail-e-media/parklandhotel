@@ -1,8 +1,17 @@
 import Image from "next/image";
 import { dining } from "@/data/data";
+import { getDiningPackage, getDiningVenues, stripHtml } from "@/lib/data";
 import Watermark from "@/components/ui/Watermark";
 
-export default function DiningSection() {
+export default async function DiningSection() {
+  const [diningPackage, venues] = await Promise.all([getDiningPackage(), getDiningVenues()]);
+
+  const title = diningPackage?.title ? stripHtml(diningPackage.title) : dining.title;
+  const paragraph = diningPackage?.description ? stripHtml(diningPackage.description) : dining.paragraph;
+  const image = diningPackage?.banner_img?.[0]?.url || dining.image;
+  const features =
+    venues.length > 0 ? venues.map((v) => ({ title: v.name, description: v.excerpt })) : dining.features;
+
   return (
     <section id="dining" className="relative  overflow-hidden scroll-mt-24">
       <Watermark
@@ -23,7 +32,7 @@ export default function DiningSection() {
         <div className="animate-slide-in-left">
           <div className="aspect-4/5 luxury-media luxury-img-zoom">
             <Image
-              src={dining.image}
+              src={image}
               alt="Outdoor dining terrace at Hotel Parkland"
               width={700}
               height={875}
@@ -33,10 +42,10 @@ export default function DiningSection() {
         </div>
         <div className="animate-slide-in-right">
           <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{dining.eyebrow}</p>
-          <h2 className="luxury-section-title text-luxury-charcoal mb-6">{dining.title}</h2>
-          <p className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{dining.paragraph}</p>
+          <h2 className="luxury-section-title text-luxury-charcoal mb-6">{title}</h2>
+          <p className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{paragraph}</p>
           <ul className="grid sm:grid-cols-2 gap-3">
-            {dining.features.map((feature, i) => (
+            {features.map((feature, i) => (
               <li
                 key={i}
                 className="flex  gap-3 text-luxury-muted text-sm border border-hairline rounded-full px-5 py-3"

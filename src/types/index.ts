@@ -42,7 +42,8 @@ export interface DiningVenue {
   excerpt: string;
   /** Longer copy for the detail page, one paragraph per entry. */
   description: string[];
-  hours: string;
+  /** Not modelled by the CMS yet — omitted when unavailable. */
+  hours?: string;
   features: string[];
 }
 
@@ -56,8 +57,10 @@ export interface MeetingSpace {
   excerpt: string;
   /** Longer copy for the detail page, one paragraph per entry. */
   description: string[];
-  capacity: string;
-  size: string;
+  /** Derived from the largest configured setup-style pax count — omitted when the CMS has none. */
+  capacity?: string;
+  /** Not always populated by the CMS — omitted when unavailable. */
+  size?: string;
   features: string[];
   /** Max pax per seating configuration, shown as the Occupancy and Setup Style table. Omit for spaces with a fixed single layout. */
   setupStyles?: { style: string; pax: number }[];

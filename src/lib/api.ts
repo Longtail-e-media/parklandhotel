@@ -1,6 +1,6 @@
 import { parseAPIResponse } from "./parser";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost/hotelparkland/api/v1/";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://www.mayurstay.com/parklandhotel/api/v1/";
 
 export async function fetchAPI<T>(
   endpoint: string,

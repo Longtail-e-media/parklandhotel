@@ -5,6 +5,7 @@ import Image from "next/image";
 import { rooms as fallbackRooms } from "@/data/data";
 import { getRooms } from "@/lib/data";
 import { site } from "@/config/site";
+import { buildMetadata } from "@/lib/metadata";
 import RoomGallery from "@/components/accommodations/RoomGallery";
 import RoomBookingWidget from "@/components/accommodations/RoomBookingWidget";
 import Watermark from "@/components/ui/Watermark";
@@ -40,18 +41,11 @@ export async function generateMetadata({
   if (!room) return {};
 
   const title = `${room.name} | Accommodation | ${site.name}`;
-  return {
-    title,
-    description: room.description,
-    alternates: { canonical: `/accommodations/${room.slug}` },
-    openGraph: {
-      title,
-      description: room.description,
-      url: `/accommodations/${room.slug}`,
-      siteName: site.name,
-      type: "website",
-    },
-  };
+  return buildMetadata(
+    "accommodations",
+    { title, description: room.description, openGraph: { title, description: room.description } },
+    `/accommodations/${room.slug}`
+  );
 }
 
 export default async function RoomDetailPage({

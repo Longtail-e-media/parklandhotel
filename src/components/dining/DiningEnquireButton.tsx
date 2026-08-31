@@ -18,7 +18,7 @@ export default function DiningEnquireButton({ venueName }: { venueName: string }
       </button>
 
       <EnquiryModal title={`Enquire — ${venueName}`} isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <EnquiryForm />
+        <EnquiryForm subject={venueName} />
       </EnquiryModal>
     </>
   );

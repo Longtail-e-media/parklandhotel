@@ -18,7 +18,7 @@ export default function MeetingEnquireButton({ spaceName }: { spaceName: string 
       </button>
 
       <EnquiryModal title={`Hall Enquiry — ${spaceName}`} isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <MeetingEnquiryForm />
+        <MeetingEnquiryForm spaceName={spaceName} />
       </EnquiryModal>
     </>
   );

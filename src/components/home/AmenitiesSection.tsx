@@ -1,8 +1,10 @@
-import { amenities } from "@/data/data";
+import { getAmenities } from "@/lib/data";
+import { amenities as fallbackAmenities } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
 
 const ICONS: Record<string, string> = {
   wifi: "wifi",
+  "boarcast-wifi": "wifi",
   bell: "bell",
   "shield-check": "shield-halved",
   car: "car",
@@ -13,7 +15,10 @@ const ICONS: Record<string, string> = {
   waves: "water",
 };
 
-export default function AmenitiesSection() {
+export default async function AmenitiesSection() {
+  const items = await getAmenities();
+  const amenities = items.length > 0 ? items : fallbackAmenities;
+
   return (
     <section className="relative overflow-hidden py-20 lg:py-32">
       <Watermark

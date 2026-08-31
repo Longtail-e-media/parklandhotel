@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getArticles, findArticleBySlug, findArticleById } from "@/lib/data";
+import { getArticles, findArticleBySlug } from "@/lib/data";
+import { buildMetadata } from "@/lib/metadata";
 import { site } from "@/config/site";
-import { deflate } from "zlib";
+import FacilitiesShowcase from "@/components/about/FacilitiesShowcase";
+
+/** CMS `article_all` id whose page also gets the /about page's Facilities section appended. */
+const ABOUT_US_ARTICLE_ID = "3";
 
 /**
  * Top-level segments already owned by a static route (`src/app/<segment>`).
@@ -54,19 +58,16 @@ export async function generateMetadata({
   const title = article.meta_title?.trim() || `${article.title} | ${site.name}`;
   const description = article.meta_description?.trim() || article.subtitle || undefined;
 
-  return {
-    title,
-    description,
-    keywords: article.meta_keywords || undefined,
-    alternates: { canonical: `/${slug}` },
-    openGraph: {
+  return buildMetadata(
+    slug,
+    {
       title,
       description,
-      url: `/${slug}`,
-      siteName: site.name,
-      type: "website",
+      keywords: article.meta_keywords || undefined,
+      openGraph: { title, description },
     },
-  };
+    `/${slug}`
+  );
 }
 
 
@@ -102,6 +103,8 @@ export default async function CmsArticlePage({
         />
 
       </section>
+
+      {String(article.id) === ABOUT_US_ARTICLE_ID && <FacilitiesShowcase />}
     </main>
   );
 }

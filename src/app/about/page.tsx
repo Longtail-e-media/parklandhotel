@@ -3,21 +3,15 @@ import AboutHeader from "@/components/about/AboutHeader";
 import AboutIntro from "@/components/about/AboutIntro";
 import FacilitiesShowcase from "@/components/about/FacilitiesShowcase";
 import { site } from "@/config/site";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: `About Us | ${site.name}`,
-  description:
-    "Since 1987, Hotel Parkland has welcomed travellers to Sauraha with mature gardens, traditional hospitality and easy access to Chitwan National Park.",
-  alternates: { canonical: "/about" },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  return buildMetadata("about", {}, "/about", {
     title: `About Us | ${site.name}`,
     description:
       "Since 1987, Hotel Parkland has welcomed travellers to Sauraha with mature gardens, traditional hospitality and easy access to Chitwan National Park.",
-    url: "/about",
-    siteName: site.name,
-    type: "website",
-  },
-};
+  });
+}
 
 export default function AboutPage() {
   return (
