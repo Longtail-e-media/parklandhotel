@@ -113,7 +113,10 @@ export async function getCategoryItems(parentId: string): Promise<any[]> {
   const category = subpackage.find(
     (c: any) => String(c.parent_id) === parentId,
   );
-  return category?.items ?? [];
+  // Same CMS quirk can show up at the item level too — guard against a
+  // non-array `items` (e.g. the same error object) rather than crashing
+  // downstream `.find`/`.map` calls.
+  return Array.isArray(category?.items) ? category.items : [];
 }
 
 export async function findCategoryItem(
