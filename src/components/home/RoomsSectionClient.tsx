@@ -44,7 +44,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
           <p className="luxury-label text-gold-text mb-5">Rooms &amp; Suites</p>
           <h2 className="luxury-section-title text-luxury-charcoal">A Sanctuary of Refined Comfort </h2>
           <p className="text-luxury-muted mt-5">
-Discover beautifully appointed rooms and suites designed to provide an elegant sanctuary after a day of exploring Chitwan. Each accommodation combines contemporary design, premium amenities and thoughtful details to create a refined and relaxing stay.
+        Discover beautifully appointed rooms and suites designed to provide an elegant sanctuary after a day of exploring Chitwan. Each accommodation combines contemporary design, premium amenities and thoughtful details to create a refined and relaxing stay.
           </p>
         </div>
 
@@ -63,13 +63,15 @@ Discover beautifully appointed rooms and suites designed to provide an elegant s
               <article className="group luxury-surface h-full flex flex-col overflow-hidden">
                 <div className="relative">
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
-                    <Image
+                    <Link href={`/accommodations/${room.slug}`} className="block w-full h-full">
+                      <Image
                       src={room.image}
                       alt={`${room.name} interior`}
                       width={600}
                       height={750}
                       className="w-full h-full object-cover"
                     />
+                    </Link>
                   </div>
 
                   {/* Rate badge — top-right corner of the photo */}
@@ -118,10 +120,10 @@ Discover beautifully appointed rooms and suites designed to provide an elegant s
                   <p className="text-luxury-muted  mt-4 leading-relaxed">{room.description}</p>
 
                   <Link
-                    href="#contact"
+                    href={`/accommodations/${room.slug}`}
                     className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
                   >
-                    Book Now <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
+                    Explore <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
                   </Link>
                 </div>
               </article>

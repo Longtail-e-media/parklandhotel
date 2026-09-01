@@ -5,7 +5,7 @@ import { GethomeArticleById } from "@/lib/data";
 
 
 export default async function AboutSection() {
-   const article = await GethomeArticleById(2);
+   const article = await GethomeArticleById(1);
   return (
     <section id="about" className="relative overflow-hidden pt-30  scroll-mt-24">
       <Watermark

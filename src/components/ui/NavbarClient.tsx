@@ -60,8 +60,8 @@ export default function NavbarClient({ menu, logoDark, logoLight, phone, phoneHr
                 <Image
               src={isTransparentPage ? ( isScrolled ? logoDark : logoLight) : logoDark}
               alt="Company Logo"
-              width={200}
-              height={200}
+              width={100}
+              height={100}
               priority
                unoptimized
               />
