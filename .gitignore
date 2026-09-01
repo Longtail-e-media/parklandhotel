@@ -35,5 +35,5 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
-
+vercel.json
 public/videos/park-old.mp4
