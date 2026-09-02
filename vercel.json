@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/apanel",
+      "destination": "https://www.mayurstay.com/parklandhotel/apanel/",
+      "permanent": true
+    }
+  ]
+}
