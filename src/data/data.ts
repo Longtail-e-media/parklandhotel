@@ -27,12 +27,12 @@ export const navItems: NavItem[] = [
   { label: "Gallery", href: "/gallery" },
   {
     label: "Accommodation",
-    href: "/accommodations",
+    href: "/accommodation",
     // Mirrors the room types in `rooms` below — keep the two lists in step.
     children: [
-      { label: "Deluxe Room", href: "/accommodations/deluxe-room" },
-      { label: "Suite Room", href: "/accommodations/suite-room" },
-      { label: "Presidential Room", href: "/accommodations/presidential-room" },
+      { label: "Deluxe Room", href: "/accommodation/deluxe-room" },
+      { label: "Suite Room", href: "/accommodation/suite-room" },
+      { label: "Presidential Room", href: "/accommodation/presidential-room" },
     ],
   },
   { label: "Dining & Bar", href: "/dining-bar" },

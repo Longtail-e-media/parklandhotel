@@ -17,7 +17,7 @@ const ABOUT_US_ARTICLE_ID = "3";
  */
 const RESERVED_SLUGS = new Set([
   "about",
-  "accommodations",
+  "accommodation",
   "blog",
   "contact",
   "dining-bar",

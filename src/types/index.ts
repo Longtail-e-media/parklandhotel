@@ -6,7 +6,7 @@ export interface NavItem {
 }
 
 export interface RoomType {
-  /** URL segment for the room's detail page, e.g. /accommodations/deluxe-room. */
+  /** URL segment for the room's detail page, e.g. /accommodation/deluxe-room. */
   slug: string;
   name: string;
   image: string;

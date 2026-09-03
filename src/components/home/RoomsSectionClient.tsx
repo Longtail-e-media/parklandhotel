@@ -63,7 +63,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
               <article className="group luxury-surface h-full flex flex-col overflow-hidden">
                 <div className="relative">
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
-                    <Link href={`/accommodations/${room.slug}`} className="block w-full h-full">
+                    <Link href={`/accommodation/${room.slug}`} className="block w-full h-full">
                       <Image
                       src={room.image}
                       alt={`${room.name} interior`}
@@ -120,7 +120,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
                   <p className="text-luxury-muted  mt-4 leading-relaxed">{room.description}</p>
 
                   <Link
-                    href={`/accommodations/${room.slug}`}
+                    href={`/accommodation/${room.slug}`}
                     className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-auto pt-5 hover:gap-3 transition-all"
                   >
                     Explore <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
