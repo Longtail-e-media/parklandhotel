@@ -21,6 +21,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
+
+# local pnpm usage (Vercel deploys use npm / package-lock.json)
+pnpm-lock.yaml
+pnpm-workspace.yaml
+package-lock-old.json
 next.config.ts
 # IDE / editor files
 .vscode/
