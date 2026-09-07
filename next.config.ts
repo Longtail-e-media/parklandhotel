@@ -40,6 +40,7 @@ const nextConfig: NextConfig = {
     ...(cmsHostIsLocal ? { dangerouslyAllowLocalIP: true } : {}),
     //  unoptimized: true,
   },
+    allowedDevOrigins: ['192.168.18.53'],
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
