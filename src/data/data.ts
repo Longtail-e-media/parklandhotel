@@ -19,6 +19,7 @@ import type {
   BlogPost,
   OfferItem,
   ExperienceItem,
+  ServiceItem,
 } from "@/types";
 
 export const navItems: NavItem[] = [
@@ -549,7 +550,12 @@ export const diningPage = {
         "Indoor seating looks out over the gardens, with attentive service pitched for everything from a relaxed breakfast to a memorable dinner.",
       ],
       hours: "6:30 AM – 10:00 PM",
-      features: ["À la carte menu", "Nepali, Indian & continental cuisine", "Garden views", "Vegetarian options"],
+      features: [
+        { title: "À la carte menu" },
+        { title: "Nepali, Indian & continental cuisine" },
+        { title: "Garden views" },
+        { title: "Vegetarian options" },
+      ],
     },
     {
       slug: "garden-terrace",
@@ -563,7 +569,12 @@ export const diningPage = {
         "A natural choice for breakfast or a long, easy lunch between morning and evening safaris, weather permitting.",
       ],
       hours: "7:00 AM – 10:00 PM (weather permitting)",
-      features: ["Open-air seating", "Shaded by mature gardens", "À la carte & light bites", "Family friendly"],
+      features: [
+        { title: "Open-air seating" },
+        { title: "Shaded by mature gardens" },
+        { title: "À la carte & light bites" },
+        { title: "Family friendly" },
+      ],
     },
     {
       slug: "buffet-hall",
@@ -577,7 +588,12 @@ export const diningPage = {
         "Sittings are timed around the day's safari and activity schedule, so there's always a hot meal waiting whichever excursion you've just returned from.",
       ],
       hours: "Breakfast 7:00 – 10:00 AM · Dinner 7:00 – 9:30 PM",
-      features: ["Daily rotating buffet", "Nepali, Indian & international dishes", "Group & full-board friendly", "Indoor seating"],
+      features: [
+        { title: "Daily rotating buffet" },
+        { title: "Nepali, Indian & international dishes" },
+        { title: "Group & full-board friendly" },
+        { title: "Indoor seating" },
+      ],
     },
     {
       slug: "parkland-bar",
@@ -591,7 +607,12 @@ export const diningPage = {
         "Live music evenings turn it into the natural gathering point after a day in the jungle, with seating that spills out toward the pool.",
       ],
       hours: "4:00 PM – 11:00 PM",
-      features: ["Signature cocktails", "Local & international spirits", "Live music evenings", "Poolside seating"],
+      features: [
+        { title: "Signature cocktails" },
+        { title: "Local & international spirits" },
+        { title: "Live music evenings" },
+        { title: "Poolside seating" },
+      ],
     },
   ] as DiningVenue[],
 };
@@ -664,6 +685,67 @@ export const meetingsPage = {
       features: ["Air conditioned", "Private & quiet", "Tea & coffee service", "Flexible half/full-day booking"],
     },
   ] as MeetingSpace[],
+};
+
+/**
+ * Fallback copy for the /services page. The CMS `services` type-1 (facilities)
+ * group only ever carries a title + image per item — no description — so this
+ * supplies the copy for both the listing cards and the detail page, keyed by
+ * CMS slug.
+ */
+const SERVICE_DESCRIPTIONS: Record<string, string[]> = {
+  "airport-pickup-drop": [
+    "We meet every flight into Bharatpur and arrange transfers for guests arriving by road, with a comfortable ride straight to the hotel — just share your travel details ahead of time and we'll take care of arrival and departure alike.",
+  ],
+  "high-speed-internet": [
+    "Complimentary high-speed Wi-Fi reaches every room, restaurant and lounge on the property, so you can stay connected between safaris without losing the quiet of the jungle.",
+  ],
+  "swimming-pool": [
+    "Our outdoor garden pool sits beneath mature trees just steps from the rooms — a cool, unhurried spot to rest between morning and evening excursions.",
+  ],
+  elevator: [
+    "Guest elevators serve every floor of the hotel, so reaching your room is effortless whichever level you're staying on.",
+  ],
+  "fitness-center": [
+    "A compact on-site gym keeps your routine going during your stay, with basic cardio and strength equipment open to all guests.",
+  ],
+  "coffee-shop": [
+    "Our in-house coffee shop serves proper espresso and light bites throughout the day — an easy stop before an early safari or a relaxed catch-up after one.",
+  ],
+  "parking-space": [
+    "Secure, private parking is available on-site for guests arriving by car, jeep or group coach.",
+  ],
+  "spa-wellness": [
+    "Unwind with a traditional massage or spa treatment after a day in the jungle, arranged right here on the property.",
+  ],
+  "event-destination": [
+    "Manicured grounds and function space make Hotel Parkland a striking, ready-made setting for conferences, celebrations and private events in the heart of Chitwan.",
+  ],
+};
+
+export const servicesPage = {
+  header: {
+    eyebrow: "Facilities",
+    title: "Hotel Facilities & Services",
+  },
+  intro:
+    "From seamless connectivity to effortless exploration, every detail at Hotel Parkland is thoughtfully in place — so you can simply relax and enjoy your time in Chitwan.",
+  descriptions: SERVICE_DESCRIPTIONS,
+  /** Full static fallback, used only if the `services` API is unreachable. */
+  items: [
+    { slug: "airport-pickup-drop", title: "Airport Pickup & Drop", icon: "fa-solid fa-plane-arrival", image: "" },
+    { slug: "high-speed-internet", title: "High Speed Internet", icon: "fa-solid fa-wifi", image: "" },
+    { slug: "swimming-pool", title: "Swimming Pool", icon: "fa-solid fa-water-ladder", image: "" },
+    { slug: "elevator", title: "Elevator", icon: "fa-solid fa-elevator", image: "" },
+    { slug: "fitness-center", title: "Fitness Center", icon: "fa-solid fa-dumbbell", image: "" },
+    { slug: "coffee-shop", title: "Coffee Shop", icon: "fa-solid fa-mug-saucer", image: "" },
+    { slug: "parking-space", title: "Parking Space", icon: "fa-solid fa-square-parking", image: "" },
+    { slug: "spa-wellness", title: "Spa & Wellness", icon: "fa-solid fa-spa", image: "" },
+    { slug: "event-destination", title: "Event Destination", icon: "fa-solid fa-champagne-glasses", image: "" },
+  ].map((item) => ({
+    ...item,
+    description: SERVICE_DESCRIPTIONS[item.slug] ?? [],
+  })) as ServiceItem[],
 };
 
 /** /experiences-destination page content. */

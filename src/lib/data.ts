@@ -6,7 +6,7 @@
 
 import { fetchAPI } from "./api";
 import { resolveHeroImages } from "./images";
-import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomType, Testimonial } from "@/types";
+import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomFeature, RoomType, ServiceItem, Testimonial } from "@/types";
 import type { SiteMetadata } from "@/types/metadata";
 import { business } from "@/config/site";
 
@@ -132,6 +132,33 @@ export async function findCategoryItem(
 /** Parent-category id for room types in the `subpackage` endpoint. */
 const ROOMS_CATEGORY_ID = "1";
 
+/** One CMS `tbl_features` amenity record — shared shape across every `subpackage`
+ * category (rooms, dining, meetings), not a plain string. */
+interface CmsAmenity {
+  title: string;
+  icon?: string;
+  img?: string;
+}
+
+/**
+ * Maps CMS `amenities` onto `RoomFeature[]`: an explicit `icon` wins; otherwise a
+ * `fa-*` class landing in `img` is treated as the icon, and any other `img` URL is
+ * used as a feature image. Shared by rooms and dining venues so both stay in step.
+ */
+function mapAmenityFeatures(amenities?: CmsAmenity[]): RoomFeature[] {
+  if (!Array.isArray(amenities)) return [];
+  return amenities
+    .map((a) => {
+      const img = a?.img ?? "";
+      return {
+        title: a?.title ?? "",
+        icon: a?.icon || (/^(?:fa(?:-solid|-regular|-brands)?)\b/.test(img) ? img : "") || undefined,
+        image: /^https?:/i.test(img) ? img : undefined,
+      };
+    })
+    .filter((f) => Boolean(f.title));
+}
+
 /** Raw shape of one `subpackage` room item, as returned by `api_subpackage.php`. */
 interface CmsRoomItem {
   slug: string;
@@ -147,8 +174,7 @@ interface CmsRoomItem {
   rooms_Size?: string | null;
   /** Free-text sleeps count, e.g. "3 people". */
   occupancy?: string | null;
-  /** Each amenity is a `tbl_features` record, not a plain string. */
-  amenities?: { title: string; icon?: string; img?: string }[];
+  amenities?: CmsAmenity[];
 }
 
 /** Pulls the leading integer out of a free-text occupancy field, e.g. "3 people" -> 3. */
@@ -222,18 +248,7 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     // Not modelled by the CMS yet — no bed-type/rating fields on `subpackage`.
     beds: "",
     rating: Number(business.aggregateRating?.ratingValue) || 0,
-    features: Array.isArray(item.amenities)
-      ? item.amenities
-          .map((a) => {
-            const img = a?.img ?? "";
-            return {
-              title: a?.title ?? "",
-              icon: a?.icon || (/^(?:fa(?:-solid|-regular|-brands)?)\b/.test(img) ? img : "") || undefined,
-              image: /^https?:/i.test(img) ? img : undefined,
-            };
-          })
-          .filter((f) => Boolean(f.title))
-      : [],
+    features: mapAmenityFeatures(item.amenities),
   };
 }
 
@@ -260,8 +275,7 @@ interface CmsVenueItem {
   gallery_images?: { src: string; title: string }[];
   description?: string;
   content_1?: string | null;
-  /** Each amenity is a `tbl_features` record, not a plain string. */
-  amenities?: { title: string; icon?: string; img?: string }[];
+  amenities?: CmsAmenity[];
 }
 
 /** Maps one CMS `subpackage` item onto the `DiningVenue` shape the UI expects. */
@@ -283,9 +297,7 @@ function mapDiningVenue(item: CmsVenueItem): DiningVenue {
     description: paragraphs.length > 0 ? paragraphs : [""],
     // Not modelled by the CMS yet — no opening-hours field on `subpackage`.
     hours: undefined,
-    features: Array.isArray(item.amenities)
-      ? item.amenities.map((a) => a?.title).filter((title): title is string => Boolean(title))
-      : [],
+    features: mapAmenityFeatures(item.amenities),
   };
 }
 
@@ -481,7 +493,44 @@ export async function getAmenities(): Promise<AmenityItem[]> {
     label: item.title,
     icon: item.icon || "",
     image: resolveHeroImages(item)[0] ?? undefined,
+    slug: item.slug || undefined,
   }));
+}
+
+/** Raw shape of one `services` type-1 (facilities) item, as returned by `api_services.php`. */
+interface CmsServiceItem {
+  slug: string;
+  title: string;
+  icon?: string;
+  gallery_images?: { src: string; title: string }[];
+  img?: { src: string; title: string }[];
+  content_0?: string | null;
+  content_1?: string | null;
+}
+
+/** Maps one CMS `services` item onto the `ServiceItem` shape the UI expects. */
+function mapServiceItem(item: CmsServiceItem): ServiceItem {
+  const images = resolveHeroImages(item);
+  const paragraphs = stripHtml([item.content_0, item.content_1].filter(Boolean).join("\n\n"))
+    .split(/\r?\n\r?\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  return {
+    slug: item.slug,
+    title: item.title,
+    image: images[0] ?? "",
+    images,
+    description: paragraphs,
+    icon: item.icon || undefined,
+  };
+}
+
+/** Hotel facilities for the /services listing + detail pages, from the `services` type-1 (facilities) group. */
+export async function getServiceItems(): Promise<ServiceItem[]> {
+  const groups = await getServices(1);
+  if (!Array.isArray(groups)) return [];
+  return groups.flatMap((group: any) => group?.items ?? []).map(mapServiceItem);
 }
 
 /** Homepage activity tiles, from the `services` type-2 (activities) group — the first item is the featured tile. */
@@ -669,8 +718,10 @@ export function getDealOfTheDay(): Promise<DealOfTheDay | null> {
 interface CmsSlideshowItem {
   title: string;
   src: string;
+  subtitle: string;
   description?: string;
   buttonLink?: string;
+  text?: string;
 }
 
 interface CmsSlideshowGroup {

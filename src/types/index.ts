@@ -54,7 +54,8 @@ export interface DiningVenue {
   description: string[];
   /** Not modelled by the CMS yet — omitted when unavailable. */
   hours?: string;
-  features: string[];
+  /** Amenities/features — titled, with an icon (Font Awesome class) or feature image resolved from the CMS. */
+  features: RoomFeature[];
 }
 
 /** A function/conference space on the /meetings-events listing and detail pages. */
@@ -125,6 +126,22 @@ export interface AmenityItem {
   label: string;
   icon: string;
   image?: string;
+  /** URL segment for the amenity's /services detail page — unset for statically-defined fallback amenities that have no matching CMS facility. */
+  slug?: string;
+}
+
+/** A hotel facility on the /services listing and detail pages, from the CMS `services` (type 1) group. */
+export interface ServiceItem {
+  /** URL segment for the facility's detail page, e.g. /services/swimming-pool. */
+  slug: string;
+  title: string;
+  image: string;
+  /** Extra photos shown in the detail page gallery, beyond `image`. */
+  images?: string[];
+  /** Longer copy for the detail page, one paragraph per entry — empty when the CMS hasn't filled it in yet. */
+  description: string[];
+  /** Font Awesome class from the CMS icon field — empty for every facility today, so cards fall back to `image`. */
+  icon?: string;
 }
 
 /** Facility card on the About page — an amenity with a line of explanation. */

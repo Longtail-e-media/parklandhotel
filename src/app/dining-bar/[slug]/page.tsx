@@ -5,11 +5,36 @@ import { site } from "@/config/site";
 import { diningPage } from "@/data/data";
 import { getDiningVenues } from "@/lib/data";
 import { buildMetadata } from "@/lib/metadata";
+import type { RoomFeature } from "@/types";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import qr from "../../../../assets/img/qr.png";
+
+/** Fallback icon for an amenity with no `icon`/`image` of its own. */
+function getDefaultFeatureIcon(category: "restaurant" | "bar"): string {
+  return category === "bar" ? "fa-solid fa-martini-glass" : "fa-solid fa-utensils";
+}
+
+/** Shown when the CMS has no amenities configured for a venue yet (e.g. Sauraha
+ * Restaurant returns `amenities: []` today) so the section isn't empty. */
+const DEFAULT_DINING_FEATURES: Record<"restaurant" | "bar", RoomFeature[]> = {
+  restaurant: [
+    { title: "Free Wi-Fi" },
+    { title: "Air Conditioning" },
+    { title: "Indoor & Outdoor Seating" },
+    { title: "Vegetarian Options" },
+    { title: "Family Friendly" },
+  ],
+  bar: [
+    { title: "Free Wi-Fi" },
+    { title: "Signature Cocktails" },
+    { title: "Indoor & Outdoor Seating" },
+    { title: "Live Music Evenings" },
+    { title: "Family Friendly" },
+  ],
+};
 
 async function getDiningVenuesWithFallback() {
   const apiVenues = await getDiningVenues();
@@ -51,6 +76,8 @@ export default async function DiningVenueDetailPage({
 
   const otherVenues = venues.filter((v) => v.slug !== venue.slug);
   const galleryImages = venue.images && venue.images.length > 0 ? venue.images : [venue.image];
+  const displayFeatures =
+    venue.features.length > 0 ? venue.features : DEFAULT_DINING_FEATURES[venue.category];
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
@@ -101,18 +128,6 @@ export default async function DiningVenueDetailPage({
                 ))}
               </div>
 
-              <ul className="grid sm:grid-cols-2 gap-3 mt-8">
-                {venue.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-full px-5 py-3"
-                  >
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
               <DiningEnquireButton venueName={venue.name} />
               <div className="mt-8 flex items-center gap-5 mt-15">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl  bg-luxury-cream text-gold-text">
@@ -128,6 +143,40 @@ export default async function DiningVenueDetailPage({
 
             </div>
           </div>
+
+          {displayFeatures.length > 0 && (
+            <div className="mt-16 lg:mt-20 animate-fade-in-up">
+              <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
+                Amenities
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+                {displayFeatures.map((feature) => (
+                  <div
+                    key={feature.title}
+                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
+                  >
+                    {feature.icon ? (
+                      <i className={`${feature.icon} text-base brown-btn shrink-0`} aria-hidden="true" />
+                    ) : feature.image ? (
+                      <Image
+                        src={feature.image}
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="object-contain shrink-0"
+                      />
+                    ) : (
+                      <i
+                        className={`${getDefaultFeatureIcon(venue.category)} text-base brown-btn shrink-0`}
+                        aria-hidden="true"
+                      />
+                    )}
+                    {feature.title}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </main>

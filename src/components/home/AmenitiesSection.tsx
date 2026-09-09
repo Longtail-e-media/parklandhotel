@@ -2,6 +2,7 @@ import { getAmenities } from "@/lib/data";
 import { amenities as fallbackAmenities } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function AmenitiesSection() {
   const items = await getAmenities();

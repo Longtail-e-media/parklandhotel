@@ -47,4 +47,5 @@ export type PageMetaKey =
   | "offers"
   | "blog"
   | "faq"
-  | "contact";
+  | "contact"
+  | "services";

@@ -21,6 +21,40 @@ const SETUP_STYLE_ICONS: Record<string, string> = {
   "Round Table": "circle",
 };
 
+/** Meeting space `features` are free-text phrases from the CMS (not fixed keys like
+ * room amenities), so icons are matched by keyword. No per-space icon data yet — this
+ * static list stands in until the CMS exposes one. */
+const MEETING_FEATURE_ICONS: [RegExp, string][] = [
+  [/wi-?fi/i, "fa-solid fa-wifi"],
+  [/av equipment|audio|visual|projector|screen/i, "fa-solid fa-display"],
+  [/catering|coffee|tea service|refreshment/i, "fa-solid fa-mug-saucer"],
+  [/garden|lawn|outdoor|open-air/i, "fa-solid fa-tree"],
+  [/wedding|reception/i, "fa-solid fa-ring"],
+  [/light/i, "fa-solid fa-lightbulb"],
+  [/events team|dedicated|staff/i, "fa-solid fa-user-tie"],
+  [/air condition|\bac\b/i, "fa-solid fa-wind"],
+  [/private|quiet/i, "fa-solid fa-door-closed"],
+  [/booking|flexible|half\/full-day/i, "fa-solid fa-calendar-check"],
+  [/layout|theatre|classroom|banquet/i, "fa-solid fa-chalkboard-user"],
+  [/parking/i, "fa-solid fa-square-parking"],
+];
+
+function getMeetingFeatureIcon(feature: string): string {
+  const match = MEETING_FEATURE_ICONS.find(([pattern]) => pattern.test(feature));
+  return match?.[1] ?? "fa-solid fa-check";
+}
+
+/** Shown when the CMS has no amenities configured for a space yet (e.g. Chitwan
+ * Hall, Sauraha Hall both return `amenities: []` today) so the section isn't empty. */
+const DEFAULT_MEETING_FEATURES = [
+  "High-Speed Wi-Fi",
+  "AV Equipment",
+  "Air Conditioning",
+  "Tea & Coffee Service",
+  "Flexible Seating Layout",
+  "On-site Parking",
+];
+
 async function getMeetingSpacesWithFallback() {
   const apiSpaces = await getMeetingSpaces();
   return apiSpaces.length > 0 ? apiSpaces : meetingsPage.spaces;
@@ -61,6 +95,7 @@ export default async function MeetingSpaceDetailPage({
 
   const otherSpaces = spaces.filter((s) => s.slug !== space.slug);
   const galleryImages = space.images && space.images.length > 0 ? space.images : [space.image];
+  const displayFeatures = space.features.length > 0 ? space.features : DEFAULT_MEETING_FEATURES;
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
@@ -117,21 +152,31 @@ export default async function MeetingSpaceDetailPage({
                 ))}
               </div>
 
-              <ul className="grid sm:grid-cols-2 gap-3 mt-8">
-                {space.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-full px-5 py-3"
-                  >
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
               <MeetingEnquireButton spaceName={space.name} />
             </div>
           </div>
+
+          {displayFeatures.length > 0 && (
+            <div className="mt-16 lg:mt-20 animate-fade-in-up">
+              <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
+                Amenities
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+                {displayFeatures.map((feature) => (
+                  <div
+                    key={feature}
+                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
+                  >
+                    <i
+                      className={`${getMeetingFeatureIcon(feature)} text-base brown-btn shrink-0`}
+                      aria-hidden="true"
+                    />
+                    {feature}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
