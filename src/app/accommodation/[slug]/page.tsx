@@ -190,15 +190,19 @@ export default async function RoomDetailPage({
                 <ul className="space-y-3 text-luxury-muted leading-relaxed">
                   <li className="flex gap-3">
                     <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>Children are welcome — kids stay free when using existing bedding.</span>
+                    <span>Below 5 years: Complimentary stay.</span>
                   </li>
                   <li className="flex gap-3">
                     <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>Children may not be eligible for complimentary breakfast.</span>
+                    <span>5-11 years: 50% discount on meals (sharing existing bed).</span>
                   </li>
                   <li className="flex gap-3">
                     <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>Rollaway / extra beds are available for $10 per day, subject to availability.</span>
+                    <span>12 years and above: Full adult charges.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
+                    <span>Extra bed available upon request, with additional charge.</span>
                   </li>
                 </ul>
               </div>

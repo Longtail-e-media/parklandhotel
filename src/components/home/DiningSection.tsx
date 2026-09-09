@@ -7,6 +7,7 @@ export default async function DiningSection() {
   const [diningPackage, venues] = await Promise.all([getDiningPackage(), getDiningVenues()]);
 
   const title = diningPackage?.title ? stripHtml(diningPackage.title) : dining.title;
+  const subtitle = diningPackage?.sub_title ? stripHtml(diningPackage.sub_title) : dining.sub_title;
   const paragraph = diningPackage?.description ? stripHtml(diningPackage.description) : dining.paragraph;
   const image = diningPackage?.banner_img?.[0]?.url || dining.image;
   const features =
@@ -41,21 +42,10 @@ export default async function DiningSection() {
           </div>
         </div>
         <div className="animate-slide-in-right">
-          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{dining.eyebrow}</p>
-          <h2 className="luxury-section-title text-luxury-charcoal mb-6">{title}</h2>
-          <p className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{paragraph}</p>
-          <ul className="grid sm:grid-cols-2 gap-3">
-            {features.map((feature, i) => (
-              <li
-                key={i}
-                className="flex  gap-3 text-luxury-muted text-sm border border-hairline rounded-full px-5 py-3"
-              >
-                <div className="wrapper">
-                  <p><span className="block">{feature.title}</span>{feature.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{title}</p>
+          <h2 className="luxury-section-title text-luxury-charcoal mb-6">{subtitle}</h2>
+          <div className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{paragraph}</div>
+
         </div>
       </div>
     </section>

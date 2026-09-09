@@ -50,6 +50,8 @@ export const hero = {
   subtitle:
     "Currently welcoming guests with 32 thoughtfully designed rooms as a 4-star hotel, we are expanding our vision with an upcoming 120-room destination, bringing together elevated comfort, modern hospitality, and the natural charm of Chitwan.",
   image: "/img/hero.jpg",
+  buttonLink: "about-us sam",
+  buttonname: "explore more",
 };
 
 export const about = {

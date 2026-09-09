@@ -45,6 +45,7 @@ export interface DiningVenue {
   /** URL segment for the venue's detail page, e.g. /dining-bar/the-parkland-restaurant. */
   slug: string;
   name: string;
+  sub_title?: string;
   category: "restaurant" | "bar";
   image: string;
   images?: string[];

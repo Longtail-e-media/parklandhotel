@@ -3,7 +3,10 @@ import Link from "next/link";
 import { getHeroVideoSrc } from "@/lib/data";
 
 export default async function VideoSection() {
-  const videoSrc = (await getHeroVideoSrc()) || "/videos/park.mp4";
+  const { src, buttonLink, buttonText } = await getHeroVideoSrc();
+  const videoSrc = src || "/videos/park.mp4";
+  const heroButtonLink = buttonLink || hero.buttonLink;
+  const heroButtonName = buttonText || hero.buttonname;
 
   return (
 <section className="relative w-full h-screen overflow-hidden">
@@ -34,8 +37,8 @@ export default async function VideoSection() {
     </p>
 
     <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 animate-fade-in-up delay-300 mb-14">
-      <Link href="#book" className="luxury-btn luxury-btn-solid">
-          Explore our Rooms
+      <Link href={heroButtonLink} className="luxury-btn luxury-btn-solid">
+        {heroButtonName}
       </Link>
     </div>
   </div>

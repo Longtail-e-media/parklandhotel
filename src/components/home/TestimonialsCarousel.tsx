@@ -31,8 +31,8 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Guest Stories</p>
-          <h2 className="luxury-section-title text-luxury-charcoal">In their words</h2>
-          <p className="text-luxury-muted mt-5">Real words from real stays, via TripAdvisor.</p>
+          <h2 className="luxury-section-title text-luxury-charcoal">Shared Experiences</h2>
+          <p className="text-luxury-muted mt-5">Genuine stories of comfort, nature, and hospitality.</p>
         </div>
 
         <Swiper

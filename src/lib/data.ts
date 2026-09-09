@@ -5,7 +5,7 @@
 // what a page receives is a change here.
 
 import { fetchAPI } from "./api";
-import { resolveHeroImages } from "./images";
+import { resolveHeroImages, toImageUrls } from "./images";
 import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomType, Testimonial } from "@/types";
 import type { SiteMetadata } from "@/types/metadata";
 import { business } from "@/config/site";
@@ -138,7 +138,9 @@ interface CmsRoomItem {
   title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
-  /** Content up to the CMS's "read more" marker — the card blurb. */
+  /** Short plain-text blurb — the card text on the homepage and room listing page. */
+  brief?: string;
+  /** Content up to the CMS's "read more" marker — the detail-page description. */
   description?: string;
   /** Content after the "read more" marker — shown only on the detail page. */
   content_1?: string | null;
@@ -197,10 +199,13 @@ export function stripHtml(html: string): string {
 /** Maps one CMS `subpackage` room item onto the `RoomType` shape the UI expects. */
 function mapRoomItem(item: CmsRoomItem): RoomType {
   const images = resolveHeroImages(item);
-  // `description` is the card blurb (content before the CMS's "read more"
-  // marker); `content_1` is the rest, shown only on the detail page — combine
-  // both for the full paragraph list, but truncate only the card blurb.
-  const cardParagraphs = stripHtml(item.description ?? "")
+  // The card thumbnail (homepage + accommodation listing) comes from `img`,
+  // not the `gallery_images` used for the detail-page gallery.
+  const cardImage = toImageUrls(item.img)[0] ?? images[0] ?? "";
+  // The card blurb (homepage + listing page) comes from `brief`. The detail
+  // page keeps using `description` (up to the CMS's "read more" marker) plus
+  // `content_1` (the rest) for its full paragraph list.
+  const cardParagraphs = stripHtml(item.brief ?? "")
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
     .filter(Boolean);
@@ -212,9 +217,9 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
   return {
     slug: item.slug,
     name: item.title,
-    image: images[0] ?? "",
+    image: cardImage,
     images,
-    description: truncate(cardParagraphs[0] ?? ""),
+    description: truncate(cardParagraphs[0] ?? fullParagraphs[0] ?? ""),
     longDescription: fullParagraphs.length > 0 ? fullParagraphs : undefined,
     pricePerNight: Number(item.price) || 0,
     size: item.rooms_Size?.trim() || "",
@@ -256,6 +261,7 @@ const DINING_CATEGORY_ID = "2";
 interface CmsVenueItem {
   slug: string;
   title: string;
+  sub_title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
   description?: string;
@@ -526,11 +532,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getFaqs(): Promise<FaqItem[]> {
   const data = await fetchAPI<FaqItem[]>("faq");
-  if (!Array.isArray(data)) return [];
-  return data.map((item) => ({
-    question: stripHtml(item.question ?? ""),
-    answer: stripHtml(item.answer ?? ""),
-  }));
+  return Array.isArray(data) ? data : [];
 }
 
 /** Images of one gallery group, selected by its CMS `display` label. */
@@ -675,6 +677,7 @@ interface CmsSlideshowItem {
   src: string;
   description?: string;
   buttonLink?: string;
+  text?: string;
 }
 
 interface CmsSlideshowGroup {
@@ -688,10 +691,20 @@ export async function getSlideshow(): Promise<CmsSlideshowGroup[]> {
 }
 
 /** First `video`-type slideshow src, for the homepage hero background. */
-export async function getHeroVideoSrc(): Promise<string | null> {
+export async function getHeroVideoSrc(): Promise<{
+    src: string | null;
+  title: string | null;
+  buttonLink: string | null;
+  buttonText: string | null;
+}> {
   const groups = await getSlideshow();
   const videoGroup = groups.find((g) => g.mediaType === "video");
-  return videoGroup?.items?.[0]?.src || null;
+  return {
+    src: videoGroup?.items?.[0]?.src || null,
+    title: videoGroup?.items?.[0]?.title || null,
+    buttonLink: videoGroup?.items?.[0]?.buttonLink || null,
+    buttonText: videoGroup?.items?.[0]?.text || null,
+  }
 }
 
 /** Maps a raw `nearby` CMS record onto the `NearbyItem` shape the UI expects. */

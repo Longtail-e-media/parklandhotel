@@ -50,9 +50,12 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
                     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-                  <p className={`overflow-hidden text-luxury-muted leading-relaxed  ${isOpen && "pb-6"}`}>
-                    {item.answer}
-                  </p>
+<div
+  className={`overflow-hidden text-luxury-muted leading-relaxed ${
+    isOpen ? "pb-6" : ""
+  }`}
+  dangerouslySetInnerHTML={{ __html: item.answer }}
+/>
                 </div>
               </div>
             );
