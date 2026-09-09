@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { Cormorant_Garamond, Work_Sans } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Work_Sans } from "next/font/google";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import CookieConsent from "@/components/ui/CookieConsent";
@@ -21,6 +21,13 @@ const workSans = Work_Sans({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const signatureFont = Great_Vibes({
+  variable: "--font-signature",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -69,7 +76,10 @@ function organizationSchema() {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang={site.locale} className={`${cormorantGaramond.variable} ${workSans.variable}`}>
+    <html
+      lang={site.locale}
+      className={`${cormorantGaramond.variable} ${workSans.variable} ${signatureFont.variable}`}
+    >
       <head>
         {/* CMS rich-text (CKEditor) content can't embed Lucide's React icons,
             so authors mark icons up as plain `<i class="fa-solid fa-...">`

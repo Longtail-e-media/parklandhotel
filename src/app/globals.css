@@ -198,6 +198,10 @@ body {
     font-weight: 500;
   }
 
+  .signature-font {
+    font-family: var(--font-signature), cursive;
+  }
+
   .luxury-subtitle {
     font-size: clamp(1rem, 1.5vw, 1.1rem);
     line-height: 1.7;

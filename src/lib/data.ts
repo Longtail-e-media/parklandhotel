@@ -223,7 +223,16 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     beds: "",
     rating: Number(business.aggregateRating?.ratingValue) || 0,
     features: Array.isArray(item.amenities)
-      ? item.amenities.map((a) => a?.title).filter((title): title is string => Boolean(title))
+      ? item.amenities
+          .map((a) => {
+            const img = a?.img ?? "";
+            return {
+              title: a?.title ?? "",
+              icon: a?.icon || (/^(?:fa(?:-solid|-regular|-brands)?)\b/.test(img) ? img : "") || undefined,
+              image: /^https?:/i.test(img) ? img : undefined,
+            };
+          })
+          .filter((f) => Boolean(f.title))
       : [],
   };
 }
@@ -463,12 +472,16 @@ export async function findServiceBySlug(slug: string): Promise<any | null> {
   return null;
 }
 
-/** Homepage amenity icons, from the `services` type-1 (facilities) group — icon is resolved from `slug` by the UI. */
+/** Homepage amenity icons & image tiles, from the `services` type-1 (facilities) group — icon is resolved from the CMS, with the gallery image as a fallback when no icon is set. */
 export async function getAmenities(): Promise<AmenityItem[]> {
   const groups = await getServices(1);
   if (!Array.isArray(groups)) return [];
   const items = groups.flatMap((group: any) => group?.items ?? []);
-  return items.map((item: any) => ({ label: item.title, icon: item.slug }));
+  return items.map((item: any) => ({
+    label: item.title,
+    icon: item.icon || "",
+    image: resolveHeroImages(item)[0] ?? undefined,
+  }));
 }
 
 /** Homepage activity tiles, from the `services` type-2 (activities) group — the first item is the featured tile. */
@@ -513,7 +526,11 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 
 export async function getFaqs(): Promise<FaqItem[]> {
   const data = await fetchAPI<FaqItem[]>("faq");
-  return Array.isArray(data) ? data : [];
+  if (!Array.isArray(data)) return [];
+  return data.map((item) => ({
+    question: stripHtml(item.question ?? ""),
+    answer: stripHtml(item.answer ?? ""),
+  }));
 }
 
 /** Images of one gallery group, selected by its CMS `display` label. */

@@ -91,30 +91,30 @@ export const aboutPage = {
   facilities: {
     eyebrow: "Facilities",
     title: "Hotel Facilities",
-    image: "/img/rooms/room-premier.jpg",
+    image: "/img/rooms/about-room.jpg",
     items: [
       {
-        title: "Rooms and Suites",
+        title: "Luxurious Stay",
         description:
-          "Varied types of rooms, from deluxe garden rooms to Parkland suites, equipped with every essential for a restful night.",
+          "Deluxe garden rooms to Presidential suites, thoughtfully appointed with premium finishes for a refined, peaceful retreat after exploring Chitwan.",
         icon: "bed",
       },
       {
-        title: "24-Hour Security",
+        title: "Event Destination",
         description:
-          "On-site security personnel and round-the-clock surveillance, with secure storage available for valuables.",
+          "Equipped halls with modern AV technology and dedicated support, tailored for seamless conferences, corporate retreats, and private celebrations.",
         icon: "shield-check",
       },
       {
-        title: "Swimming Pool",
+        title: "Wellness & Leisure",
         description:
-          "An outdoor pool set within the gardens — for an unhurried afternoon between morning and evening safaris.",
+          "An outdoor garden pool, spa, sauna, and steam room offer a serene counterpoint to the jungle, just steps away.",
         icon: "waves",
       },
       {
-        title: "Restaurant & Bar",
+        title: "Dine & Wine",
         description:
-          "Indoor dining and an open-air terrace, a daily buffet spread, and a garden bar that keeps the evening easy.",
+          "Indoor and open-air terrace dining, daily buffet spreads, and a garden bar serving authentic Nepalese and international flavors.",
         icon: "utensils",
       },
     ] as FacilityItem[],
@@ -138,7 +138,7 @@ export const rooms: RoomType[] = [
     adults: 2 + 1,
     beds: "1 Queen Bed",
     rating: 4.3,
-    features: ["wifi", "tv", "breakfast"],
+    features: [{ title: "wifi" }, { title: "tv" }, { title: "breakfast" }],
   },
   {
     slug: "suite-room",
@@ -157,7 +157,7 @@ export const rooms: RoomType[] = [
     beds: "1 King Bed",
     rating: 4.6,
     featured: true,
-    features: ["wifi", "tv", "ac"],
+    features: [{ title: "wifi" }, { title: "tv" }, { title: "ac" }],
   },
   {
     slug: "presidential-room",
@@ -176,7 +176,7 @@ export const rooms: RoomType[] = [
     beds: "1 KingBed",
     rating: 4.9,
     featured: true,
-    features: ["wifi", "ac", "bath"],
+    features: [{ title: "wifi" }, { title: "ac" }, { title: "bath" }],
   },
 ];
 
@@ -303,7 +303,7 @@ export const exploreLinks = [
   { label: "Experiences", href: "" },
 ];
 export const quickLinks = [
-  { label: "Book Your Stay", href: "" },
+  { label: "Book Your Stay", href: "https://www.mayurstay.com/parklandhotel/result.php?hotel_code=AZZxYq2" },
   { label: "Special Offers", href: "/offers" },
   { label: "Getting Here", href: "" },
   { label: "Privacy Policy", href: "" },
@@ -311,15 +311,15 @@ export const quickLinks = [
 ];
 
 export const amenities: AmenityItem[] = [
-  { label: "Swimming Pool", icon: "waves" },
-  { label: "Free Wi-Fi", icon: "wifi" },
-  { label: "Room Service", icon: "bell" },
-  { label: "24/7 Security", icon: "shield-check" },
-  { label: "Private Parking", icon: "car" },
-  { label: "Bicycle Rental", icon: "bike" },
-  { label: "Currency Exchange", icon: "banknote" },
-  { label: "Live Music Evenings", icon: "music" },
-  { label: "Conference Hall", icon: "users" },
+  { label: "Swimming Pool", icon: "fa-solid fa-water-ladder" },
+  { label: "Free Wi-Fi", icon: "fa-solid fa-wifi" },
+  { label: "Room Service", icon: "fa-solid fa-bell-concierge" },
+  { label: "24/7 Security", icon: "fa-solid fa-shield-halved" },
+  { label: "Private Parking", icon: "fa-solid fa-square-parking" },
+  { label: "Bicycle Rental", icon: "fa-solid fa-bicycle" },
+  { label: "Currency Exchange", icon: "fa-solid fa-money-bill" },
+  { label: "Live Music Evenings", icon: "fa-solid fa-music" },
+  { label: "Conference Hall", icon: "fa-solid fa-users" },
 ];
 
 export const trustBadges = [

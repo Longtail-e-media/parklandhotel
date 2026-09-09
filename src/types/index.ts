@@ -27,8 +27,17 @@ export interface RoomType {
   rating: number;
   /** Shows a "Featured" badge over the photo on the listing card. */
   featured?: boolean;
-  /** Icon keys resolved by ROOM_FEATURES in RoomsSection — keep the two in step. */
-  features: string[];
+  /** Amenities/features — titled, with an icon (Font Awesome class) or feature image resolved from the CMS. */
+  features: RoomFeature[];
+}
+
+/** One room amenity — `icon` is a full Font Awesome class, `image` a feature image used when no icon is set. */
+export interface RoomFeature {
+  title: string;
+  /** Full Font Awesome class from the CMS, e.g. "fa-solid fa-broom". */
+  icon?: string;
+  /** Feature image URL from the CMS, shown when no `icon` is set. */
+  image?: string;
 }
 
 /** A dining or bar outlet on the /dining-bar listing and detail pages. */
@@ -114,6 +123,7 @@ export interface Testimonial {
 export interface AmenityItem {
   label: string;
   icon: string;
+  image?: string;
 }
 
 /** Facility card on the About page — an amenity with a line of explanation. */

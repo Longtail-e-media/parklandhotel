@@ -112,16 +112,30 @@ export default async function RoomDetailPage({
 
               <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Room Amenities</h2>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {room.features.map((key) => {
-                  const feature = ROOM_FEATURES[key.toLowerCase()];
-                  const icon = feature?.icon ?? "check";
+                {room.features.map((feature) => {
+                  const known = ROOM_FEATURES[feature.title.toLowerCase()];
+                  const icon = feature.icon || (known ? `fa-solid fa-${known.icon}` : "");
+                  const image = feature.image;
+                  const label = known?.label ?? feature.title;
                   return (
                     <li
-                      key={key}
+                      key={feature.title}
                       className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
                     >
-                      <i className={`fa-solid fa-${icon} text-base brown-btn shrink-0`} aria-hidden="true" />
-                      {feature?.label ?? key}
+                      {icon ? (
+                        <i className={`${icon} text-base brown-btn shrink-0`} aria-hidden="true" />
+                      ) : image ? (
+                        <Image
+                          src={image}
+                          alt=""
+                          width={20}
+                          height={20}
+                          className="object-contain shrink-0"
+                        />
+                      ) : (
+                        <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
+                      )}
+                      {label}
                     </li>
                   );
                 })}

@@ -84,18 +84,31 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
 
                   {/* Feature icons — stacked down the right edge, under the badge */}
                   <ul className="absolute top-20 right-5 flex flex-col gap-2">
-                    {room.features.map((key, i) => {
-                      const feature = ROOM_FEATURES[key.toLowerCase()];
-                      const icon = feature?.icon ?? "check";
-                      const label = feature?.label ?? key;
+                    {room.features.slice(0,4).map((feature, i) => {
+                      const known = ROOM_FEATURES[feature.title.toLowerCase()];
+                      const icon = feature.icon || (known ? `fa-solid fa-${known.icon}` : "");
+                      const image = feature.image;
+                      const label = known?.label ?? feature.title;
                       return (
                         <li
-                          key={key}
+                          key={feature.title}
                           title={label}
                           style={{ transitionDelay: `${i * 70}ms` }}
                           className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/95 backdrop-blur-sm text-luxury-charcoal shadow-[0_10px_30px_-18px_rgba(36,36,32,0.8)] transition-all duration-500 hover:bg-gold hover:text-white sm:opacity-0 sm:translate-x-3 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"
                         >
-                          <i className={`fa-solid fa-${icon} text-base`} aria-hidden="true" />
+                          {icon ? (
+                            <i className={`${icon} text-base`} aria-hidden="true" />
+                          ) : image ? (
+                            <Image
+                              src={image}
+                              alt=""
+                              width={24}
+                              height={24}
+                              className="object-contain"
+                            />
+                          ) : (
+                            <i className="fa-solid fa-check text-base" aria-hidden="true" />
+                          )}
                           <span className="sr-only">{label}</span>
                         </li>
                       );

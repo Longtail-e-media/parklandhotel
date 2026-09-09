@@ -1,24 +1,27 @@
 import { contact, kathmanduOffice, chitwanOffice, address } from "@/config/site";
 import { getSiteRegulars, splitContactList } from "@/lib/data";
 
-const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address.full)}&output=embed`;
-
 export default async function ContactInfoSection() {
   const siteRegulars = await getSiteRegulars();
-  // The CMS models one site-wide phone/email, not one per office — both
-  // blocks share this single dynamic value once set, same as the homepage's
-  // ContactSection.
+  // The CMS doesn't yet expose distinct per-office address/mobile fields —
+  // until it does, every block shares these same CMS-driven values (same
+  // fallback pattern as the homepage's ContactSection) instead of the old
+  // hardcoded per-office config.
   const phone = splitContactList(siteRegulars?.contact_info)[0] || contact.phone;
   const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
+  const hotelAddress = siteRegulars?.fiscal_address || chitwanOffice.address;
+  const mapSrc =
+    siteRegulars?.location_map ||
+    `https://www.google.com/maps?q=${encodeURIComponent(address.full)}&output=embed`;
 
   const infoBlocks = [
     {
       heading: "Reservations Office",
       subheading: kathmanduOffice.label,
       lines: [
-        { label: "Address", value: kathmanduOffice.address },
+        { label: "Address", value: hotelAddress },
         { label: "Telephone", value: phone },
-        { label: "Mobile", value: `${kathmanduOffice.mobile.number} (${kathmanduOffice.mobile.name})` },
+        { label: "Mobile", value: phone },
         { label: "Email", value: email, href: `mailto:${email}` },
       ],
     },
@@ -26,9 +29,9 @@ export default async function ContactInfoSection() {
       heading: "Hotel Location",
       subheading: chitwanOffice.label,
       lines: [
-        { label: "Address", value: chitwanOffice.address },
+        { label: "Address", value: hotelAddress },
         { label: "Telephone", value: phone },
-        { label: "Mobile", value: `${chitwanOffice.mobile.number} (${chitwanOffice.mobile.name})` },
+        { label: "Mobile", value: phone },
         { label: "Email", value: email, href: `mailto:${email}` },
       ],
     },

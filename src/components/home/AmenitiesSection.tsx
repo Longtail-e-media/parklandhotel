@@ -1,19 +1,7 @@
 import { getAmenities } from "@/lib/data";
 import { amenities as fallbackAmenities } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
-
-const ICONS: Record<string, string> = {
-  wifi: "wifi",
-  "boarcast-wifi": "wifi",
-  bell: "bell",
-  "shield-check": "shield-halved",
-  car: "car",
-  bike: "bicycle",
-  banknote: "money-bill",
-  music: "music",
-  users: "users",
-  waves: "water",
-};
+import Image from "next/image";
 
 export default async function AmenitiesSection() {
   const items = await getAmenities();
@@ -53,18 +41,27 @@ export default async function AmenitiesSection() {
           {/* --- Amenity cards ------------------------------------------- */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 animate-fade-in-up delay-100">
             {amenities.map((item) => {
-              const icon = ICONS[item.icon];
+              const icon = item.icon;
+              const image = item.image;
               return (
                 <div
                   key={item.label}
                   className="group flex flex-col items-center justify-center gap-5 text-center rounded-2xl  bg-[#fff5f594] px-5 py-10 transition-all duration-500 hover:-translate-y-1.5"
                 >
-                  {icon && (
+                  {icon ? (
                     <i
-                      className={`fa-solid fa-${icon} text-[60px] opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-(--color-dark-brown)`}
+                      className={`${icon} text-[60px] opacity-90 text-luxury-charcoal transition-colors duration-500 group-hover:text-(--color-dark-brown)`}
                       aria-hidden="true"
                     />
-                  )}
+                  ) : image ? (
+                    <Image
+                      src={image}
+                      alt={item.label}
+                      width={60}
+                      height={60}
+                      className="object-contain opacity-90 transition-transform duration-500 group-hover:scale-110"
+                    />
+                  ) : null}
                   <p className="font-display text-lg text-luxury-charcoal leading-snug">
                     {item.label}
                   </p>

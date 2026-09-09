@@ -74,9 +74,10 @@ export default function NearbySectionClient({ items }: { items: NearbyItem[] }) 
                       />
                     </span>
                     {isActive && (
-                      <p className="mt-3 text-sm text-luxury-muted leading-relaxed border-t border-hairline pt-3">
-                        {item.description}
-                      </p>
+            <p className="mt-3 text-sm text-luxury-muted leading-relaxed border-t border-hairline pt-3">
+              {item.description.replace(/<[^>]+>/g, '')}
+            </p>
+
                     )}
                   </button>
                 </li>

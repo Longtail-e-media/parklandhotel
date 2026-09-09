@@ -2,13 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { aboutPage } from "@/data/data";
 import CmsSection from "@/components/ui/CmsSection";
+import {
+  BedDouble,
+  ChefHat,
+  Landmark,
+  WavesLadder,
+  type LucideIcon,
+} from "lucide-react";
 
-/** Maps the static facility keys to their Font Awesome solid icon slugs. */
-const ICONS: Record<string, string> = {
-  bed: "bed",
-  "shield-check": "shield-halved",
-  waves: "water",
-  utensils: "utensils",
+/** Maps the static facility keys to their Lucide icon components. */
+const ICONS: Record<string, LucideIcon> = {
+  bed: BedDouble,
+  "shield-check": Landmark,
+  waves: WavesLadder,
+  utensils: ChefHat,
 };
 
 // About-page-only: renders the client's `hotel-facilities` CMS entry once
@@ -35,12 +42,14 @@ export default function FacilitiesShowcase() {
 
             <div className="grid sm:grid-cols-2 gap-x-10 gap-y-12">
               {facilities.items.map((item) => {
-                const icon = ICONS[item.icon];
+                const Icon = ICONS[item.icon];
                 return (
                   <div key={item.title} className="group">
-                    {icon && (
-                      <i
-                        className={`fa-solid fa-${icon} text-[44px] text-gold-text transition-transform duration-500 group-hover:-translate-y-1`}
+                    {Icon && (
+                      <Icon
+                        size={44}
+                        strokeWidth={1.5}
+                        className="text-gold-text transition-transform duration-500 group-hover:-translate-y-1"
                         aria-hidden="true"
                       />
                     )}
@@ -53,7 +62,7 @@ export default function FacilitiesShowcase() {
               })}
             </div>
 
-            <Link href="/#rooms" className="luxury-btn luxury-btn-accent mt-12">
+            <Link href="/accommodation" className="luxury-btn luxury-btn-accent mt-12">
               View Our Rooms
             </Link>
           </div>

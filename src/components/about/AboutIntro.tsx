@@ -1,15 +1,7 @@
 import Image from "next/image";
-import { Great_Vibes } from "next/font/google";
 import { aboutPage } from "@/data/data";
 import Watermark from "@/components/ui/Watermark";
 import CmsSection from "@/components/ui/CmsSection";
-
-/** Script face, loaded here only — it exists for the signature and nothing else. */
-const signatureFont = Great_Vibes({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
 
 // Renders the client's `about-us` CMS entry once they add one via CKEditor
 // (see CmsSection), falling back to the static section below until then.
@@ -74,7 +66,7 @@ export default function AboutIntro() {
 
             <div className="mt-10">
               <p
-                className={`${signatureFont.className} text-5xl lg:text-6xl text-gold-text leading-none`}
+                className="signature-font text-5xl lg:text-6xl text-gold-text leading-none"
               >
                 {intro.signature}
               </p>
