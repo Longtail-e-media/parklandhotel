@@ -1,11 +1,11 @@
-// Data-access layer — the only module that talks to fetchAPI besides api.ts
+           // Data-access layer — the only module that talks to fetchAPI besides api.ts
 // itself. Pages/components never import fetchAPI directly; they call the named
 // helpers below, which own all endpoint names, response-shape quirks and
 // filtering. Changing where data comes from is an api.ts/env concern; changing
 // what a page receives is a change here.
 
 import { fetchAPI } from "./api";
-import { resolveHeroImages, toImageUrls } from "./images";
+import { resolveHeroImages } from "./images";
 import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomType, Testimonial } from "@/types";
 import type { SiteMetadata } from "@/types/metadata";
 import { business } from "@/config/site";
@@ -138,9 +138,7 @@ interface CmsRoomItem {
   title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
-  /** Short plain-text blurb — the card text on the homepage and room listing page. */
-  brief?: string;
-  /** Content up to the CMS's "read more" marker — the detail-page description. */
+  /** Content up to the CMS's "read more" marker — the card blurb. */
   description?: string;
   /** Content after the "read more" marker — shown only on the detail page. */
   content_1?: string | null;
@@ -199,13 +197,10 @@ export function stripHtml(html: string): string {
 /** Maps one CMS `subpackage` room item onto the `RoomType` shape the UI expects. */
 function mapRoomItem(item: CmsRoomItem): RoomType {
   const images = resolveHeroImages(item);
-  // The card thumbnail (homepage + accommodation listing) comes from `img`,
-  // not the `gallery_images` used for the detail-page gallery.
-  const cardImage = toImageUrls(item.img)[0] ?? images[0] ?? "";
-  // The card blurb (homepage + listing page) comes from `brief`. The detail
-  // page keeps using `description` (up to the CMS's "read more" marker) plus
-  // `content_1` (the rest) for its full paragraph list.
-  const cardParagraphs = stripHtml(item.brief ?? "")
+  // `description` is the card blurb (content before the CMS's "read more"
+  // marker); `content_1` is the rest, shown only on the detail page — combine
+  // both for the full paragraph list, but truncate only the card blurb.
+  const cardParagraphs = stripHtml(item.description ?? "")
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
     .filter(Boolean);
@@ -217,9 +212,9 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
   return {
     slug: item.slug,
     name: item.title,
-    image: cardImage,
+    image: images[0] ?? "",
     images,
-    description: truncate(cardParagraphs[0] ?? fullParagraphs[0] ?? ""),
+    description: truncate(cardParagraphs[0] ?? ""),
     longDescription: fullParagraphs.length > 0 ? fullParagraphs : undefined,
     pricePerNight: Number(item.price) || 0,
     size: item.rooms_Size?.trim() || "",
@@ -261,7 +256,6 @@ const DINING_CATEGORY_ID = "2";
 interface CmsVenueItem {
   slug: string;
   title: string;
-  sub_title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
   description?: string;
@@ -677,7 +671,6 @@ interface CmsSlideshowItem {
   src: string;
   description?: string;
   buttonLink?: string;
-  text?: string;
 }
 
 interface CmsSlideshowGroup {
@@ -694,16 +687,16 @@ export async function getSlideshow(): Promise<CmsSlideshowGroup[]> {
 export async function getHeroVideoSrc(): Promise<{
     src: string | null;
   title: string | null;
-  buttonLink: string | null;
   buttonText: string | null;
+  buttonLink: string | null;
 }> {
   const groups = await getSlideshow();
   const videoGroup = groups.find((g) => g.mediaType === "video");
   return {
     src: videoGroup?.items?.[0]?.src || null,
     title: videoGroup?.items?.[0]?.title || null,
-    buttonLink: videoGroup?.items?.[0]?.buttonLink || null,
     buttonText: videoGroup?.items?.[0]?.text || null,
+    buttonLink: videoGroup?.items?.[0]?.buttonLink || null,
   }
 }
 

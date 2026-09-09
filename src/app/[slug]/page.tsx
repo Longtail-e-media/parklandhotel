@@ -81,18 +81,14 @@ export default async function CmsArticlePage({
   if (RESERVED_SLUGS.has(slug)) notFound();
 
   const article = await findArticleBySlug(slug);
+  console.log(article);
   if (!article?.content) notFound();
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <div className="pt-36 lg:pt-44 pb-4">
-        <div className="container mx-auto px-6 lg:px-10">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> Back to Home
-          </Link>
+      <div className="pt-36 lg:pt-44 pb-20">
+        <div className="container mx-auto px-6 lg:px-10 text-center text-4xl">
+                {article?.title}
         </div>
       </div>
 
