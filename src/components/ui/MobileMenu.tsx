@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { NavItem } from "@/types";
 import { site, contact, address, links } from "@/config/site";
@@ -31,6 +31,7 @@ export default function MobileMenu({
   email = contact.email,
 }: MobileMenuProps) {
   const isExternalBooking = bookingUrl.startsWith("http");
+  const panelRef = useRef<HTMLElement>(null);
   // Label of the expanded submenu — only one is open at a time.
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
@@ -53,10 +54,15 @@ export default function MobileMenu({
     const previousOverflow = document.body.style.overflow;
 
     document.addEventListener("keydown", onKeyDown);
+    const onPointerDown = (e: PointerEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener("pointerdown", onPointerDown);
     document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", onPointerDown);
       document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, onClose]);
@@ -74,6 +80,7 @@ export default function MobileMenu({
 
       {/* Panel */}
       <aside
+        ref={panelRef}
         id="mobile-menu"
         role="dialog"
         aria-modal="true"

@@ -17,9 +17,9 @@ export default async function RoomsHeader() {
   return (
     <section className="pt-36 lg:pt-44 pb-4 lg:pb-8">
       <div className="max-w-2xl mx-auto px-6 lg:px-10 text-center">
-        <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
+        {/* <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
           {header.eyebrow}
-        </p>
+        </p> */}
         <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
           {title}
         </h2>

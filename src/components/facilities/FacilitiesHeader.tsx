@@ -1,0 +1,39 @@
+import { servicesPage } from "@/data/data";
+import Watermark from "@/components/ui/Watermark";
+
+/**
+ * Typographic page header — no banner image, so the top padding here is what
+ * clears the fixed navbar (h-24 / h-20 once scrolled). Shares copy with the
+ * /services page: same CMS `services` type-1 group, just a different card
+ * layout (icon grid vs. image cards).
+ */
+export default function FacilitiesHeader() {
+  const { header, intro } = servicesPage;
+
+  return (
+    <section className="relative overflow-hidden pt-36 lg:pt-44 pb-4 lg:pb-8">
+      <Watermark
+        motif="leaf"
+        className="w-28 lg:w-40 -right-6 top-10 text-gold/7"
+        rotate={-14}
+        duration={16}
+      />
+      <Watermark
+        motif="fern"
+        className="w-24 lg:w-32 left-[8%] bottom-4 text-luxury-charcoal/5"
+        rotate={6}
+        duration={12}
+        delay={0.8}
+      />
+      <div className="max-w-2xl mx-auto px-6 lg:px-10 text-center">
+        <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
+          {header.eyebrow}
+        </p>
+        <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
+          {header.title}
+        </h2>
+        <p className="text-luxury-muted mt-5 whitespace-pre-line animate-fade-in-up delay-300">{intro}</p>
+      </div>
+    </section>
+  );
+}

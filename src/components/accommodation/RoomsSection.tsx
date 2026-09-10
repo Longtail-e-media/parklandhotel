@@ -57,8 +57,8 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
         <p className="text-luxury-muted mt-4 leading-relaxed">{room.description}</p>
 
         <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 bg-luxury-cream-alt/60 rounded-2xl px-4 sm:px-6 py-5">
-          <RoomStat icon="user" value={`${room.adults} Person`} label="Guests" />
-          <RoomStat icon="bed" value={room.beds} label="Bed Type" />
+          <RoomStat icon="user" value={`${room.adults}`} label="Guests" />
+          <RoomStat icon="bed" value={room.bed} label="Bed Size" />
           <RoomStat icon="expand" value={room.size} label="Room Size" />
         </div>
 

@@ -3,7 +3,6 @@ import RoomsHeader from "@/components/accommodation/RoomsHeader";
 import RoomsSection from "@/components/accommodation/RoomsSection";
 import { site } from "@/config/site";
 import { buildMetadata } from "@/lib/metadata";
-
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata("accommodation", {}, "/accommodation", {
     title: `Accommodation | ${site.name}`,

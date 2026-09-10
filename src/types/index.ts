@@ -20,10 +20,11 @@ export interface RoomType {
   pricePerNight: number;
   /** Floor area as written on the card, e.g. "34 Sqm". */
   size: string;
+  bed: string;
   /** Maximum adults the room sleeps. */
-  adults: number;
-  /** Bed configuration as written on the card, e.g. "1 King Bed". */
-  beds: string;
+  adults: string ;
+  /** Raw occupancy string from the CMS, e.g. "2+1" — no dedicated bed-type field exists yet. */
+
   /** Guest rating out of 5, shown as stars on the listing card. */
   rating: number;
   /** Shows a "Featured" badge over the photo on the listing card. */

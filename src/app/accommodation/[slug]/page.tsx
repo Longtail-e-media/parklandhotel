@@ -149,7 +149,7 @@ export default async function RoomDetailPage({
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
                   <i className="fa-solid fa-bed text-base brown-btn shrink-0" aria-hidden="true" />
-                  Bed Type: {room.beds}
+                  Occupancy: {room.beds}
                 </li>
               </ul>
 

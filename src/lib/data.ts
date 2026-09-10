@@ -163,8 +163,11 @@ function mapAmenityFeatures(amenities?: CmsAmenity[]): RoomFeature[] {
 interface CmsRoomItem {
   slug: string;
   title: string;
+  bed: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
+  /** Short card blurb, plain text (not HTML) — preferred over `description` for the listing card. */
+  brief?: string;
   /** Content up to the CMS's "read more" marker — the card blurb. */
   description?: string;
   /** Content after the "read more" marker — shown only on the detail page. */
@@ -238,16 +241,18 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
   return {
     slug: item.slug,
     name: item.title,
+    bed: item.bed,
     img: item.img,
     image: images[0] ?? "",
     images,
-    description: truncate(cardParagraphs[0] ?? ""),
+    description: truncate(item.brief?.trim() || cardParagraphs[0] || ""),
     longDescription: fullParagraphs.length > 0 ? fullParagraphs : undefined,
     pricePerNight: Number(item.price) || 0,
     size: item.rooms_Size?.trim() || "",
     adults: parseOccupancy(item.occupancy),
-    // Not modelled by the CMS yet — no bed-type/rating fields on `subpackage`.
-    beds: "",
+    // No dedicated bed-type field on `subpackage` — show the raw occupancy
+    // string (e.g. "2+1") instead.
+    beds: item.occupancy?.trim() || "",
     rating: Number(business.aggregateRating?.ratingValue) || 0,
     features: mapAmenityFeatures(item.amenities),
   };
