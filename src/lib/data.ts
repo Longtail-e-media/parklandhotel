@@ -281,10 +281,12 @@ interface CmsVenueItem {
 /** Maps one CMS `subpackage` item onto the `DiningVenue` shape the UI expects. */
 function mapDiningVenue(item: CmsVenueItem): DiningVenue {
   const images = resolveHeroImages(item);
-  const paragraphs = stripHtml([item.description, item.content_1].filter(Boolean).join("\n\n"))
+  const rawDescription = [item.description, item.content_1].filter(Boolean).join("");
+  // Excerpt still needs plain text — it's rendered outside dangerouslySetInnerHTML on listing cards.
+  const firstPlainParagraph = stripHtml(rawDescription)
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
-    .filter(Boolean);
+    .find(Boolean);
 
   return {
     slug: item.slug,
@@ -293,8 +295,8 @@ function mapDiningVenue(item: CmsVenueItem): DiningVenue {
     category: /bar/i.test(item.slug) ? "bar" : "restaurant",
     image: images[0] ?? "",
     images,
-    excerpt: truncate(paragraphs[0] ?? "", 160),
-    description: paragraphs.length > 0 ? paragraphs : [""],
+    excerpt: truncate(firstPlainParagraph ?? "", 160),
+    description: rawDescription,
     // Not modelled by the CMS yet — no opening-hours field on `subpackage`.
     hours: undefined,
     features: mapAmenityFeatures(item.amenities),
@@ -335,10 +337,12 @@ function parsePax(value?: string | null): number | null {
 /** Maps one CMS `subpackage` item onto the `MeetingSpace` shape the UI expects. */
 function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
   const images = resolveHeroImages(item);
-  const paragraphs = stripHtml([item.description, item.content_1].filter(Boolean).join("\n\n"))
+  const rawDescription = [item.description, item.content_1].filter(Boolean).join("");
+  // Excerpt still needs plain text — it's rendered outside dangerouslySetInnerHTML on listing cards.
+  const firstPlainParagraph = stripHtml(rawDescription)
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
-    .filter(Boolean);
+    .find(Boolean);
 
   const setupStyleFields: [string, string | null | undefined][] = [
     ["U-Shape Style", item.u_shape],
@@ -356,8 +360,8 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
     name: item.title,
     image: images[0] ?? "",
     images,
-    excerpt: truncate(paragraphs[0] ?? "", 160),
-    description: paragraphs.length > 0 ? paragraphs : [""],
+    excerpt: truncate(firstPlainParagraph ?? "", 160),
+    description: rawDescription,
     // Not a distinct CMS field — derived from the largest configured setup-style pax count.
     capacity: maxPax > 0 ? `Up to ${maxPax} guests` : undefined,
     size: item.rooms_Size?.trim() || item.size?.trim() || undefined,

@@ -7,7 +7,7 @@ export default async function DiningSection() {
   const [diningPackage, venues] = await Promise.all([getDiningPackage(), getDiningVenues()]);
 
   const title = diningPackage?.title ? stripHtml(diningPackage.title) : dining.title;
-  const paragraph = diningPackage?.description ? stripHtml(diningPackage.description) : dining.paragraph;
+  const paragraph = diningPackage?.description ? diningPackage.description : dining.paragraph;
   const image = diningPackage?.banner_img?.[0]?.url || dining.image;
   const features =
     venues.length > 0 ? venues.map((v) => ({ title: v.name, description: v.excerpt })) : dining.features;
@@ -43,7 +43,10 @@ export default async function DiningSection() {
         <div className="animate-slide-in-right">
           <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{dining.eyebrow}</p>
           <h2 className="luxury-section-title text-luxury-charcoal mb-6">{title}</h2>
-          <div className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line">{paragraph}</div>
+          <div
+            className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line"
+            dangerouslySetInnerHTML={{ __html: paragraph }}
+          />
 
         </div>
       </div>

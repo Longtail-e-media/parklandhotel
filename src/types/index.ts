@@ -50,8 +50,8 @@ export interface DiningVenue {
   image: string;
   images?: string[];
   excerpt: string;
-  /** Longer copy for the detail page, one paragraph per entry. */
-  description: string[];
+  /** Longer copy for the detail page — raw HTML from the CMS, rendered as-is so its own tags/classes are preserved. */
+  description: string;
   /** Not modelled by the CMS yet — omitted when unavailable. */
   hours?: string;
   /** Amenities/features — titled, with an icon (Font Awesome class) or feature image resolved from the CMS. */
@@ -66,8 +66,8 @@ export interface MeetingSpace {
   image: string;
   images?: string[];
   excerpt: string;
-  /** Longer copy for the detail page, one paragraph per entry. */
-  description: string[];
+  /** Longer copy for the detail page — raw HTML from the CMS, rendered as-is so its own tags/classes are preserved. */
+  description: string;
   /** Derived from the largest configured setup-style pax count — omitted when the CMS has none. */
   capacity?: string;
   /** Not always populated by the CMS — omitted when unavailable. */

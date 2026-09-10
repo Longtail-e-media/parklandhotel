@@ -545,10 +545,8 @@ export const diningPage = {
       image: "/img/dining.jpg",
       images: ["/img/dining.jpg", "/img/garden.jpg"],
       excerpt: "Contemporary dining featuring local and international cuisine.",
-      description: [
-        "Our main restaurant serves a considered mix of Nepalese, Indian and continental dishes, drawing on quality local ingredients and recipes passed down through Parkland's kitchen since 1987.",
-        "Indoor seating looks out over the gardens, with attentive service pitched for everything from a relaxed breakfast to a memorable dinner.",
-      ],
+      description:
+        "<p>Our main restaurant serves a considered mix of Nepalese, Indian and continental dishes, drawing on quality local ingredients and recipes passed down through Parkland's kitchen since 1987.</p><p>Indoor seating looks out over the gardens, with attentive service pitched for everything from a relaxed breakfast to a memorable dinner.</p>",
       hours: "6:30 AM – 10:00 PM",
       features: [
         { title: "À la carte menu" },
@@ -564,10 +562,8 @@ export const diningPage = {
       image: "/img/garden.jpg",
       images: ["/img/garden.jpg", "/img/dining.jpg"],
       excerpt: "Al fresco dining surrounded by the beauty of Sauraha.",
-      description: [
-        "Set among the mature gardens that give Hotel Parkland its character, the Garden Terrace is our open-air dining space — shaded by the property's indigenous trees and open to birdsong through the day.",
-        "A natural choice for breakfast or a long, easy lunch between morning and evening safaris, weather permitting.",
-      ],
+      description:
+        "<p>Set among the mature gardens that give Hotel Parkland its character, the Garden Terrace is our open-air dining space — shaded by the property's indigenous trees and open to birdsong through the day.</p><p>A natural choice for breakfast or a long, easy lunch between morning and evening safaris, weather permitting.</p>",
       hours: "7:00 AM – 10:00 PM (weather permitting)",
       features: [
         { title: "Open-air seating" },
@@ -583,10 +579,8 @@ export const diningPage = {
       image: "/img/dining.jpg",
       images: ["/img/dining.jpg", "/img/garden.jpg"],
       excerpt: "A generous selection of fresh flavours for every palate.",
-      description: [
-        "For guests on full board or simply after variety, the Buffet Hall lays out a generous daily spread — a rotating mix of Nepalese, Indian and international dishes prepared fresh each service.",
-        "Sittings are timed around the day's safari and activity schedule, so there's always a hot meal waiting whichever excursion you've just returned from.",
-      ],
+      description:
+        "<p>For guests on full board or simply after variety, the Buffet Hall lays out a generous daily spread — a rotating mix of Nepalese, Indian and international dishes prepared fresh each service.</p><p>Sittings are timed around the day's safari and activity schedule, so there's always a hot meal waiting whichever excursion you've just returned from.</p>",
       hours: "Breakfast 7:00 – 10:00 AM · Dinner 7:00 – 9:30 PM",
       features: [
         { title: "Daily rotating buffet" },
@@ -602,10 +596,8 @@ export const diningPage = {
       image: "/img/pool.jpg",
       images: ["/img/pool.jpg", "/img/garden.jpg"],
       excerpt: "Unwind with signature drinks and a relaxed evening ambience.",
-      description: [
-        "The Parkland Bar keeps the evening easy — a garden-set bar pouring signature cocktails, local spirits and a well-stocked selection of wine and beer.",
-        "Live music evenings turn it into the natural gathering point after a day in the jungle, with seating that spills out toward the pool.",
-      ],
+      description:
+        "<p>The Parkland Bar keeps the evening easy — a garden-set bar pouring signature cocktails, local spirits and a well-stocked selection of wine and beer.</p><p>Live music evenings turn it into the natural gathering point after a day in the jungle, with seating that spills out toward the pool.</p>",
       hours: "4:00 PM – 11:00 PM",
       features: [
         { title: "Signature cocktails" },
@@ -632,10 +624,8 @@ export const meetingsPage = {
       image: "/img/dining.jpg",
       images: ["/img/dining.jpg", "/img/garden.jpg"],
       excerpt: "Our largest indoor venue, set up for conferences, seminars and corporate retreats.",
-      description: [
-        "The Grand Conference Hall is Hotel Parkland's largest indoor venue — a flexible, naturally lit space that reconfigures for theatre-style seminars, classroom training sessions or banquet-style gatherings.",
-        "Standard AV equipment, high-speed wi-fi and dedicated event staff come as part of every booking, with catering drawn from our restaurant kitchen.",
-      ],
+      description:
+        "<p>The Grand Conference Hall is Hotel Parkland's largest indoor venue — a flexible, naturally lit space that reconfigures for theatre-style seminars, classroom training sessions or banquet-style gatherings.</p><p>Standard AV equipment, high-speed wi-fi and dedicated event staff come as part of every booking, with catering drawn from our restaurant kitchen.</p>",
       capacity: "Up to 120 guests, theatre-style",
       size: "150 Sq.m",
       features: ["Theatre, classroom & banquet layouts", "AV equipment included", "High-speed wi-fi", "On-site catering"],
@@ -654,10 +644,8 @@ export const meetingsPage = {
       image: "/img/garden.jpg",
       images: ["/img/garden.jpg", "/img/pool.jpg"],
       excerpt: "An open-air setting among the gardens, built for weddings and celebrations.",
-      description: [
-        "Set beneath Hotel Parkland's mature trees, the Garden Pavilion is our open-air venue for weddings, receptions and milestone celebrations — string lighting and lawn seating included.",
-        "The space pairs easily with the adjoining Garden Terrace for cocktail hours and evening dining, and our events team can help shape a full-day itinerary around it.",
-      ],
+      description:
+        "<p>Set beneath Hotel Parkland's mature trees, the Garden Pavilion is our open-air venue for weddings, receptions and milestone celebrations — string lighting and lawn seating included.</p><p>The space pairs easily with the adjoining Garden Terrace for cocktail hours and evening dining, and our events team can help shape a full-day itinerary around it.</p>",
       capacity: "Up to 200 guests, reception-style",
       size: "300 Sq.m open lawn",
       features: ["Open-air garden setting", "Wedding & reception ready", "String lighting", "Dedicated events team"],
@@ -676,10 +664,8 @@ export const meetingsPage = {
       image: "/img/rooms/room-premier.jpg",
       images: ["/img/rooms/room-premier.jpg", "/img/dining.jpg"],
       excerpt: "An intimate, private room for small corporate meetings and interviews.",
-      description: [
-        "For smaller gatherings — board meetings, interviews or client presentations — the Boardroom offers a private, air-conditioned space away from the rest of the hotel.",
-        "Seats up to twelve around a single table, with tea and coffee service available throughout.",
-      ],
+      description:
+        "<p>For smaller gatherings — board meetings, interviews or client presentations — the Boardroom offers a private, air-conditioned space away from the rest of the hotel.</p><p>Seats up to twelve around a single table, with tea and coffee service available throughout.</p>",
       capacity: "Up to 12 guests, boardroom-style",
       size: "40 Sq.m",
       features: ["Air conditioned", "Private & quiet", "Tea & coffee service", "Flexible half/full-day booking"],

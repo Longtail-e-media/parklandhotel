@@ -146,11 +146,10 @@ export default async function MeetingSpaceDetailPage({
                 )}
               </ul>
 
-              <div className="mt-8 space-y-4 text-luxury-muted leading-relaxed">
-                {space.description.map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
-              </div>
+              <div
+                className="mt-8 space-y-4 text-luxury-muted leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: space.description }}
+              />
 
               <MeetingEnquireButton spaceName={space.name} />
             </div>

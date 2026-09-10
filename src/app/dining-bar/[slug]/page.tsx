@@ -122,11 +122,10 @@ export default async function DiningVenueDetailPage({
                 </p>
               )}
 
-              <div className="mt-8 space-y-4 text-luxury-muted leading-relaxed">
-                {venue.description.map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
-              </div>
+              <div
+                className="mt-8 space-y-4 text-luxury-muted leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: venue.description }}
+              />
 
               <DiningEnquireButton venueName={venue.name} />
               <div className="mt-8 flex items-center gap-5 mt-15">
