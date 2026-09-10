@@ -238,6 +238,7 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
   return {
     slug: item.slug,
     name: item.title,
+    img: item.img,
     image: images[0] ?? "",
     images,
     description: truncate(cardParagraphs[0] ?? ""),
@@ -271,6 +272,7 @@ const DINING_CATEGORY_ID = "2";
 interface CmsVenueItem {
   slug: string;
   title: string;
+  sub_title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
   description?: string;
@@ -291,6 +293,7 @@ function mapDiningVenue(item: CmsVenueItem): DiningVenue {
   return {
     slug: item.slug,
     name: item.title,
+    sub_title : item.sub_title,
     // The CMS has no dedicated restaurant/bar field yet — infer it from the slug.
     category: /bar/i.test(item.slug) ? "bar" : "restaurant",
     image: images[0] ?? "",
@@ -358,6 +361,7 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
   return {
     slug: item.slug,
     name: item.title,
+
     image: images[0] ?? "",
     images,
     excerpt: truncate(firstPlainParagraph ?? "", 160),

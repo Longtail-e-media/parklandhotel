@@ -65,7 +65,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
                     <Link href={`/accommodation/${room.slug}`} className="block w-full h-full">
                       <Image
-                      src={room.image}
+                      src={room.img?.[0]?.src || room.image}
                       alt={`${room.name} interior`}
                       width={600}
                       height={750}

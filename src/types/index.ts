@@ -9,6 +9,7 @@ export interface RoomType {
   /** URL segment for the room's detail page, e.g. /accommodation/deluxe-room. */
   slug: string;
   name: string;
+  img?: { src: string; title: string }[];
   image: string;
   /** Extra photos shown in the detail page gallery, beyond `image`. */
   images?: string[];

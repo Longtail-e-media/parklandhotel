@@ -62,9 +62,11 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
                     />
                   ))}
                 </div>
-<blockquote className="relative text-luxury-charcoal/80 leading-8 mb-7">
-  {(t.quote || "").replace(/<\/?p[^>]*>/g, "")}
-</blockquote>
+<blockquote
+  className="relative text-luxury-charcoal/80 leading-8 mb-7"
+  dangerouslySetInnerHTML={{ __html: t.quote }}
+></blockquote>
+
 
                 <figcaption className="relative flex items-center gap-4 border-t border-hairline pt-6">
                   <span className="flex items-center justify-center w-11 h-11 rounded-full border border-hairline luxury-hero-title text-base text-gold shrink-0">
