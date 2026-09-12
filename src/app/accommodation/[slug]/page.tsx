@@ -109,8 +109,25 @@ export default async function RoomDetailPage({
                   <p key={i}>{para}</p>
                 ))}
               </div>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
+                                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                  <i className="fa-solid fa-user text-base brown-btn shrink-0" aria-hidden="true" />
+                  Adults: {room.occupancy}
+                </li>
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                  <i className="fa-solid fa-expand text-base brown-btn shrink-0" aria-hidden="true" />
+                  Size: {room.size}
+                </li>
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                  <i className="fa-solid fa-bed text-base brown-btn shrink-0" aria-hidden="true" />
+                  Bed Size: {room.bed}
+                </li>
+              </ul>
 
-              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Room Amenities</h2>
+
+
+
+              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">{room.amenities_name}</h2>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {room.features.map((feature) => {
                   const known = ROOM_FEATURES[feature.title.toLowerCase()];
@@ -139,18 +156,7 @@ export default async function RoomDetailPage({
                     </li>
                   );
                 })}
-                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-user text-base brown-btn shrink-0" aria-hidden="true" />
-                  Adults: {room.adults}
-                </li>
-                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-expand text-base brown-btn shrink-0" aria-hidden="true" />
-                  Size: {room.size}
-                </li>
-                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-bed text-base brown-btn shrink-0" aria-hidden="true" />
-                  Occupancy: {room.beds}
-                </li>
+
               </ul>
 
               <div className="grid sm:grid-cols-2 gap-8 mt-12">

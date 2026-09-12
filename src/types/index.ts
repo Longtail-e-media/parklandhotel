@@ -11,6 +11,7 @@ export interface RoomType {
   name: string;
   img?: { src: string; title: string }[];
   image: string;
+  occupancy: any;
   /** Extra photos shown in the detail page gallery, beyond `image`. */
   images?: string[];
   description: string;
@@ -18,11 +19,11 @@ export interface RoomType {
   longDescription?: string[];
   /** Nightly rate in USD — printed on the badge over the photo. */
   pricePerNight: number;
+  amenities_name: string;
   /** Floor area as written on the card, e.g. "34 Sqm". */
   size: string;
   bed: string;
   /** Maximum adults the room sleeps. */
-  adults: string ;
   /** Raw occupancy string from the CMS, e.g. "2+1" — no dedicated bed-type field exists yet. */
 
   /** Guest rating out of 5, shown as stars on the listing card. */

@@ -164,6 +164,7 @@ interface CmsRoomItem {
   slug: string;
   title: string;
   bed: string;
+  amenities_name: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
   /** Short card blurb, plain text (not HTML) — preferred over `description` for the listing card. */
@@ -242,6 +243,8 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     slug: item.slug,
     name: item.title,
     bed: item.bed,
+    amenities_name: item.amenities_name,
+    occupancy :item.occupancy,
     img: item.img,
     image: images[0] ?? "",
     images,
@@ -249,10 +252,8 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     longDescription: fullParagraphs.length > 0 ? fullParagraphs : undefined,
     pricePerNight: Number(item.price) || 0,
     size: item.rooms_Size?.trim() || "",
-    adults: parseOccupancy(item.occupancy),
     // No dedicated bed-type field on `subpackage` — show the raw occupancy
     // string (e.g. "2+1") instead.
-    beds: item.occupancy?.trim() || "",
     rating: Number(business.aggregateRating?.ratingValue) || 0,
     features: mapAmenityFeatures(item.amenities),
   };

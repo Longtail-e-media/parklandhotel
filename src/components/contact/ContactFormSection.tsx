@@ -161,7 +161,7 @@ export default function ContactFormSection() {
               )}
             </div>
 
-            <Recaptcha onChange={setCaptchaToken} />
+            {/* <Recaptcha onChange={setCaptchaToken} /> */}
 
             {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
 
