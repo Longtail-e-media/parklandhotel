@@ -126,7 +126,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
                     </li>
                     <li className="flex items-center gap-2">
                       <i className="fa-solid fa-user text-base brown-btn" aria-hidden="true" />
-                      Adults: {room.adults}
+                      Adults: {room.occupancy}
                     </li>
                   </ul>
 
