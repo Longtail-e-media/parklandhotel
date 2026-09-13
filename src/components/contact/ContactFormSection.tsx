@@ -182,7 +182,7 @@ export default function ContactFormSection() {
 
         <div className="luxury-media relative w-full h-[380px] lg:h-full min-h-[420px] animate-fade-in-up delay-100">
           <Image
-            src="/img/rooms/room-premier.jpg"
+            src="/img/rooms/contact.jpg"
             alt="A Hotel Parkland suite"
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"

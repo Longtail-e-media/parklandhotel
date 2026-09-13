@@ -1,22 +1,21 @@
 "use client";
 
 import type { RoomType } from "@/types";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { getSiteRegulars} from "@/lib/data";
+    const siteRegulars = await getSiteRegulars();
 export default function RoomBookingWidget({
-  room,
-  rooms,
   className = "",
 }: {
   room: RoomType;
   rooms: RoomType[];
   className?: string;
 }) {
-  const router = useRouter();
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const today = new Date().toISOString().slice(0, 10);
+
+  const booking_code = siteRegulars?.booking_code;
 
   return (
     <aside className={`luxury-surface p-7 sm:p-8 ${className}`}>
@@ -27,7 +26,10 @@ export default function RoomBookingWidget({
         className="space-y-5"
         onSubmit={(e) => {
           e.preventDefault();
-          router.push("/contact");
+          const bookingUrl = new URL(`${booking_code}`);
+          bookingUrl.searchParams.set("hotel_check_in", checkIn);
+          bookingUrl.searchParams.set("hotel_check_out", checkOut);
+          window.location.assign(bookingUrl.toString());
         }}
       >
         <div>

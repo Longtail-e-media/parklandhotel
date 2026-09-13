@@ -191,6 +191,7 @@ export const dining = {
   title: "Flavours Under the Sauraha Sky",
   paragraph:
     "From authentic Nepalese flavours to international favourites, discover dining experiences crafted to delight every palate.\n\nOur culinary spaces offer sophisticated settings, quality ingredients and attentive service—from relaxed breakfasts to memorable dinners and evening gatherings.",
+    slug: "dining-bar",
   features: [
 {title:"Outdoor Dining", description:"Al fresco dining surrounded by the beauty of Sauraha."},
 {title:"Buffet Dining", description:"A generous selection of fresh flavours for every palate."},
@@ -617,6 +618,7 @@ export const meetingsPage = {
   header: {
     eyebrow: "Meetings & Events",
     title: "Gather, Celebrate, Connect",
+    slug: "meetings-events",
   },
   intro:
     "From boardroom strategy sessions to garden celebrations, Hotel Parkland's function spaces bring together attentive service and the calm of Sauraha.",

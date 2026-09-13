@@ -23,7 +23,7 @@ export default async function GallerySection() {
             <p className="luxury-eyebrow luxury-label text-gold-text mb-5">Gallery</p>
             <h2 className="luxury-section-title text-luxury-charcoal">A Glimpse of Parkland</h2>
           </div>
-          <Link href="/gallery" className="luxury-btn luxury-btn-dark">
+          <Link href="/gallery" className="luxury-btn">
             View Full Gallery <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
           </Link>
         </div>

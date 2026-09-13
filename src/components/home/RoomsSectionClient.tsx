@@ -117,7 +117,8 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
                 </div>
 
                 <div className="p-7 flex flex-col grow">
-                  <h3 className="luxury-section-title text-2xl">{room.name}</h3>
+                   <Link href={`/accommodation/${room.slug}`}> <h3 className="luxury-section-title text-2xl">{room.name}</h3></Link>
+
 
                   <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-3 text-sm text-luxury-muted">
                     <li className="flex items-center gap-2">
