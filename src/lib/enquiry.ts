@@ -30,13 +30,13 @@ export function cmsEndpointUrl(endpointFile: string): string {
 export async function submitEnquiry(
   endpointFile: string,
   data: Record<string, unknown>,
-  captchaToken: string,
+  // captchaToken: string,
 ): Promise<EnquiryResult> {
   try {
     const res = await fetch(cmsEndpointUrl(endpointFile), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, "g-recaptcha-response": captchaToken }),
+      body: JSON.stringify({ ...data }),
     });
 
     if (!res.ok) {

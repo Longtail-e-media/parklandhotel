@@ -97,12 +97,6 @@ export default async function DiningVenueDetailPage({
           flip
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <Link
-            href="/dining-bar"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Dining & Bar
-          </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div className="animate-slide-in-left">

@@ -149,8 +149,8 @@ export default function MobileMenu({
                         }`}
                       >
                         <ul className="overflow-hidden">
-                          {item.children.map((child) => (
-                            <li key={child.label}>
+                          {item.children.map((child, i) => (
+                            <li key={i}>
                               <Link
                                 href={child.href || "#"}
                                 onClick={onClose}

@@ -43,10 +43,10 @@ export default function ContactFormSection() {
   const { onChange: onNumberChange, ...numberField } = register("number");
 
   const onSubmit = async (data: ContactFormValues) => {
-    if (!captchaToken) {
-      setSubmitError("Please complete the reCAPTCHA.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   setSubmitError("Please complete the reCAPTCHA.");
+    //   return;
+    // }
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -56,7 +56,7 @@ export default function ContactFormSection() {
       email: data.email,
       phone: data.number,
       message: data.message,
-    }, captchaToken);
+    });
 
     setIsSubmitting(false);
 
@@ -67,7 +67,7 @@ export default function ContactFormSection() {
 
     setSubmitted(true);
     reset();
-    setCaptchaToken(null);
+    // setCaptchaToken(null);
   };
 
   return (
