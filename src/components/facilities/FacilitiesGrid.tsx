@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { servicesPage } from "@/data/data";
-import { getServiceItems } from "@/lib/data";
+import { getServiceItems, stripHtml } from "@/lib/data";
 
 export default async function FacilitiesGrid() {
   const apiItems = await getServiceItems();
@@ -11,7 +11,7 @@ export default async function FacilitiesGrid() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-l border-hairline animate-fade-in-up delay-200">
           {items.map((item, index) => {
-            const excerpt = (servicesPage.descriptions[item.slug] ?? item.description)[0];
+            const excerpt = typeof item.content_0 === "string" ? stripHtml(item.content_0) : "";
 
             return (
               <div

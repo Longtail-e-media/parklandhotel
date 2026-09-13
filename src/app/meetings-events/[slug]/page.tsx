@@ -115,12 +115,6 @@ export default async function MeetingSpaceDetailPage({
           delay={1.2}
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <Link
-            href="/meetings-events"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Meetings & Events
-          </Link>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div className="animate-slide-in-left">
@@ -131,40 +125,23 @@ export default async function MeetingSpaceDetailPage({
               <p className="luxury-label text-gold-text mb-5">Meetings & Events</p>
               <h1 className="luxury-section-title text-luxury-charcoal">{space.name}</h1>
 
-              <ul className="flex flex-wrap items-center gap-x-8 gap-y-2 mt-6 text-sm text-luxury-muted">
-                {space.capacity && (
-                  <li className="flex items-center gap-2">
-                    <i className="fa-solid fa-users text-base brown-btn" aria-hidden="true" />
-                    {space.capacity}
-                  </li>
-                )}
-                {space.size && (
-                  <li className="flex items-center gap-2">
-                    <i className="fa-solid fa-expand text-base brown-btn" aria-hidden="true" />
-                    {space.size}
-                  </li>
-                )}
-              </ul>
 
               <div
                 className="mt-8 space-y-4 text-luxury-muted leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: space.description }}
               />
 
-              <MeetingEnquireButton spaceName={space.name} />
-            </div>
-          </div>
 
-          {displayFeatures.length > 0 && (
-            <div className="mt-16 lg:mt-20 animate-fade-in-up">
+                        {displayFeatures.length > 0 && (
+            <div className="mt-16 lg:mt-10 animate-fade-in-up">
               <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
                 Amenities
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-5">
                 {displayFeatures.map((feature) => (
                   <div
                     key={feature}
-                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
+                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-2 py-2.5"
                   >
                     <i
                       className={`${getMeetingFeatureIcon(feature)} text-base brown-btn shrink-0`}
@@ -176,6 +153,9 @@ export default async function MeetingSpaceDetailPage({
               </div>
             </div>
           )}
+                <MeetingEnquireButton spaceName={space.name} />
+            </div>
+          </div>
         </div>
       </section>
 

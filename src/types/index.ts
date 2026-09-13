@@ -138,6 +138,7 @@ export interface ServiceItem {
   /** URL segment for the facility's detail page, e.g. /services/swimming-pool. */
   slug: string;
   title: string;
+  content_0: any;
   image: string;
   /** Extra photos shown in the detail page gallery, beyond `image`. */
   images?: string[];

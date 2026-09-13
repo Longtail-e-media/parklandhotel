@@ -533,6 +533,7 @@ function mapServiceItem(item: CmsServiceItem): ServiceItem {
   return {
     slug: item.slug,
     title: item.title,
+    content_0: item.content_0,
     image: images[0] ?? "",
     images,
     description: paragraphs,
