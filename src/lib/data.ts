@@ -278,10 +278,12 @@ const DINING_CATEGORY_ID = "2";
 interface CmsVenueItem {
   slug: string;
   title: string;
+  amenities_name: string;
   sub_title: string;
   img?: { src: string; title: string }[];
   gallery_images?: { src: string; title: string }[];
   description?: string;
+  read_more?: string;
   content_1?: string | null;
   amenities?: CmsAmenity[];
 }
@@ -300,12 +302,14 @@ function mapDiningVenue(item: CmsVenueItem): DiningVenue {
     slug: item.slug,
     name: item.title,
     sub_title : item.sub_title,
+    amenities_name : item.amenities_name,
     // The CMS has no dedicated restaurant/bar field yet — infer it from the slug.
     category: /bar/i.test(item.slug) ? "bar" : "restaurant",
     image: images[0] ?? "",
     images,
     excerpt: truncate(firstPlainParagraph ?? "", 160),
     description: rawDescription,
+    read_more: item.read_more ?? "",
     // Not modelled by the CMS yet — no opening-hours field on `subpackage`.
     hours: undefined,
     features: mapAmenityFeatures(item.amenities),
@@ -330,11 +334,14 @@ const MEETINGS_CATEGORY_ID = "3";
 /** Raw shape of one `subpackage` meeting-space item's setup-style pax fields. */
 interface CmsMeetingItem extends CmsVenueItem {
   theater?: string | null;
+  theatre?: string | null;
   class_room_style?: string | null;
   u_shape?: string | null;
   round_table?: string | null;
+  round_Table?: string | null;
   rooms_Size?: string | null;
   size?: string | null;
+  amenities_name: string;
 }
 
 /** Pulls the leading integer out of a free-text pax field, e.g. "120 pax" -> 120. */
@@ -356,8 +363,8 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
   const setupStyleFields: [string, string | null | undefined][] = [
     ["U-Shape Style", item.u_shape],
     ["Classroom Style", item.class_room_style],
-    ["Theatre Style", item.theater],
-    ["Round Table", item.round_table],
+    ["Theatre Style", item.theater ?? item.theatre],
+    ["Round Table", item.round_table ?? item.round_Table],
   ];
   const setupStyles = setupStyleFields
     .map(([style, value]) => ({ style, pax: parsePax(value) }))
@@ -367,7 +374,7 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
   return {
     slug: item.slug,
     name: item.title,
-
+    amenities_name: item.amenities_name,
     image: images[0] ?? "",
     images,
     excerpt: truncate(firstPlainParagraph ?? "", 160),

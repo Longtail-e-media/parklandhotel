@@ -67,12 +67,6 @@ export default async function BlogPostPage({
           delay={1}
         />
         <div className="container mx-auto px-6 lg:px-10">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Stories
-          </Link>
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <div className="min-w-0 lg:col-span-8">

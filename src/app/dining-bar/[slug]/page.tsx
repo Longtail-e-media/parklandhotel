@@ -146,7 +146,7 @@ export default async function DiningVenueDetailPage({
           {displayFeatures.length > 0 && (
             <div className="mt-16 lg:mt-20 animate-fade-in-up">
               <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
-                Amenities
+                {venue?.amenities_name?.[1] || "Amenities"}
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
                 {displayFeatures.map((feature) => (

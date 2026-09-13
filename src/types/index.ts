@@ -51,6 +51,8 @@ export interface DiningVenue {
   sub_title?: string;
   category: "restaurant" | "bar";
   image: string;
+   read_more: string;
+  amenities_name: string;
   images?: string[];
   excerpt: string;
   /** Longer copy for the detail page — raw HTML from the CMS, rendered as-is so its own tags/classes are preserved. */
@@ -66,6 +68,7 @@ export interface MeetingSpace {
   /** URL segment for the space's detail page, e.g. /meetings-events/grand-conference-hall. */
   slug: string;
   name: string;
+  amenities_name?: string;
   image: string;
   images?: string[];
   excerpt: string;

@@ -6,6 +6,7 @@ import { getMeetingSpaces } from "@/lib/data";
 export default async function MeetingsGrid() {
   const apiSpaces = await getMeetingSpaces();
   const spaces = apiSpaces.length > 0 ? apiSpaces : meetingsPage.spaces;
+  console.log(spaces);
 
   return (
     <section className="relative pb-24 lg:pb-32">
@@ -27,7 +28,7 @@ export default async function MeetingsGrid() {
                 />
               </div>
               <div className="p-7 flex flex-col grow">
-                <h3 className="luxury-section-title text-xl">{space.name}</h3>
+                <h3 className="luxury-section-title text-3xl">{space.name}</h3>
                 <p className="text-luxury-muted mt-4 leading-relaxed grow">{space.excerpt}</p>
                 <ul className="flex flex-col gap-2 mt-5 text-xs text-luxury-muted">
                   {space.capacity && (

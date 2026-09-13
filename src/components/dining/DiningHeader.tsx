@@ -13,7 +13,8 @@ export default async function DiningHeader() {
   const diningPackage = await getDiningPackage();
 
   const title = diningPackage?.title ? stripHtml(diningPackage.title) : header.title;
-  const intro = diningPackage?.description ? diningPackage.description : fallbackIntro;
+  // const intro = diningPackage?.description ? diningPackage.description : fallbackIntro;
+  const intro = diningPackage?.read_more ? diningPackage.read_more : fallbackIntro;
 
   return (
     <section className="relative overflow-hidden pt-36 lg:pt-44 pb-4 lg:pb-8">

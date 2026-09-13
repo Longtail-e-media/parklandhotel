@@ -78,13 +78,6 @@ export default async function RoomDetailPage({
           delay={1.4}
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <Link
-            href="/accommodation"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Rooms
-          </Link>
-
           <div className="grid lg:grid-cols-3 gap-12 lg:gap-16 items-start">
             <div className="min-w-0 lg:col-span-2 animate-slide-in-left">
               <RoomGallery images={galleryImages} name={room.name} />

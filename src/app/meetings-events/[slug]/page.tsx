@@ -96,7 +96,6 @@ export default async function MeetingSpaceDetailPage({
   const otherSpaces = spaces.filter((s) => s.slug !== space.slug);
   const galleryImages = space.images && space.images.length > 0 ? space.images : [space.image];
   const displayFeatures = space.features.length > 0 ? space.features : DEFAULT_MEETING_FEATURES;
-
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
       <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
@@ -135,7 +134,7 @@ export default async function MeetingSpaceDetailPage({
                         {displayFeatures.length > 0 && (
             <div className="mt-16 lg:mt-10 animate-fade-in-up">
               <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
-                Amenities
+                {space.amenities_name?.[0] || "Amenities"}
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-5">
                 {displayFeatures.map((feature) => (
