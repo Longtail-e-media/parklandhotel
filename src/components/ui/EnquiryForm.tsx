@@ -86,7 +86,7 @@ export default function EnquiryForm({
       email: data.email,
       phone: data.phone,
       message,
-    }, captchaToken);
+    });
 
     setIsSubmitting(false);
 
