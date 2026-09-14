@@ -1,14 +1,15 @@
 import { contact, kathmanduOffice, chitwanOffice, address } from "@/config/site";
-import { getSiteRegulars, splitContactList } from "@/lib/data";
+import { getSiteRegulars } from "@/lib/data";
 
 export default async function ContactInfoSection() {
   const siteRegulars = await getSiteRegulars();
-  // The CMS doesn't yet expose distinct per-office address/mobile fields —
-  // until it does, every block shares these same CMS-driven values (same
-  // fallback pattern as the homepage's ContactSection) instead of the old
-  // hardcoded per-office config.
-  const phone = splitContactList(siteRegulars?.contact_info)[0] || contact.phone;
-  const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
+  const reservationsPhone = siteRegulars?.contact_info || contact.phone;
+  const landline = siteRegulars?.landline_info || chitwanOffice.phones[0];
+  const reservationsWhatsapp = siteRegulars?.whatsapp || contact.whatsapp;
+  const chitwanWhatsapp = siteRegulars?.whatsapp_a || contact.whatsapp;
+  const mobile = siteRegulars?.address || chitwanOffice.mobile.number;
+  const email = siteRegulars?.email_address || contact.email;
+  const telHref = (value: string) => `tel:${value.replace(/[^\d+]/g, "")}`;
   const hotelAddress = siteRegulars?.fiscal_address || chitwanOffice.address;
   const mapSrc =
     siteRegulars?.location_map ||
@@ -19,20 +20,21 @@ export default async function ContactInfoSection() {
       heading: "Reservations Office",
       subheading: kathmanduOffice.label,
       lines: [
-        { label: "Address", value: hotelAddress },
-        { label: "Telephone", value: phone },
-        { label: "Mobile", value: phone },
-        { label: "Email", value: email, href: `mailto:${email}` },
+        { label: "Address", icon: "fa-solid fa-location-dot", value: kathmanduOffice.address },
+        { label: "Telephone", icon: "fa-solid fa-phone", value: reservationsPhone, href: telHref(reservationsPhone) },
+        { label: "WhatsApp", icon: "fa-solid fa-phone", value: reservationsWhatsapp, href: telHref(reservationsWhatsapp) },
+        { label: "Email", icon: "fa-solid fa-envelope", value: email, href: `mailto:${email}` },
       ],
     },
     {
       heading: "Hotel Location",
       subheading: chitwanOffice.label,
       lines: [
-        { label: "Address", value: hotelAddress },
-        { label: "Telephone", value: phone },
-        { label: "Mobile", value: phone },
-        { label: "Email", value: email, href: `mailto:${email}` },
+        { label: "Address", icon: "fa-solid fa-location-dot", value: hotelAddress },
+        { label: "Telephone", icon: "fa-solid fa-phone", value: landline, href: telHref(landline) },
+        { label: "Mobile", icon: "fa-solid fa-mobile-screen", value: mobile, href: telHref(mobile) },
+        { label: "WhatsApp", icon: "fa-solid fa-phone", value: chitwanWhatsapp, href: telHref(chitwanWhatsapp) },
+        { label: "Email", icon: "fa-solid fa-envelope", value: email, href: `mailto:${email}` },
       ],
     },
   ];
@@ -57,8 +59,9 @@ export default async function ContactInfoSection() {
               <h2 className="luxury-section-title text-2xl text-luxury-charcoal mb-6">{block.heading}</h2>
               <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
                 {block.lines.map((line) => (
-                  <li key={line.label} className="flex gap-2">
-                    <span className="">{line.label}:</span>
+                  <li key={line.label} className="flex gap-3">
+                    <i className={`${line.icon} text-base shrink-0 mt-1`} aria-hidden="true" />
+                    <span>{line.label}:</span>
                     {line.href ? (
                       <a href={line.href} className="hover:text-luxury-gold transition-colors">
                         {line.value}

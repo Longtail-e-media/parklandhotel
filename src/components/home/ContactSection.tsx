@@ -1,5 +1,5 @@
 import { contact, kathmanduOffice, chitwanOffice } from "@/config/site";
-import { getSiteRegulars, splitContactList } from "@/lib/data";
+import { getSiteRegulars } from "@/lib/data";
 
 const offices = [
   { ...kathmanduOffice, heading: "Reservations", delay: "" },
@@ -8,14 +8,28 @@ const offices = [
 
 export default async function ContactSection() {
   const siteRegulars = await getSiteRegulars();
-  // The CMS models one site-wide phone/email, not one per office — both cards
-  // (and the CTA buttons below) share this single dynamic value once set.
-  const phone = splitContactList(siteRegulars?.contact_info)[0] || contact.phone;
-  const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
-  const phoneHref = phone.replace(/[^\d+]/g, "");
+  const phone = siteRegulars?.contact_info || contact.phone;
+  const email = siteRegulars?.email_address || contact.email;
+  const telHref = (value?: string) => (value ? `tel:${value.replace(/[^\d+]/g, "")}` : undefined);
+  const splitPhoneNumbers = (value?: string) =>
+    (value ?? "").split("/").map((number) => number.trim()).filter(Boolean);
+  const phoneHref = telHref(phone);
+  const contactRows = [
+    [
+      { label: "Reservations", icon: "fa-solid fa-phone", value: siteRegulars?.contact_info, href: telHref(siteRegulars?.contact_info) },
+      { label: "Phone", icon: "fa-solid fa-phone", phoneNumbers: splitPhoneNumbers(siteRegulars?.whatsapp) },
+      { label: "Email", icon: "fa-solid fa-envelope", value: siteRegulars?.email_address, href: `mailto:${email}` },
+    ],
+    [
+      { label: "Landline", icon: "fa-solid fa-phone", value: siteRegulars?.landline_info, href: telHref(siteRegulars?.landline_info) },
+      { label: "Mobile", icon: "fa-solid fa-mobile-screen", value: siteRegulars?.address, href: telHref(siteRegulars?.address) },
+      { label: "Phone", icon: "fa-solid fa-phone", value: siteRegulars?.whatsapp_a, href: telHref(siteRegulars?.whatsapp_a) },
+      { label: "Email", icon: "fa-solid fa-envelope", value: siteRegulars?.email_address, href: `mailto:${email}` },
+    ],
+  ].map((rows) => rows.filter((row) => Boolean(row.value || row.phoneNumbers?.length)));
 
   return (
-    <section id="contact" className="    relative py-24 lg:py-32 overflow-hidden scroll-mt-24
+    <section id="contact" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24
     after:absolute after:right-0 after:bottom-0
     after:w-64 after:h-64
     after:bg-[url('/img/travel.png')]
@@ -31,7 +45,7 @@ export default async function ContactSection() {
         </div>
 
         <div id="book" className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto scroll-mt-24">
-          {offices.map((office) => (
+          {offices.map((office, officeIndex) => (
             <div
               key={office.label}
               className={`luxury-surface p-9 lg:p-10 animate-fade-in-up ${office.delay}`}
@@ -40,15 +54,26 @@ export default async function ContactSection() {
               <h3 className="luxury-section-title text-2xl mb-4">{office.heading}</h3>
               <p className=" text-sm leading-relaxed mb-6">{office.address}</p>
               <ul className="space-y-3  text-luxury-charcoal/80 border-t border-hairline pt-6">
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-phone text-base shrink-0" aria-hidden="true" /> {phone}
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-mobile-screen text-base shrink-0" aria-hidden="true" /> {office.mobile.number}
-                </li>
-                <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-envelope text-base shrink-0" aria-hidden="true" /> {email}
-                </li>
+                {contactRows[officeIndex].map((row) => (
+                  <li key={row.label} className="flex items-start gap-3">
+                    <i className={`${row.icon} text-base shrink-0 mt-1`} aria-hidden="true" />
+                    <span>
+                      <span className="font-medium">{row.label}:</span>{" "}
+                      {row.phoneNumbers ? (
+                        row.phoneNumbers.map((number, index) => (
+                          <span key={number}>
+                            {index > 0 ? " / " : ""}
+                            <a href={telHref(number)}>{number}</a>
+                          </span>
+                        ))
+                      ) : row.href ? (
+                        <a href={row.href}>{row.value}</a>
+                      ) : (
+                        row.value
+                      )}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
