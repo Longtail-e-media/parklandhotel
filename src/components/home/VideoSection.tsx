@@ -32,7 +32,7 @@ export default async function VideoSection() {
       {hero.title}
     </h1>
 
-    <p className="luxury-subtitle text-white max-w-xl mt-6 animate-fade-in-up delay-200">
+    <p className="luxury-subtitle text-white max-w-xl mt-6 animate-fade-in-up delay-200  hidden md:inline">
       {hero.subtitle}
     </p>
 

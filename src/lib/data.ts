@@ -56,6 +56,7 @@ interface CmsMenuItem {
   id: string;
   title: string;
   link: string;
+  image?: string;
   /** "1" = external URL, otherwise an internal route. */
   linktype?: string | number;
   subLinks?: CmsMenuItem[];
@@ -71,6 +72,7 @@ function mapMenuItem(item: CmsMenuItem): NavItem {
   return {
     label: item.title,
     href: item.link,
+    ...(item.image ? { image: item.image } : {}),
     ...(item.subLinks && item.subLinks.length > 0
       ? { children: item.subLinks.map(mapMenuItem) }
       : {}),

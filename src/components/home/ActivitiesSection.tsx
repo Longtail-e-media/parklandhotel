@@ -2,6 +2,7 @@ import Image from "next/image";
 import { activities as fallbackActivities } from "@/data/data";
 import { getActivities } from "@/lib/data";
 import Watermark from "@/components/ui/Watermark";
+import Link from "next/link";
 
 export default async function ActivitiesSection() {
   const items = await getActivities();
@@ -40,18 +41,21 @@ export default async function ActivitiesSection() {
                 activity.featured ? "lg:col-span-2 lg:row-span-2" : ""
               }`}
             >
-              <Image
+                <Link href="experience" className="block w-full h-full">
+                  <div><Image
                 src={activity.image}
                 alt={activity.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover group-hover:scale-105 transition duration-700"
-              />
+              /></div>
               <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/5 to-transparent" />
+              </Link>
               <div className="absolute bottom-0 left-0 p-5 md:p-6">
+                <Link href="experience">
                 <h3 className={`luxury-section-title text-white ${activity.featured ? "text-2xl" : "text-lg"}`}>
                   {activity.title}
-                </h3>
+                </h3></Link>
                 {activity.subtitle && <p className="text-white/80 text-sm mt-1">{activity.subtitle}</p>}
               </div>
             </div>

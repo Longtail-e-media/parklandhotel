@@ -1,6 +1,7 @@
 export interface NavItem {
   label: string;
   href: string;
+  image?: string;
   /** Sub-navigation — rendered as an accordion inside the drawer. */
   children?: NavItem[];
 }

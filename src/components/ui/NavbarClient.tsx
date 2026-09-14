@@ -111,5 +111,6 @@ export default function NavbarClient({ menu, logoDark, logoLight, phone, phoneHr
         email={email}
       />
     </header>
+
   );
 }

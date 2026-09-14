@@ -8,6 +8,7 @@ config.autoAddCss = false;
 import "./globals.css";
 import { site, contact, address, business, SITE_URL } from "@/config/site";
 import { buildMetadata } from "@/lib/metadata";
+import MobileStickyMenu from "@/components/ui/MobileStickyMenu";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display-serif",
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <Navbar />
         {children}
+        <MobileStickyMenu />
         <Footer />
         <CookieConsent />
       </body>
