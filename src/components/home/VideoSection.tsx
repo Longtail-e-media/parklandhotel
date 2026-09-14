@@ -4,7 +4,7 @@ import { getHeroVideoSrc } from "@/lib/data";
 
 export default async function VideoSection() {
   const { src, buttonLink, buttonText } = await getHeroVideoSrc();
-  const videoSrc = src || "/videos/park.mp4";
+  const videoSrc = src || "/videos/parsk.mp4";
   const heroButtonLink = buttonLink || hero.buttonLink;
   const heroButtonName = buttonText || hero.buttonname;
 

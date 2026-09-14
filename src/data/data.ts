@@ -49,7 +49,7 @@ export const hero = {
   eyebrow: "Sauraha · Chitwan National Park, Nepal",
   title: "A Five-Star Sanctuary\non the Edge of the Wild",
   subtitle:
-    "Currently welcoming guests with 32 thoughtfully designed rooms as a 4-star hotel, we are expanding our vision with an upcoming 120-room destination, bringing together elevated comfort, modern hospitality, and the natural charm of Chitwan.",
+    "Experience refined hospitality surrounded by the untamed beauty of Chitwan— just a minutes from the heart of Sauraha and the gateway to Chitwan National Park.",
   image: "/img/hero.jpg",
   buttonLink: "about-us sam",
   buttonname: "explore more",
