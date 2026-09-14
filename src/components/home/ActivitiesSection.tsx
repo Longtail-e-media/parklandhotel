@@ -36,7 +36,7 @@ export default async function ActivitiesSection() {
           {activities.map((activity) => (
             <div
               key={activity.title}
-              className={`relative group overflow-hidden rounded-3xl aspect-3/4 animate-fade-in-up ${
+              className={`relative group overflow-hidden rounded-[10px] aspect-3/4 animate-fade-in-up ${
                 activity.featured ? "lg:col-span-2 lg:row-span-2" : ""
               }`}
             >

@@ -479,7 +479,7 @@ export const accommodationsPage = {
     title: "Restful Spaces, Reimagined",
   },
   intro:
-    "Thirty-two rooms across three categories, each pairing warm, natural materials with the quiet of the garden beyond the window.",
+    "One hundred and twenty rooms and suites across three categories, each pairing warm, natural materials with the quiet of the garden beyond the window.",
 };
 
 /** /offers page content. */
@@ -539,6 +539,7 @@ export const diningPage = {
   header: {
     eyebrow: "Dining & Bar",
     title: "Flavours Under the Sauraha Sky",
+    subtitle: "Flavours Under the Sauraha Sky",
   },
   intro: dining.paragraph,
   venues: [

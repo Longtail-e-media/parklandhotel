@@ -7,18 +7,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Watermark from "@/components/ui/Watermark";
 import Recaptcha from "@/components/ui/Recaptcha";
-import { nameSchema, emailSchema, phoneSchema, messageSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import { nameSchema, emailSchema, phoneSchema, addressSchema, messageSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
 import { submitEnquiry } from "@/lib/enquiry";
 
 const fields = [
   { name: "name", label: "Full Name", placeholder: "Your Name", type: "text", icon: "user" },
   { name: "email", label: "Email", placeholder: "Your Email", type: "email", icon: "envelope" },
   { name: "number", label: "Phone Number", placeholder: "Phone Number", type: "tel", icon: "phone" },
+  { name: "address", label: "Address", placeholder: "Address", type: "text", icon: "location-pin" },
 ] as const;
 
 const contactSchema = z.object({
   name: nameSchema,
   number: phoneSchema,
+  address: addressSchema,
   email: emailSchema,
   message: messageSchema,
 });
@@ -43,10 +45,10 @@ export default function ContactFormSection() {
   const { onChange: onNumberChange, ...numberField } = register("number");
 
   const onSubmit = async (data: ContactFormValues) => {
-    // if (!captchaToken) {
-    //   setSubmitError("Please complete the reCAPTCHA.");
-    //   return;
-    // }
+    if (!captchaToken) {
+      setSubmitError("Please complete the reCAPTCHA.");
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -67,7 +69,7 @@ export default function ContactFormSection() {
 
     setSubmitted(true);
     reset();
-    // setCaptchaToken(null);
+    setCaptchaToken(null);
   };
 
   return (
@@ -161,7 +163,7 @@ export default function ContactFormSection() {
               )}
             </div>
 
-            {/* <Recaptcha onChange={setCaptchaToken} /> */}
+            <Recaptcha onChange={setCaptchaToken} />
 
             {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
 
@@ -173,7 +175,7 @@ export default function ContactFormSection() {
               {isSubmitting ? "Sending…" : submitted ? "Message Sent" : "Send Message"}
             </button>
             {submitted && (
-              <p className="text-sm text-luxury-muted text-center">
+              <p className="text-sm text-luxury-muted text-center bg-green-700 text-white py-4">
                 Thank you — our reservations team will be in touch shortly.
               </p>
             )}
@@ -186,7 +188,7 @@ export default function ContactFormSection() {
             alt="A Hotel Parkland suite"
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover"
+            className="object-cover rounded-[10px]"
           />
         </div>
       </div>

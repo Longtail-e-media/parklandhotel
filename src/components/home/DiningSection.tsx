@@ -33,7 +33,7 @@ export default async function DiningSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
         <div className="animate-slide-in-left">
-          <div className="aspect-4/5 luxury-media luxury-img-zoom">
+          <div className="aspect-4/5 luxury-media luxury-img-zoom rounded-[10px]">
            <Link href={`${slug}`} className="block w-full h-full">
             <Image
               src={image}

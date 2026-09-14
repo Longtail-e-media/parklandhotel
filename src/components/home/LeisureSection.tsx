@@ -44,7 +44,7 @@ export default async function LeisureSection() {
             <div dangerouslySetInnerHTML={{ __html: paragraphs }}></div>
         </div>
         <div className="order-1 lg:order-2 relative animate-slide-in-right">
-          <div className="aspect-4/5 luxury-media luxury-img-zoom">
+          <div className="aspect-4/5 luxury-media luxury-img-zoom rounded-[10px]">
            <Link href={`${slug}`} className="block w-full h-full">
             <Image
               src={image}

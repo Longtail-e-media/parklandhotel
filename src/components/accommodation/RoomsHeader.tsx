@@ -12,17 +12,18 @@ export default async function RoomsHeader() {
   const roomsPackage = await getRoomsPackage();
 
   const title = roomsPackage?.title ? stripHtml(roomsPackage.title) : header.title;
+  const subtitle = roomsPackage?.sub_title ? stripHtml(roomsPackage.sub_title) : header.eyebrow;
   const description = roomsPackage?.description ? stripHtml(roomsPackage.description) : intro;
 
   return (
     <section className="pt-36 lg:pt-44 pb-4 lg:pb-8">
       <div className="max-w-2xl mx-auto px-6 lg:px-10 text-center">
-        {/* <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
-          {header.eyebrow}
-        </p> */}
-        <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
+        <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
+          {subtitle}
+        </p>
+        <h1 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
           {title}
-        </h2>
+        </h1>
         <p className="text-luxury-muted mt-5 animate-fade-in-up delay-300">{description}</p>
       </div>
     </section>

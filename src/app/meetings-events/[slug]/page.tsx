@@ -5,10 +5,11 @@ import { site } from "@/config/site";
 import { meetingsPage } from "@/data/data";
 import { getMeetingSpaces } from "@/lib/data";
 import { buildMetadata } from "@/lib/metadata";
+import type { RoomFeature } from "@/types";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-
 /** Icon shown per setup style in the Occupancy and Setup Style table. Unrecognised
  * CMS setup-style names still render, just without an icon. */
 const SETUP_STYLE_ICONS: Record<string, string> = {
@@ -138,16 +139,32 @@ export default async function MeetingSpaceDetailPage({
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-5">
                 {displayFeatures.map((feature) => (
-                  <div
-                    key={feature}
-                    className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-2 py-2.5"
-                  >
-                    <i
-                      className={`${getMeetingFeatureIcon(feature)} text-base brown-btn shrink-0`}
-                      aria-hidden="true"
-                    />
-                    {feature}
-                  </div>
+                  (() => {
+                    const featureData: RoomFeature =
+                      typeof feature === "string" ? { title: feature } : feature;
+                    return (
+                      <div
+                        key={featureData.title}
+                        className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-2 py-2.5"
+                      >
+                        {featureData.image ? (
+                          <Image
+                            src={featureData.image}
+                            alt=""
+                            width={20}
+                            height={20}
+                            className="object-contain shrink-0"
+                          />
+                        ) : (
+                          <i
+                            className={`${getMeetingFeatureIcon(featureData.title)} text-base brown-btn shrink-0`}
+                            aria-hidden="true"
+                          />
+                        )}
+                        {featureData.title}
+                      </div>
+                    );
+                  })()
                 ))}
               </div>
             </div>

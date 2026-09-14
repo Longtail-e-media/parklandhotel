@@ -32,10 +32,10 @@ export default async function MeetingsHeader() {
         delay={1.2}
       />
       <div className="max-w-2xl mx-auto px-6 lg:px-10 text-center">
-        <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
+        {/* <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
           {header.eyebrow}
-        </p>
-        <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
+        </p> */}
+        <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl mb-10">
           {title}
         </h2>
         <p className="text-luxury-muted mt-5 animate-fade-in-up delay-300">{intro}</p>

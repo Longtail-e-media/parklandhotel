@@ -31,7 +31,7 @@ export default async function GallerySection() {
           {images.map((img, i) => (
             <div
               key={img.src}
-              className={`relative h-64 overflow-hidden rounded-3xl ${
+              className={`relative h-64 overflow-hidden rounded-[10px] ${
                 i === 0 || i === 3 ? "md:row-span-2 md:h-full" : ""
               }`}
             >

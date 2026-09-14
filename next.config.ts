@@ -12,6 +12,14 @@ const cmsImagesPattern = new URL(`${cmsBasePath}/backend/images/**`, CMS_API_URL
 // guard) — the local CMS resolves to one in dev, so opt back in only then.
 // Once NEXT_PUBLIC_API_URL points at a real public host, this stays off.
 const cmsHostIsLocal = ["localhost", "127.0.0.1", "::1"].includes(cmsImagesPattern.hostname);
+const cmsImagePatterns = [
+  cmsImagesPattern,
+  {
+    protocol: "https" as const,
+    hostname: "mayurstay.com",
+    pathname: `${cmsBasePath}/backend/images/**`,
+  },
+];
 
 // Baseline security headers applied to every route.
 const securityHeaders = [
@@ -36,7 +44,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 64, 96, 128, 256],
-    remotePatterns: [cmsImagesPattern],
+    remotePatterns: cmsImagePatterns,
     ...(cmsHostIsLocal ? { dangerouslyAllowLocalIP: true } : {}),
     //  unoptimized: true,
   },

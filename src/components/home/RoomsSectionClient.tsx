@@ -60,7 +60,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
         >
           {rooms.map((room) => (
             <SwiperSlide key={room.slug} className="h-auto!">
-              <article className="group luxury-surface h-full flex flex-col overflow-hidden">
+              <article className="group luxury-surface  rounded-[10px] h-full flex flex-col overflow-hidden">
                 <div className="relative">
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
                     <Link href={`/accommodation/${room.slug}`} className="block w-full h-full">
@@ -94,7 +94,7 @@ export default function RoomsSectionClient({ rooms }: { rooms: RoomType[] }) {
                           key={feature.title}
                           title={label}
                           style={{ transitionDelay: `${i * 70}ms` }}
-                          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/95 backdrop-blur-sm text-luxury-charcoal shadow-[0_10px_30px_-18px_rgba(36,36,32,0.8)] transition-all duration-500 hover:bg-gold hover:text-white sm:opacity-0 sm:translate-x-3 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"
+                          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/95 backdrop-blur-sm text-luxury-charcoal shadow-[0_10px_30px_-18px_rgba(36,36,32,0.8)] transition-all duration-500 hover:text-white sm:opacity-0 sm:translate-x-3 sm:group-hover:opacity-100 sm:group-hover:translate-x-0"
                         >
                           {icon ? (
                             <i className={`${icon} text-base`} aria-hidden="true" />

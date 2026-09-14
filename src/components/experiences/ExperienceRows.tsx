@@ -39,7 +39,7 @@ export default function ExperienceRows() {
                 </div>
 
                 <div className={`relative ${mediaClass}`}>
-                  <div className="aspect-4/5 luxury-media luxury-img-zoom">
+                  <div className="aspect-4/5 luxury-media luxury-img-zoom rounded-[10px]">
                     <Image
                       src={item.image}
                       alt={item.imageAlt}

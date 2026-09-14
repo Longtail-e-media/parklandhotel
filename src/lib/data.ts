@@ -136,6 +136,7 @@ const ROOMS_CATEGORY_ID = "1";
  * category (rooms, dining, meetings), not a plain string. */
 interface CmsAmenity {
   title: string;
+  amenities: string;
   icon?: string;
   img?: string;
 }
@@ -375,6 +376,7 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
     slug: item.slug,
     name: item.title,
     amenities_name: item.amenities_name,
+    amenities: mapAmenityFeatures(item.amenities),
     image: images[0] ?? "",
     images,
     excerpt: truncate(firstPlainParagraph ?? "", 160),
@@ -382,9 +384,7 @@ function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
     // Not a distinct CMS field — derived from the largest configured setup-style pax count.
     capacity: maxPax > 0 ? `Up to ${maxPax} guests` : undefined,
     size: item.rooms_Size?.trim() || item.size?.trim() || undefined,
-    features: Array.isArray(item.amenities)
-      ? item.amenities.map((a) => a?.title).filter((title): title is string => Boolean(title))
-      : [],
+    features: mapAmenityFeatures(item.amenities),
     setupStyles: setupStyles.length > 0 ? setupStyles : undefined,
   };
 }

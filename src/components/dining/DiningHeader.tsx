@@ -13,6 +13,7 @@ export default async function DiningHeader() {
   const diningPackage = await getDiningPackage();
 
   const title = diningPackage?.title ? stripHtml(diningPackage.title) : header.title;
+  const subtitle = diningPackage?.sub_title ? stripHtml(diningPackage.sub_title) : header.eyebrow;
   // const intro = diningPackage?.description ? diningPackage.description : fallbackIntro;
   const intro = diningPackage?.read_more ? diningPackage.read_more : fallbackIntro;
 
@@ -34,10 +35,10 @@ export default async function DiningHeader() {
       />
       <div className=" max-w-5xl mx-auto px-6 lg:px-10 text-center">
         <p className="luxury-eyebrow luxury-eyebrow-center justify-center luxury-label text-gold-text mb-5 animate-fade-in-up delay-100">
-          {header.eyebrow}
+         {title}
         </p>
         <h2 className="luxury-hero-title text-luxury-charcoal animate-fade-in-up delay-200 text-4xl">
-          {title}
+            {subtitle}
         </h2>
         <div
           className="text-luxury-muted mt-5 whitespace-pre-line animate-fade-in-up delay-300"

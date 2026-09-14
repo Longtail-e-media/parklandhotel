@@ -23,7 +23,7 @@ function OfferCard({ offer, priority }: { offer: OfferItem; priority: boolean })
           Expires {formatOfferExpiry(offer.expiryDate)}
         </span>
         <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-luxury-dark/85 via-luxury-dark/20 to-transparent px-5 pt-10 pb-5">
-          <p className="text-white font-display text-lg leading-tight">{offer.name}</p>
+          <p className="text-white font-display text-lg leading-tight md:text-3xl">{offer.name}</p>
         </div>
       </div>
     </Link>

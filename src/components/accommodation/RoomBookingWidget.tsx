@@ -3,7 +3,7 @@
 import type { RoomType } from "@/types";
 import { useState } from "react";
 import { getSiteRegulars} from "@/lib/data";
-    const siteRegulars = await getSiteRegulars();
+const siteRegulars = await getSiteRegulars();
 export default function RoomBookingWidget({
   className = "",
 }: {

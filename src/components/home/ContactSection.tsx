@@ -44,7 +44,7 @@ export default async function ContactSection() {
                   <i className="fa-solid fa-phone text-base shrink-0" aria-hidden="true" /> {phone}
                 </li>
                 <li className="flex items-center gap-3">
-                  <i className="fa-solid fa-mobile-screen text-base shrink-0" aria-hidden="true" /> {office.mobile.number} ({office.mobile.name})
+                  <i className="fa-solid fa-mobile-screen text-base shrink-0" aria-hidden="true" /> {office.mobile.number}
                 </li>
                 <li className="flex items-center gap-3">
                   <i className="fa-solid fa-envelope text-base shrink-0" aria-hidden="true" /> {email}

@@ -84,7 +84,6 @@ export default async function RoomDetailPage({
 
               <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3 mt-9">
                 <div>
-                  <p className="luxury-label text-gold-text mb-3">Accommodation</p>
                   <h1 className="luxury-section-title text-luxury-charcoal text-3xl lg:text-4xl">
                     {room.name}
                   </h1>
@@ -104,15 +103,15 @@ export default async function RoomDetailPage({
               </div>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
                                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-user text-base brown-btn shrink-0" aria-hidden="true" />
+                  <i className="fa-solid fa-user text-base shrink-0" aria-hidden="true" />
                   Adults: {room.occupancy}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-expand text-base brown-btn shrink-0" aria-hidden="true" />
+                  <i className="fa-solid fa-expand text-base shrink-0" aria-hidden="true" />
                   Size: {room.size}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-bed text-base brown-btn shrink-0" aria-hidden="true" />
+                  <i className="fa-solid fa-bed text-base shrink-0" aria-hidden="true" />
                   Bed Type: {room.bed}
                 </li>
               </ul>
@@ -225,7 +224,7 @@ export default async function RoomDetailPage({
                 <Link
                   key={r.slug}
                   href={`/accommodation/${r.slug}`}
-                  className="group luxury-surface overflow-hidden block"
+                  className="group luxury-surface overflow-hidden block rounded-[10px]"
                 >
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
                     <Image

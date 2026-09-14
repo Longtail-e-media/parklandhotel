@@ -4,7 +4,10 @@ import { getRooms } from "@/lib/data";
 import { rooms as fallbackRooms } from "@/data/data";
 import type { RoomType } from "@/types";
 import Watermark from "@/components/ui/Watermark";
+import { getSiteRegulars} from "@/lib/data";
+const siteRegulars = await getSiteRegulars();
 
+  const booking_code = siteRegulars?.booking_code;
 
 function RoomStat({
   icon,
@@ -45,7 +48,8 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
 
       <div className="p-7 sm:p-9 lg:p-10 flex flex-col">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="luxury-section-title text-2xl lg:text-[1.75rem]">{room.name}</h3>
+          <Link href={`/accommodation/${room.slug}`}>
+          <h3 className="luxury-section-title text-2xl lg:text-[1.75rem]">{room.name}</h3></Link>
 
         </div>
 
@@ -69,7 +73,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
           >
             View Details <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
           </Link>
-          <Link href="/contact" className="luxury-btn py-2.5! px-5! text-[11px] bg-(--color-primary-green) text-white">
+          <Link href={booking_code} target="_blank" className="luxury-btn py-2.5! px-5! text-[11px] bg-(--color-primary-green) text-white">
             Book Now
           </Link>
         </div>

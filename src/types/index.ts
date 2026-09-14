@@ -69,6 +69,7 @@ export interface MeetingSpace {
   slug: string;
   name: string;
   amenities_name?: string;
+  amenities?: RoomFeature[];
   image: string;
   images?: string[];
   excerpt: string;
@@ -78,7 +79,7 @@ export interface MeetingSpace {
   capacity?: string;
   /** Not always populated by the CMS — omitted when unavailable. */
   size?: string;
-  features: string[];
+  features: (string | RoomFeature)[];
   /** Max pax per seating configuration, shown as the Occupancy and Setup Style table. Omit for spaces with a fixed single layout. */
   setupStyles?: { style: string; pax: number }[];
 }

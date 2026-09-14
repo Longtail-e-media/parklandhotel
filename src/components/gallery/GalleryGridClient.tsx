@@ -51,7 +51,7 @@ const GalleryLightboxGrid = memo(function GalleryLightboxGrid({
               href={item.src}
               data-thumb={item.src}
               data-sub-html={`<p>${item.alt}</p>`}
-              className="gallery-link luxury-media  rounded-2xl luxury-img-zoom group relative block aspect-4/3 overflow-hidden cursor-zoom-in"
+              className="gallery-link luxury-media  rounded-[10px] luxury-img-zoom group relative block aspect-4/3 overflow-hidden cursor-zoom-in"
             >
               <Image
                 src={item.src}

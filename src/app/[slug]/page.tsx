@@ -81,7 +81,7 @@ export default async function CmsArticlePage({
   if (RESERVED_SLUGS.has(slug)) notFound();
 
   const article = await findArticleBySlug(slug);
-  console.log(article);
+
   if (!article?.content) notFound();
 
   return (
