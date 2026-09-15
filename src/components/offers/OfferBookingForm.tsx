@@ -243,7 +243,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
           <div id="booking-price" className="flex items-center gap-2 h-13">
             <i className="fa-solid fa-tag text-base text-luxury-muted shrink-0" aria-hidden="true" />
             <span className="text-sm text-luxury-charcoal">
-              {offer.currency} {offer.unitPrice.toLocaleString()}
+             USD {offer.unitPrice.toLocaleString()}
             </span>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function OfferBookingForm({ offer }: { offer: OfferItem }) {
       <div className="block my-10">
         <span className="luxury-label text-[11px] text-luxury-charcoal block w-full">Total Amount</span>
         <span className=" text-xl block w-full">
-          {offer.currency} {totalAmount.toLocaleString()}
+         USD {totalAmount.toLocaleString()}
         </span>
       </div>
 

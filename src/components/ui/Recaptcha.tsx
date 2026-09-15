@@ -10,7 +10,7 @@ export default function Recaptcha({ onChange }: RecaptchaProps) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
 
   return (
-    <div className="flex justify-start my-4">
+    <div className="flex justify-start my-4 origin-left scale-90 md:scale-100">
       <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
     </div>
   );

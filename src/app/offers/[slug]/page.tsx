@@ -50,25 +50,18 @@ export default async function OfferDetailPage({
       <section className="relative  pt-36 lg:pt-44 pb-24 lg:pb-32">
         <Watermark
           motif="leaf"
-          className="w-28 lg:w-40 -left-8 top-16 text-gold/6"
+          className="w-28 lg:w-40 hidden xl:inline -left-8 top-16 text-gold/6"
           rotate={-14}
           duration={16}
         />
         <Watermark
           motif="deer"
-          className="w-40 lg:w-56 -right-12 bottom-10 text-luxury-charcoal/4"
+          className="w-40 lg:w-56 -right-12 hidden xl:inline bottom-10 text-luxury-charcoal/4"
           rotate={6}
           duration={20}
           delay={1.4}
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <Link
-            href="/offers"
-            className="inline-flex items-center gap-2 text-sm text-luxury-muted hover:text-luxury-charcoal transition-colors mb-10"
-          >
-            <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" /> All Offers
-          </Link>
-
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div className="animate-slide-in-left">
               <h1 className="luxury-section-title text-luxury-charcoal text-3xl md:text-[2rem]">{offer.name}</h1>
