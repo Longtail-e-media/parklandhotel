@@ -63,7 +63,7 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
                   ))}
                 </div>
 <blockquote
-  className="relative text-luxury-charcoal/80 leading-8 mb-7 md:h-56 overflow-auto"
+  className="relative text-luxury-charcoal/80 leading-8 mb-7 h-56 overflow-auto"
   dangerouslySetInnerHTML={{ __html: t.quote }}
 ></blockquote>
 

@@ -33,8 +33,8 @@ function RoomStat({
 
 function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
   return (
-    <article className="group luxury-surface overflow-hidden grid md:grid-cols-2">
-      <div className="relative min-h-70 md:min-h-0 overflow-hidden luxury-img-zoom">
+    <article className="group luxury-surface overflow-hidden grid grid-cols-1 lg:grid-cols-2">
+      <div className="relative min-h-70  overflow-hidden luxury-img-zoom">
         <Image
           src={room.image}
           alt={`${room.name} interior`}
@@ -46,7 +46,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
 
       </div>
 
-      <div className="p-7 sm:p-9 lg:p-10 flex flex-col">
+      <div className="p-3 sm:p-5 lg:p-10 flex flex-col">
         <div className="flex items-start justify-between gap-4">
           <Link href={`/accommodation/${room.slug}`}>
           <h3 className="luxury-section-title text-2xl lg:text-[1.75rem]">{room.name}</h3></Link>
@@ -60,7 +60,7 @@ function RoomCard({ room, priority }: { room: RoomType; priority: boolean }) {
 
         <p className="text-luxury-muted mt-4 leading-relaxed">{room.description}</p>
 
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 bg-luxury-cream-alt/60 rounded-2xl px-4 sm:px-6 py-5">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6 bg-luxury-cream-alt/60 rounded-2xl xl:px-6 py- flex-wrap">
           <RoomStat icon="user" value={`${room.occupancy}`} label="Guests" />
           <RoomStat icon="bed" value={room.bed} label="Bed Size" />
           <RoomStat icon="expand" value={room.size} label="Room Size" />

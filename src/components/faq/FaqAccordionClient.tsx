@@ -21,7 +21,7 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
         duration={17}
       />
 
-    <div className="after:fixed hidden md:block after:left-0 after:top-30
+    <div className="after:fixed hidden xl:block after:left-0 after:top-30
     after:w-100 after:h-100
     after:bg-[url('/img/question.png')]
     after:bg-contain after:bg-no-repeat after:bg-right-bottom

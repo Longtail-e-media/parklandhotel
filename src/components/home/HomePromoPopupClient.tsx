@@ -42,14 +42,11 @@ export default function HomePromoPopupClient({ slides }: { slides: PopupSlide[] 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
     };
-    const previousOverflow = document.body.style.overflow;
 
     document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen]);
 

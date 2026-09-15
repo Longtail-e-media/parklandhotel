@@ -31,6 +31,7 @@ export default async function Footer() {
   const fiscalAddress = siteRegulars?.fiscal_address || address.full;
   const email = splitContactList(siteRegulars?.email_address)[0] || contact.email;
   const whatsappNumber = siteRegulars?.whatsapp_a || contact.whatsapp;
+  const reviews = siteRegulars?.brief || "Ranked of 36 specialty lodging in Sauraha, from 211 traveller reviews on TripAdvisor.";
   const socialItems = socialGroup?.items?.length ? socialGroup.items : null;
 
   // Only entries with a logo image render as a badge — CMS entries without one
@@ -74,9 +75,7 @@ export default async function Footer() {
                   </div>
                 </div>
                 <p className="text-sm text-luxury-muted leading-relaxed">
-                  Ranked <strong className="text-luxury-charcoal">#2 of 36</strong> specialty lodging in
-                  Sauraha, from <strong className="text-luxury-charcoal">{rating.reviewCount} traveller
-                  reviews</strong> on TripAdvisor.
+                      {reviews}
                 </p>
               </div>
             )}

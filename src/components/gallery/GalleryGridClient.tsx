@@ -161,15 +161,15 @@ export default function GalleryGridClient({
 
   return (
     <section className="relative pb-24 lg:pb-32">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="flex flex-wrap justify-center gap-3 mb-12 animate-fade-in-up delay-300">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 overflow-auto">
+        <div className="flex  md:justify-center gap-3 mb-12 animate-fade-in-up delay-300 overflow-auto">
           {categories.map((cat) => (
             <button
               key={cat.key}
               type="button"
               onClick={() => handleFilter(cat.key)}
               aria-pressed={activeFilter === cat.key}
-              className={`luxury-btn rounded-md hover:cursor-pointer ${
+              className={`luxury-btn rounded-md shrink-0 grow md:flex-none mb-5 hover:cursor-pointer ${
                 activeFilter === cat.key ? "bg-(--color-primary-green) text-white" : ""
               }`}
             >

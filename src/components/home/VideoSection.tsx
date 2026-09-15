@@ -9,7 +9,7 @@ export default async function VideoSection() {
   const heroButtonName = buttonText || hero.buttonname;
 
   return (
-<section className="relative w-full h-screen overflow-hidden">
+<section className="relative w-full h-[500px] md:h-screen overflow-hidden">
   <video
     src={videoSrc}
     autoPlay

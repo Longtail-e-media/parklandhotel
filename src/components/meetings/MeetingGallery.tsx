@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 export default function MeetingGallery({ images, name }: { images: string[]; name: string }) {
   return (
     <div
-      className="relative"
+      className="relative min-w-0 w-full max-w-full overflow-hidden"
       style={
         {
           "--swiper-pagination-color": "var(--luxury-gold)",
@@ -26,17 +26,17 @@ export default function MeetingGallery({ images, name }: { images: string[]; nam
         navigation={{ prevEl: ".meeting-gallery-prev", nextEl: ".meeting-gallery-next" }}
         pagination={{ clickable: true, el: ".meeting-gallery-pagination" }}
         a11y={{ containerMessage: `${name} photos` }}
-        className="luxury-media"
+        className="luxury-media min-w-0 w-full max-w-full"
       >
         {images.map((src, i) => (
-          <SwiperSlide key={src}>
-            <div className="aspect-4/5">
+          <SwiperSlide key={src} className="min-w-0 max-w-full overflow-hidden">
+            <div className="relative aspect-4/5 w-full max-w-full overflow-hidden">
               <Image
                 src={src}
                 alt={`${name} — photo ${i + 1}`}
-                width={800}
-                height={1000}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
                 priority={i === 0}
               />
             </div>

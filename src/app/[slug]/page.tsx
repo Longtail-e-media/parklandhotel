@@ -86,7 +86,7 @@ export default async function CmsArticlePage({
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
-      <div className="pt-36 lg:pt-44 pb-20">
+      <div className="pt-30 lg:pt-44 pb-10 md:pb-20">
         <div className="container mx-auto px-6 lg:px-10 text-center">
           <h1 className="luxury-section-title text-luxury-charcoal">{article?.title}</h1>
           {article?.subtitle && (

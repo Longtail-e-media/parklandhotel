@@ -184,7 +184,7 @@ body {
     font-family: var(--font-display-serif), Georgia, serif;
     /* Was clamp(0.125rem, -1.5357rem + 5.9048vw, 4rem) — the negative
        intercept collapsed the hero headline to the 2px floor on phones. */
-    font-size: clamp(2.4rem, 1.84rem + 2.4vw, 3rem);
+    font-size: clamp(1.6rem, 1.84rem + 1.4vw, 3rem);
     line-height: 1.08;
     letter-spacing: 0.01em;
     font-weight: 500;
@@ -192,7 +192,7 @@ body {
 
   .luxury-section-title {
     font-family: var(--font-display-serif), Georgia, serif;
-    font-size: clamp(2.2rem, 4.2vw, 3.5rem);
+    font-size: clamp(2rem, 4.2vw, 3.5rem);
     line-height: 1.12;
     letter-spacing: 0;
     font-weight: 500;

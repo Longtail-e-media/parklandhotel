@@ -27,7 +27,7 @@ export default async function GallerySection() {
             View Full Gallery <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 animate-fade-in-up">
           {images.map((img, i) => (
             <div
               key={img.src}

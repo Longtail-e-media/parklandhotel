@@ -9,7 +9,7 @@ export default async function FacilitiesGrid() {
   return (
     <section className="relative pb-24 lg:pb-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-l border-hairline animate-fade-in-up delay-200">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 border-t border-l border-hairline animate-fade-in-up delay-200">
           {items.map((item, index) => {
             const excerpt = typeof item.content_0 === "string" ? stripHtml(item.content_0) : "";
 

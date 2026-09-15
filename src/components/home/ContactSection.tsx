@@ -32,7 +32,7 @@ export default async function ContactSection() {
     <section id="contact" className="relative py-24 lg:py-32 overflow-hidden scroll-mt-24
     after:absolute after:right-0 after:bottom-0
     after:w-64 after:h-64
-    after:bg-[url('/img/rhino.png')]
+    md:after:bg-[url('/img/rhino.png')]
     after:bg-contain after:bg-no-repeat after:bg-right-bottom
     after:pointer-events-none after:opacity-30">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">

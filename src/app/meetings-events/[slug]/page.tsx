@@ -117,7 +117,7 @@ export default async function MeetingSpaceDetailPage({
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            <div className="animate-slide-in-left">
+            <div className="animate-slide-in-left min-w-0 w-full max-w-full">
               <MeetingGallery images={galleryImages} name={space.name} />
             </div>
 

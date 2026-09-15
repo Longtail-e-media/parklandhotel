@@ -25,7 +25,7 @@ export default function AboutIntro() {
           delay={1.5}
         />
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="max-w-7xl mx-auto lg:px-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           {/* --- Stacked imagery ------------------------------------------
               The small frame sits on the big one's bottom-right corner and
               hangs past it by the container's padding-bottom, so nothing
