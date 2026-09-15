@@ -30,7 +30,7 @@ export default function OfferGallery({ images, name }: { images: string[]; name:
       >
         {images.map((src, i) => (
           <SwiperSlide key={src}>
-            <div className="aspect-4/5">
+            <div className="aspect-4/5 w-full">
               <Image
                 src={src}
                 alt={`${name} — photo ${i + 1}`}
