@@ -61,9 +61,9 @@ export default async function ContactSection() {
                       <span className="font-medium">{row.label}:</span>{" "}
                       {row.phoneNumbers ? (
                         row.phoneNumbers.map((number, index) => (
-                          <span key={number} className="whitespace-nowrap">
+                          <span key={number} className="md:whitespace-nowrap">
                             {index > 0 ? " / " : ""}
-                            <a className="whitespace-nowrap" href={telHref(number)}>{number}</a>
+                            <a className="md:whitespace-nowrap" href={telHref(number)}>{number}</a>
                           </span>
                         ))
                       ) : row.href ? (

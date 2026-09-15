@@ -56,6 +56,7 @@ export default function ContactFormSection() {
     const result = await submitEnquiry("enquery_mail_contact.php", {
       name: data.name,
       email: data.email,
+      address: data.address,
       phone: data.number,
       message: data.message,
     }, captchaToken);

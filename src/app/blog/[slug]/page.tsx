@@ -55,13 +55,13 @@ export default async function BlogPostPage({
       <article className="relative  pt-36 lg:pt-44 pb-16 lg:pb-24">
         <Watermark
           motif="fern"
-          className="w-28 lg:w-40 -right-8 top-16 text-gold/6"
+          className="w-28 lg:w-40 hidden md:inline  -right-8 top-16 text-gold/6"
           rotate={10}
           duration={17}
         />
         <Watermark
           motif="bird"
-          className="w-24 lg:w-32 left-[6%] bottom-8 text-luxury-charcoal/5"
+          className="w-24 lg:w-32 hidden md:inline left-[6%] bottom-8 text-luxury-charcoal/5"
           rotate={-6}
           duration={13}
           delay={1}

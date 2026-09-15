@@ -66,13 +66,13 @@ export default async function RoomDetailPage({
       <section className="relative pt-36 lg:pt-44 pb-24 lg:pb-32">
         <Watermark
           motif="leaf"
-          className="w-28 lg:w-40 -left-8 top-20 text-gold/6"
+          className="w-28 hidden xl:inline lg:w-40 -left-8 top-20 text-gold/6"
           rotate={-14}
           duration={18}
         />
         <Watermark
           motif="elephant"
-          className="w-40 lg:w-56 -right-10 top-1/2 text-luxury-charcoal/4"
+          className="w-40 lg:w-56 hidden xl:inline   -right-10 top-1/2 text-luxury-charcoal/4"
           rotate={0}
           duration={22}
           delay={1.4}
