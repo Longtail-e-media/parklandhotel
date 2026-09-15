@@ -5,7 +5,7 @@
 // swap this action URL for Hotel Parkland's own embedded-form URL once one
 // exists (Mailchimp → Audience → Signup forms → Embedded forms).
 const MAILCHIMP_ACTION =
-  "https://manakamanahillcrest.us12.list-manage.com/subscribe/post?u=c9a5f9fea652322559bf56230&id=528e344f90&f_id=00bec2e1f0";
+  "https://hotelparkland.us5.list-manage.com/subscribe/post?u=539c6af23e2bbfbe35949a751&amp;id=9a18a2e38b&amp;f_id=00155de9f0";
 
 export default function Newsletter() {
   return (

@@ -20,6 +20,14 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
         rotate={10}
         duration={17}
       />
+
+    <div className="after:fixed hidden md:block after:left-0 after:top-30
+    after:w-100 after:h-100
+    after:bg-[url('/img/question.png')]
+    after:bg-contain after:bg-no-repeat after:bg-right-bottom
+    after:pointer-events-none after:opacity-80"></div>
+
+
       <div className="max-w-3xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col gap-4 animate-fade-in-up delay-300">
           {items.map((item, index) => {

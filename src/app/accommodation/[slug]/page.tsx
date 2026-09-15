@@ -228,7 +228,7 @@ export default async function RoomDetailPage({
                 >
                   <div className="aspect-4/5 overflow-hidden luxury-img-zoom">
                     <Image
-                      src={r.image}
+                      src={r.img?.[0]?.src ?? r.image}
                       alt={`${r.name} interior`}
                       width={500}
                       height={625}

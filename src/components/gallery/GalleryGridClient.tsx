@@ -41,7 +41,10 @@ const GalleryLightboxGrid = memo(function GalleryLightboxGrid({
       speed={500}
       download={false}
     >
-      <div ref={gridRef} className="gallery-grid relative animate-fade-in-up delay-400">
+      <div
+        ref={gridRef}
+        className="gallery-grid relative w-full max-w-full overflow-x-clip animate-fade-in-up delay-400"
+      >
         {items.map((item) => (
           <div
             key={item.src}
@@ -97,6 +100,22 @@ export default function GalleryGridClient({
   const gridRef = useRef<HTMLDivElement>(null);
   const isoRef = useRef<Isotope | null>(null);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [shuffledItems, setShuffledItems] = useState(items);
+
+  useEffect(() => {
+    const nextItems = [...items];
+
+    for (let index = nextItems.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [nextItems[index], nextItems[randomIndex]] = [
+        nextItems[randomIndex],
+        nextItems[index],
+      ];
+    }
+
+    const frame = requestAnimationFrame(() => setShuffledItems(nextItems));
+    return () => cancelAnimationFrame(frame);
+  }, [items]);
 
   useEffect(() => {
     let cancelled = false;
@@ -129,6 +148,12 @@ export default function GalleryGridClient({
     };
   }, []);
 
+  useEffect(() => {
+    if (!isoRef.current) return;
+    isoRef.current.reloadItems();
+    isoRef.current.layout();
+  }, [shuffledItems]);
+
   const handleFilter = (key: string) => {
     setActiveFilter(key);
     isoRef.current?.arrange({ filter: key === "all" ? "*" : `.cat-${key}` });
@@ -153,7 +178,7 @@ export default function GalleryGridClient({
           ))}
         </div>
 
-        <GalleryLightboxGrid gridRef={gridRef} items={items} />
+        <GalleryLightboxGrid gridRef={gridRef} items={shuffledItems} />
       </div>
     </section>
   );

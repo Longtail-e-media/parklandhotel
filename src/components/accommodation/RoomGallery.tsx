@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 export default function RoomGallery({ images, name }: { images: string[]; name: string }) {
   return (
     <div
-      className="relative"
+      className="relative w-full max-w-full overflow-hidden"
       style={
         {
           "--swiper-pagination-color": "var(--luxury-gold)",
@@ -26,17 +26,17 @@ export default function RoomGallery({ images, name }: { images: string[]; name: 
         navigation={{ prevEl: ".room-gallery-prev", nextEl: ".room-gallery-next" }}
         pagination={{ clickable: true, el: ".room-gallery-pagination" }}
         a11y={{ containerMessage: `${name} photos` }}
-        className="luxury-media rounded-t-lg"
+        className="luxury-media w-full max-w-full rounded-t-lg"
       >
         {images.map((src, i) => (
           <SwiperSlide key={src}>
-            <div className="aspect-3/2">
+            <div className="aspect-3/2 w-full max-w-full">
               <Image
                 src={src}
                 alt={`${name} — photo ${i + 1}`}
                 width={1000}
                 height={667}
-                className="w-full h-full object-cover"
+                className="block w-full max-w-full h-full object-cover"
                 priority={i === 0}
               />
             </div>
