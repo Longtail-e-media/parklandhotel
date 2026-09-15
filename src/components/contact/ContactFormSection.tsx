@@ -58,7 +58,7 @@ export default function ContactFormSection() {
       email: data.email,
       phone: data.number,
       message: data.message,
-    });
+    }, captchaToken);
 
     setIsSubmitting(false);
 
