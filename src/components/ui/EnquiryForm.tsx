@@ -5,19 +5,41 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Recaptcha from "@/components/ui/Recaptcha";
-import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH, eventSchema } from "@/lib/validation";
+import {
+  nameSchema,
+  emailSchema,
+  phoneSchema,
+  PHONE_ALLOWED_CHARS,
+  PHONE_MAX_LENGTH,
+} from "@/lib/validation";
 import { submitEnquiry } from "@/lib/enquiry";
 
 const fields = [
-  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", icon: "user" },
-  { name: "email", label: "Email Address", placeholder: "Email Address", type: "email", icon: "envelope" },
-  { name: "event", label: "Event Name", placeholder: "Enter your event name", type: "text", icon: "calendar" },
-  { name: "phone", label: "Phone Number", placeholder: "Phone Number", type: "tel", icon: "phone" },
+  {
+    name: "name",
+    label: "Full Name",
+    placeholder: "Full Name",
+    type: "text",
+    icon: "user",
+  },
+  {
+    name: "email",
+    label: "Email Address",
+    placeholder: "Email Address",
+    type: "email",
+    icon: "envelope",
+  },
+  {
+    name: "phone",
+    label: "Phone Number",
+    placeholder: "Phone Number",
+    type: "tel",
+    icon: "phone",
+  },
 ] as const;
 
 const enquirySchema = z.object({
   name: nameSchema,
-  event: eventSchema,
   email: emailSchema,
   phone: phoneSchema,
   eventDate: z.string().min(1, "Please select a date."),
@@ -52,7 +74,13 @@ export default function EnquiryForm({
     formState: { errors },
   } = useForm<EnquiryFormValues>({
     resolver: zodResolver(enquirySchema),
-    defaultValues: { name: "", email: "", phone: "", event: "", eventDate: "", request: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      eventDate: "",
+      request: "",
+    },
   });
 
   const { onChange: onPhoneChange, ...phoneField } = register("phone");
@@ -73,7 +101,6 @@ export default function EnquiryForm({
 
     const message = [
       subject ? `Enquiry about: ${subject}` : null,
-      `Event: ${data.event}`,
       `Date: ${data.eventDate}`,
       `Pax: ${pax}`,
       data.request,
@@ -81,17 +108,23 @@ export default function EnquiryForm({
       .filter(Boolean)
       .join("\n");
 
-    const result = await submitEnquiry("enquery_mail_contact.php", {
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      message,
-    }, captchaToken);
+    const result = await submitEnquiry(
+      "enquery_mail_contact.php",
+      {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message,
+      },
+      captchaToken,
+    );
 
     setIsSubmitting(false);
 
     if (!result.ok) {
-      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
+      setSubmitError(
+        result.message ?? "Something went wrong. Please try again later.",
+      );
       return;
     }
 
@@ -105,7 +138,10 @@ export default function EnquiryForm({
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
       {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
-          <label htmlFor={`enquiry-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor={`enquiry-${name}`}
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             {label}
             <span className="text-red-500">*</span>
           </label>
@@ -114,7 +150,10 @@ export default function EnquiryForm({
               errors[name] ? "border-red-400" : "border-hairline"
             }`}
           >
-            <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
+            <i
+              className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`}
+              aria-hidden="true"
+            />
             <input
               id={`enquiry-${name}`}
               type={type}
@@ -122,13 +161,18 @@ export default function EnquiryForm({
               maxLength={name === "phone" ? PHONE_MAX_LENGTH : undefined}
               placeholder={placeholder}
               aria-invalid={!!errors[name]}
-              aria-describedby={errors[name] ? `enquiry-${name}-error` : undefined}
+              aria-describedby={
+                errors[name] ? `enquiry-${name}-error` : undefined
+              }
               className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-muted focus:outline-none"
               {...(name === "phone"
                 ? {
                     ...phoneField,
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      e.target.value = e.target.value.replace(PHONE_ALLOWED_CHARS, "");
+                      e.target.value = e.target.value.replace(
+                        PHONE_ALLOWED_CHARS,
+                        "",
+                      );
                       onPhoneChange(e);
                     },
                   }
@@ -136,7 +180,10 @@ export default function EnquiryForm({
             />
           </div>
           {errors[name] && (
-            <p id={`enquiry-${name}-error`} className="text-xs text-red-500 mt-2">
+            <p
+              id={`enquiry-${name}-error`}
+              className="text-xs text-red-500 mt-2"
+            >
               {errors[name]?.message}
             </p>
           )}
@@ -145,22 +192,30 @@ export default function EnquiryForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="enquiry-date" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="enquiry-date"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Date
-              <span className="text-red-500">*</span>
+            <span className="text-red-500">*</span>
           </label>
           <div
             className={`flex items-center gap-2 rounded-2xl border px-4 py-4 focus-within:border-soft transition-colors ${
               errors.eventDate ? "border-red-400" : "border-hairline"
             }`}
           >
-            <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
+            <i
+              className="fa-solid fa-calendar text-base text-luxury-muted shrink-0"
+              aria-hidden="true"
+            />
             <input
               id="enquiry-date"
               type="date"
               min={today}
               aria-invalid={!!errors.eventDate}
-              aria-describedby={errors.eventDate ? "enquiry-date-error" : undefined}
+              aria-describedby={
+                errors.eventDate ? "enquiry-date-error" : undefined
+              }
               className="w-full min-w-0 bg-transparent text-sm text-luxury-charcoal focus:outline-none"
               {...register("eventDate")}
             />
@@ -173,7 +228,10 @@ export default function EnquiryForm({
         </div>
 
         <div>
-          <label htmlFor="enquiry-pax" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="enquiry-pax"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Pax
             <span className="text-red-500">*</span>
           </label>
@@ -187,7 +245,10 @@ export default function EnquiryForm({
             >
               <i className="fa-solid fa-minus text-sm" aria-hidden="true" />
             </button>
-            <i className="fa-solid fa-users text-base text-luxury-muted shrink-0" aria-hidden="true" />
+            <i
+              className="fa-solid fa-users text-base text-luxury-muted shrink-0"
+              aria-hidden="true"
+            />
             <input
               id="enquiry-pax"
               name="pax"
@@ -211,11 +272,17 @@ export default function EnquiryForm({
       </div>
 
       <div>
-        <label htmlFor="enquiry-request" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+        <label
+          htmlFor="enquiry-request"
+          className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+        >
           Special Request
         </label>
         <div className="flex items-start gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-          <i className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5" aria-hidden="true" />
+          <i
+            className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5"
+            aria-hidden="true"
+          />
           <textarea
             id="enquiry-request"
             rows={3}
@@ -228,7 +295,9 @@ export default function EnquiryForm({
 
       <Recaptcha onChange={setCaptchaToken} />
 
-      {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
+      {submitError && (
+        <p className="text-sm text-red-500 font-medium">{submitError}</p>
+      )}
 
       <button
         type="submit"

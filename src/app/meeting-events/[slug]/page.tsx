@@ -41,7 +41,9 @@ const MEETING_FEATURE_ICONS: [RegExp, string][] = [
 ];
 
 function getMeetingFeatureIcon(feature: string): string {
-  const match = MEETING_FEATURE_ICONS.find(([pattern]) => pattern.test(feature));
+  const match = MEETING_FEATURE_ICONS.find(([pattern]) =>
+    pattern.test(feature),
+  );
   return match?.[1] ?? "fa-solid fa-check";
 }
 
@@ -78,9 +80,13 @@ export async function generateMetadata({
 
   const title = `${space.name} | Meetings & Events | ${site.name}`;
   return buildMetadata(
-    "meetings-events",
-    { title, description: space.excerpt, openGraph: { title, description: space.excerpt } },
-    `/meetings-events/${space.slug}`
+    "meeting-events",
+    {
+      title,
+      description: space.excerpt,
+      openGraph: { title, description: space.excerpt },
+    },
+    `/meeting-events/${space.slug}`,
   );
 }
 
@@ -95,8 +101,10 @@ export default async function MeetingSpaceDetailPage({
   if (!space) notFound();
 
   const otherSpaces = spaces.filter((s) => s.slug !== space.slug);
-  const galleryImages = space.images && space.images.length > 0 ? space.images : [space.image];
-  const displayFeatures = space.features.length > 0 ? space.features : DEFAULT_MEETING_FEATURES;
+  const galleryImages =
+    space.images && space.images.length > 0 ? space.images : [space.image];
+  const displayFeatures =
+    space.features.length > 0 ? space.features : DEFAULT_MEETING_FEATURES;
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
       <section className="relative overflow-hidden pt-36 lg:pt-44 pb-24 lg:pb-32">
@@ -115,61 +123,64 @@ export default async function MeetingSpaceDetailPage({
           delay={1.2}
         />
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             <div className="animate-slide-in-left min-w-0 w-full max-w-full">
               <MeetingGallery images={galleryImages} name={space.name} />
             </div>
 
             <div className="animate-slide-in-right">
-              <p className="luxury-label text-gold-text mb-5">Meetings & Events</p>
-              <h1 className="luxury-section-title text-luxury-charcoal">{space.name}</h1>
-
+              <p className="luxury-label text-gold-text mb-5">
+                Meetings & Events
+              </p>
+              <h1 className="luxury-section-title text-luxury-charcoal">
+                {space.name}
+              </h1>
 
               <div
                 className="mt-8 space-y-4 text-luxury-muted leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: space.description }}
               />
 
-
-                        {displayFeatures.length > 0 && (
-            <div className="mt-16 lg:mt-10 animate-fade-in-up">
-              <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
-                {space.amenities_name?.[0] || "Amenities"}
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-5">
-                {displayFeatures.map((feature) => (
-                  (() => {
-                    const featureData: RoomFeature =
-                      typeof feature === "string" ? { title: feature } : feature;
-                    return (
-                      <div
-                        key={featureData.title}
-                        className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-2 py-2.5"
-                      >
-                        {featureData.image ? (
-                          <Image
-                            src={featureData.image}
-                            alt=""
-                            width={20}
-                            height={20}
-                            className="object-contain shrink-0"
-                          />
-                        ) : (
-                          <i
-                            className={`${getMeetingFeatureIcon(featureData.title)} text-base brown-btn shrink-0`}
-                            aria-hidden="true"
-                          />
-                        )}
-                        {featureData.title}
-                      </div>
-                    );
-                  })()
-                ))}
-              </div>
-            </div>
-          )}
-                <MeetingEnquireButton spaceName={space.name} />
+              {displayFeatures.length > 0 && (
+                <div className="mt-16 lg:mt-10 animate-fade-in-up">
+                  <h2 className="luxury-section-title text-luxury-charcoal text-2xl lg:text-3xl mb-8">
+                    {space.amenities_name?.[0] || "Amenities"}
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-5">
+                    {displayFeatures.map((feature) =>
+                      (() => {
+                        const featureData: RoomFeature =
+                          typeof feature === "string"
+                            ? { title: feature }
+                            : feature;
+                        return (
+                          <div
+                            key={featureData.title}
+                            className="flex items-center gap-3 text-sm text-luxury-muted border border-hairline rounded-xl px-2 py-2.5"
+                          >
+                            {featureData.image ? (
+                              <Image
+                                src={featureData.image}
+                                alt=""
+                                width={20}
+                                height={20}
+                                className="object-contain shrink-0"
+                              />
+                            ) : (
+                              <i
+                                className={`${getMeetingFeatureIcon(featureData.title)} text-base brown-btn shrink-0`}
+                                aria-hidden="true"
+                              />
+                            )}
+                            {featureData.title}
+                          </div>
+                        );
+                      })(),
+                    )}
+                  </div>
+                </div>
+              )}
+              <MeetingEnquireButton spaceName={space.name} />
             </div>
           </div>
         </div>
@@ -196,9 +207,14 @@ export default async function MeetingSpaceDetailPage({
                         >
                           <div className="flex flex-col items-center gap-2">
                             {icon && (
-                              <i className={`fa-solid fa-${icon} text-2xl brown-btn`} aria-hidden="true" />
+                              <i
+                                className={`fa-solid fa-${icon} text-2xl brown-btn`}
+                                aria-hidden="true"
+                              />
                             )}
-                            <span className="luxury-label text-[11px] text-gold-text">{style}</span>
+                            <span className="luxury-label text-[11px] text-gold-text">
+                              {style}
+                            </span>
                           </div>
                         </th>
                       );
@@ -208,8 +224,13 @@ export default async function MeetingSpaceDetailPage({
                 <tbody>
                   <tr>
                     {space.setupStyles.map(({ style, pax }) => (
-                      <td key={style} className="px-4 py-6 text-luxury-charcoal">
-                        <span className="text-2xl lg:text-3xl text-gold-text">{pax}</span>{" "}
+                      <td
+                        key={style}
+                        className="px-4 py-6 text-luxury-charcoal"
+                      >
+                        <span className="text-2xl lg:text-3xl text-gold-text">
+                          {pax}
+                        </span>{" "}
                         <span className="text-sm text-luxury-muted">pax</span>
                       </td>
                     ))}

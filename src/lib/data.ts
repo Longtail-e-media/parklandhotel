@@ -1,4 +1,4 @@
-           // Data-access layer — the only module that talks to fetchAPI besides api.ts
+// Data-access layer — the only module that talks to fetchAPI besides api.ts
 // itself. Pages/components never import fetchAPI directly; they call the named
 // helpers below, which own all endpoint names, response-shape quirks and
 // filtering. Changing where data comes from is an api.ts/env concern; changing
@@ -6,7 +6,24 @@
 
 import { fetchAPI } from "./api";
 import { resolveHeroImages } from "./images";
-import type { ActivityItem, AmenityItem, BlogPost, DiningVenue, FaqItem, GalleryItem, Landmark, MeetingSpace, NavItem, NearbyItem, NewsData, OfferItem, RoomFeature, RoomType, ServiceItem, Testimonial } from "@/types";
+import type {
+  ActivityItem,
+  AmenityItem,
+  BlogPost,
+  DiningVenue,
+  FaqItem,
+  GalleryItem,
+  Landmark,
+  MeetingSpace,
+  NavItem,
+  NearbyItem,
+  NewsData,
+  OfferItem,
+  RoomFeature,
+  RoomType,
+  ServiceItem,
+  Testimonial,
+} from "@/types";
 import type { SiteMetadata } from "@/types/metadata";
 import { business } from "@/config/site";
 
@@ -46,7 +63,10 @@ export async function getCmsSchemaEntries<T = any>(): Promise<T[]> {
 
 /** Splits a comma-separated CMS phone/email field into a clean list. */
 export function splitContactList(value?: string | null): string[] {
-  return (value ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  return (value ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 // ── Navigation & social ──────────────────────────────────────────────────────
@@ -155,7 +175,10 @@ function mapAmenityFeatures(amenities?: CmsAmenity[]): RoomFeature[] {
       const img = a?.img ?? "";
       return {
         title: a?.title ?? "",
-        icon: a?.icon || (/^(?:fa(?:-solid|-regular|-brands)?)\b/.test(img) ? img : "") || undefined,
+        icon:
+          a?.icon ||
+          (/^(?:fa(?:-solid|-regular|-brands)?)\b/.test(img) ? img : "") ||
+          undefined,
         image: /^https?:/i.test(img) ? img : undefined,
       };
     })
@@ -237,7 +260,9 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
     .filter(Boolean);
-  const fullParagraphs = stripHtml([item.description, item.content_1].filter(Boolean).join("\n\n"))
+  const fullParagraphs = stripHtml(
+    [item.description, item.content_1].filter(Boolean).join("\n\n"),
+  )
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
     .filter(Boolean);
@@ -246,8 +271,9 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     slug: item.slug,
     name: item.title,
     bed: item.bed,
+    content_1: item.content_1,
     amenities_name: item.amenities_name,
-    occupancy :item.occupancy,
+    occupancy: item.occupancy,
     img: item.img,
     image: images[0] ?? "",
     images,
@@ -294,7 +320,9 @@ interface CmsVenueItem {
 /** Maps one CMS `subpackage` item onto the `DiningVenue` shape the UI expects. */
 function mapDiningVenue(item: CmsVenueItem): DiningVenue {
   const images = resolveHeroImages(item);
-  const rawDescription = [item.description, item.content_1].filter(Boolean).join("");
+  const rawDescription = [item.description, item.content_1]
+    .filter(Boolean)
+    .join("");
   // Excerpt still needs plain text — it's rendered outside dangerouslySetInnerHTML on listing cards.
   const firstPlainParagraph = stripHtml(rawDescription)
     .split(/\r?\n\r?\n/)
@@ -304,8 +332,8 @@ function mapDiningVenue(item: CmsVenueItem): DiningVenue {
   return {
     slug: item.slug,
     name: item.title,
-    sub_title : item.sub_title,
-    amenities_name : item.amenities_name,
+    sub_title: item.sub_title,
+    amenities_name: item.amenities_name,
     // The CMS has no dedicated restaurant/bar field yet — infer it from the slug.
     category: /bar/i.test(item.slug) ? "bar" : "restaurant",
     image: images[0] ?? "",
@@ -356,7 +384,9 @@ function parsePax(value?: string | null): number | null {
 /** Maps one CMS `subpackage` item onto the `MeetingSpace` shape the UI expects. */
 function mapMeetingSpace(item: CmsMeetingItem): MeetingSpace {
   const images = resolveHeroImages(item);
-  const rawDescription = [item.description, item.content_1].filter(Boolean).join("");
+  const rawDescription = [item.description, item.content_1]
+    .filter(Boolean)
+    .join("");
   // Excerpt still needs plain text — it's rendered outside dangerouslySetInnerHTML on listing cards.
   const firstPlainParagraph = stripHtml(rawDescription)
     .split(/\r?\n\r?\n/)
@@ -461,7 +491,8 @@ function mapBlogItem(item: NewsData): BlogPost {
   return {
     slug: item.slug,
     title: item.title,
-    excerpt: item.meta_description?.trim() || truncate(paragraphs[0] ?? "", 160),
+    excerpt:
+      item.meta_description?.trim() || truncate(paragraphs[0] ?? "", 160),
     content: paragraphs.length > 0 ? paragraphs : [""],
     image: item.image || item.banner_image || "",
     date: item.date,
@@ -534,7 +565,9 @@ interface CmsServiceItem {
 /** Maps one CMS `services` item onto the `ServiceItem` shape the UI expects. */
 function mapServiceItem(item: CmsServiceItem): ServiceItem {
   const images = resolveHeroImages(item);
-  const paragraphs = stripHtml([item.content_0, item.content_1].filter(Boolean).join("\n\n"))
+  const paragraphs = stripHtml(
+    [item.content_0, item.content_1].filter(Boolean).join("\n\n"),
+  )
     .split(/\r?\n\r?\n/)
     .map((p) => p.trim())
     .filter(Boolean);
@@ -564,7 +597,9 @@ export async function getActivities(): Promise<ActivityItem[]> {
   const items = groups.flatMap((group: any) => group?.items ?? []);
   return items.map((item: any, index: number) => ({
     title: item.title,
-    subtitle: item.content_0 ? stripHtml(item.content_0) || undefined : undefined,
+    subtitle: item.content_0
+      ? stripHtml(item.content_0) || undefined
+      : undefined,
     image: resolveHeroImages(item)[0] ?? "",
     featured: index === 0,
   }));
@@ -612,9 +647,14 @@ export async function getGalleryImages(display = "Inner Page"): Promise<any[]> {
 }
 
 /** Homepage gallery strip images, from the `gallery` group with `display: "Home Page"`. */
-export async function getHomeGalleryImages(): Promise<{ src: string; alt: string }[]> {
+export async function getHomeGalleryImages(): Promise<
+  { src: string; alt: string }[]
+> {
   const items = await getGalleryImages("Home Page");
-  return items.map((item: any) => ({ src: item.image, alt: item.title || "Hotel Parkland" }));
+  return items.map((item: any) => ({
+    src: item.image,
+    alt: item.title || "Hotel Parkland",
+  }));
 }
 
 /** Raw shape of one `gallery` item, as returned by `api_gallery.php`. */
@@ -659,7 +699,9 @@ function slugifyCategory(value: string): string {
  * the CMS doesn't ship a fixed category list — the pills are derived from
  * whatever categories the items themselves actually use, in first-seen order.
  */
-export async function getGalleryPage(display = "Inner Page"): Promise<GalleryPageData> {
+export async function getGalleryPage(
+  display = "Inner Page",
+): Promise<GalleryPageData> {
   const raw = await getGalleryImages(display);
   if (raw.length === 0) return { items: [], categories: [] };
 
@@ -705,7 +747,9 @@ function mapOfferItem(item: CmsOffer): OfferItem {
     name: item.title,
     image: item.image,
     excerpt: truncate(paragraphs[0] ?? "", 160),
-    price: unitPrice ? `${business.currency} ${unitPrice.toLocaleString()}` : undefined,
+    price: unitPrice
+      ? `${business.currency} ${unitPrice.toLocaleString()}`
+      : undefined,
     unitPrice,
     currency: business.currency,
     expiryDate: item.end_date,
@@ -760,7 +804,7 @@ export async function getSlideshow(): Promise<CmsSlideshowGroup[]> {
 
 /** First `video`-type slideshow src, for the homepage hero background. */
 export async function getHeroVideoSrc(): Promise<{
-    src: string | null;
+  src: string | null;
   title: string | null;
   buttonText: string | null;
   buttonLink: string | null;
@@ -772,7 +816,7 @@ export async function getHeroVideoSrc(): Promise<{
     title: videoGroup?.items?.[0]?.title || null,
     buttonText: videoGroup?.items?.[0]?.text || null,
     buttonLink: videoGroup?.items?.[0]?.buttonLink || null,
-  }
+  };
 }
 
 /** Maps a raw `nearby` CMS record onto the `NearbyItem` shape the UI expects. */
@@ -849,7 +893,8 @@ export interface PopupSlide {
 /** Whether a popup item's [start_date, end_date] window covers right now. */
 function isPopupActive(item: CmsPopupItem): boolean {
   const now = Date.now();
-  if (item.start_date && new Date(item.start_date).getTime() > now) return false;
+  if (item.start_date && new Date(item.start_date).getTime() > now)
+    return false;
   if (item.end_date && new Date(item.end_date).getTime() < now) return false;
   return true;
 }
@@ -872,7 +917,9 @@ function mapPopupSlide(item: CmsPopupItem, group: CmsPopupGroup): PopupSlide {
   const isVideo = group.type === "video";
   const orientationRaw = item.orientation || group.orientation;
   const orientation: PopupSlide["orientation"] =
-    orientationRaw === "vertical" || orientationRaw === "horizontal" ? orientationRaw : "square";
+    orientationRaw === "vertical" || orientationRaw === "horizontal"
+      ? orientationRaw
+      : "square";
 
   return {
     title: item.title || "Promotional offer",
@@ -900,7 +947,8 @@ export async function getActivePopupSlides(): Promise<PopupSlide[]> {
     for (const item of group.items) {
       if (!isPopupActive(item)) continue;
       const slide = mapPopupSlide(item, group);
-      if (slide.type === "image" ? slide.image : slide.videoSrc) slides.push(slide);
+      if (slide.type === "image" ? slide.image : slide.videoSrc)
+        slides.push(slide);
     }
   }
 

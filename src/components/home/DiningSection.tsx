@@ -5,15 +5,26 @@ import Watermark from "@/components/ui/Watermark";
 import Link from "next/link";
 
 export default async function DiningSection() {
-  const [diningPackage, venues] = await Promise.all([getDiningPackage(), getDiningVenues()]);
+  const [diningPackage, venues] = await Promise.all([
+    getDiningPackage(),
+    getDiningVenues(),
+  ]);
 
-  const title = diningPackage?.title ? stripHtml(diningPackage.title) : dining.title;
+  const title = diningPackage?.title
+    ? stripHtml(diningPackage.title)
+    : dining.title;
   const slug = diningPackage?.slug ? diningPackage.slug : dining.title;
-  const subtitle = diningPackage?.sub_title ? stripHtml(diningPackage.sub_title) : dining.eyebrow;
-  const paragraph = diningPackage?.description ? diningPackage.description : dining.paragraph;
+  const subtitle = diningPackage?.sub_title
+    ? stripHtml(diningPackage.sub_title)
+    : dining.eyebrow;
+  const paragraph = diningPackage?.description
+    ? diningPackage.description
+    : dining.paragraph;
   const image = diningPackage?.banner_img?.[0]?.url || dining.image;
   const features =
-    venues.length > 0 ? venues.map((v) => ({ title: v.name, description: v.excerpt })) : dining.features;
+    venues.length > 0
+      ? venues.map((v) => ({ title: v.name, description: v.excerpt }))
+      : dining.features;
 
   return (
     <section id="dining" className="relative  overflow-hidden scroll-mt-24">
@@ -34,26 +45,34 @@ export default async function DiningSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
         <div className="animate-slide-in-left">
           <div className="aspect-4/5 luxury-media luxury-img-zoom rounded-[10px]">
-           <Link href={`${slug}`} className="block w-full h-full">
-            <Image
-              src={image}
-              alt="Outdoor dining terrace at Hotel Parkland"
-              width={700}
-              height={875}
-              className="w-full h-full object-cover"
-            />
+            <Link href={`${slug}`} className="block w-full h-full">
+              <Image
+                src={image}
+                alt="Outdoor dining terrace at Hotel Parkland"
+                width={700}
+                height={875}
+                className="w-full h-full object-cover"
+              />
             </Link>
           </div>
         </div>
         <div className="animate-slide-in-right">
-          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{subtitle}</p>
-           <Link href={`${slug}`} className="block w-full h-full"> <h2 className="luxury-section-title text-luxury-charcoal mb-6">{title}</h2></Link>
+          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">
+            {subtitle}
+          </p>
+          <Link href={`${slug}`} className="block w-full h-full">
+            <h2 className="luxury-section-title text-luxury-charcoal mb-6">
+              {title}
+            </h2>
+          </Link>
 
           <div
-            className="text-luxury-muted leading-relaxed mb-8 whitespace-pre-line"
+            className="text-luxury-muted "
             dangerouslySetInnerHTML={{ __html: paragraph }}
           />
-
+          <Link className="luxury-btn luxury-btn-accent mt-10" href={`${slug}`}>
+            Explore Culinary Experiences
+          </Link>
         </div>
       </div>
     </section>

@@ -43,8 +43,12 @@ export async function generateMetadata({
   const title = `${room.name} | Accommodation | ${site.name}`;
   return buildMetadata(
     "accommodation",
-    { title, description: room.description, openGraph: { title, description: room.description } },
-    `/accommodation/${room.slug}`
+    {
+      title,
+      description: room.description,
+      openGraph: { title, description: room.description },
+    },
+    `/accommodation/${room.slug}`,
   );
 }
 
@@ -59,7 +63,8 @@ export default async function RoomDetailPage({
   if (!room) notFound();
 
   const otherRooms = rooms.filter((r) => r.slug !== room.slug);
-  const galleryImages = room.images && room.images.length > 0 ? room.images : [room.image];
+  const galleryImages =
+    room.images && room.images.length > 0 ? room.images : [room.image];
 
   return (
     <main id="main-content" className="flex flex-col min-h-screen">
@@ -92,7 +97,9 @@ export default async function RoomDetailPage({
                   <span className="text-2xl lg:text-3xl text-gold-text">
                     ${room.pricePerNight}
                   </span>
-                  <span className="luxury-label text-[11px] text-luxury-muted ml-2">/ Night</span>
+                  <span className="luxury-label text-[11px] text-luxury-muted ml-2">
+                    / Night
+                  </span>
                 </p>
               </div>
 
@@ -102,28 +109,37 @@ export default async function RoomDetailPage({
                 ))}
               </div>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-5">
-                                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-user text-base shrink-0" aria-hidden="true" />
+                <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
+                  <i
+                    className="fa-solid fa-user text-base shrink-0"
+                    aria-hidden="true"
+                  />
                   Adults: {room.occupancy}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-expand text-base shrink-0" aria-hidden="true" />
+                  <i
+                    className="fa-solid fa-expand text-base shrink-0"
+                    aria-hidden="true"
+                  />
                   Size: {room.size}
                 </li>
                 <li className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5">
-                  <i className="fa-solid fa-bed text-base shrink-0" aria-hidden="true" />
+                  <i
+                    className="fa-solid fa-bed text-base shrink-0"
+                    aria-hidden="true"
+                  />
                   Bed Type: {room.bed}
                 </li>
               </ul>
 
-
-
-
-              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">{room.amenities_name}</h2>
+              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">
+                {room.amenities_name}
+              </h2>
               <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {room.features.map((feature) => {
                   const known = ROOM_FEATURES[feature.title.toLowerCase()];
-                  const icon = feature.icon || (known ? `fa-solid fa-${known.icon}` : "");
+                  const icon =
+                    feature.icon || (known ? `fa-solid fa-${known.icon}` : "");
                   const image = feature.image;
                   const label = known?.label ?? feature.title;
                   return (
@@ -132,7 +148,10 @@ export default async function RoomDetailPage({
                       className="flex items-center gap-3 text-luxury-muted border border-hairline rounded-xl px-4 py-3.5"
                     >
                       {icon ? (
-                        <i className={`${icon} text-base brown-btn shrink-0`} aria-hidden="true" />
+                        <i
+                          className={`${icon} text-base brown-btn shrink-0`}
+                          aria-hidden="true"
+                        />
                       ) : image ? (
                         <Image
                           src={image}
@@ -142,68 +161,114 @@ export default async function RoomDetailPage({
                           className="object-contain shrink-0"
                         />
                       ) : (
-                        <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
+                        <i
+                          className="fa-solid fa-check text-base brown-btn shrink-0"
+                          aria-hidden="true"
+                        />
                       )}
                       {label}
                     </li>
                   );
                 })}
-
               </ul>
+              {/* children and extra bed */}
+              <div dangerouslySetInnerHTML={{ __html: room.content_1 }} />
+              {!room.content_1 && (
+                <div className="text-show">
+                  <div className="grid sm:grid-cols-2 gap-8 mt-12">
+                    <div>
+                      <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">
+                        Check-in
+                      </h2>
+                      <ul className="space-y-3">
+                        <li className="flex items-center gap-3 text-luxury-muted">
+                          <i
+                            className="fa-solid fa-check text-base brown-btn shrink-0"
+                            aria-hidden="true"
+                          />
+                          Check-in from 02:00 PM
+                        </li>
+                        <li className="flex items-center gap-3 text-luxury-muted">
+                          <i
+                            className="fa-solid fa-check text-base brown-btn shrink-0"
+                            aria-hidden="true"
+                          />
+                          Early check-in subject to availability
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">
+                        Check-out
+                      </h2>
+                      <ul className="space-y-3">
+                        <li className="flex items-center gap-3 text-luxury-muted">
+                          <i
+                            className="fa-solid fa-check text-base brown-btn shrink-0"
+                            aria-hidden="true"
+                          />
+                          Check-out before noon
+                        </li>
+                        <li className="flex items-center gap-3 text-luxury-muted">
+                          <i
+                            className="fa-solid fa-check text-base brown-btn shrink-0"
+                            aria-hidden="true"
+                          />
+                          Express check-out
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
 
-              <div className="grid sm:grid-cols-2 gap-8 mt-12">
-                <div>
-                  <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-in</h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-center gap-3 text-luxury-muted">
-                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                      Check-in from 02:00 PM
-                    </li>
-                    <li className="flex items-center gap-3 text-luxury-muted">
-                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                      Early check-in subject to availability
-                    </li>
-                  </ul>
+                  <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">
+                    Children &amp; Extra Beds
+                  </h2>
+                  <div className="luxury-surface flex flex-col sm:flex-row gap-6 p-6 lg:p-7">
+                    <div className="shrink-0 w-11 h-11 rounded-full bg-luxury-cream-alt flex items-center justify-center">
+                      <i
+                        className="fa-solid fa-baby text-xl brown-btn"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <ul className="space-y-3 text-luxury-muted leading-relaxed">
+                      <li className="flex gap-3">
+                        <i
+                          className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>Below 5 years: Complimentary stay.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <i
+                          className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>
+                          5-11 years: 50% discount on meals (sharing existing
+                          bed).
+                        </span>
+                      </li>
+                      <li className="flex gap-3">
+                        <i
+                          className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>12 years and above: Full adult charges.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <i
+                          className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>
+                          Extra bed available upon request, with additional
+                          charge.
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="luxury-section-title text-xl lg:text-2xl mb-5">Check-out</h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-center gap-3 text-luxury-muted">
-                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                      Check-out before noon
-                    </li>
-                    <li className="flex items-center gap-3 text-luxury-muted">
-                      <i className="fa-solid fa-check text-base brown-btn shrink-0" aria-hidden="true" />
-                      Express check-out
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <h2 className="luxury-section-title text-xl lg:text-2xl mt-12 mb-6">Children &amp; Extra Beds</h2>
-              <div className="luxury-surface flex flex-col sm:flex-row gap-6 p-6 lg:p-7">
-                <div className="shrink-0 w-11 h-11 rounded-full bg-luxury-cream-alt flex items-center justify-center">
-                  <i className="fa-solid fa-baby text-xl brown-btn" aria-hidden="true" />
-                </div>
-                <ul className="space-y-3 text-luxury-muted leading-relaxed">
-                  <li className="flex gap-3">
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>Below 5 years: Complimentary stay.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>5-11 years: 50% discount on meals (sharing existing bed).</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>12 years and above: Full adult charges.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <i className="fa-solid fa-check text-base brown-btn shrink-0 mt-0.5" aria-hidden="true" />
-                    <span>Extra bed available upon request, with additional charge.</span>
-                  </li>
-                </ul>
-              </div>
+              )}
             </div>
 
             <RoomBookingWidget
@@ -218,7 +283,9 @@ export default async function RoomDetailPage({
       {otherRooms.length > 0 && (
         <section className="relative pb-24 lg:pb-32">
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <h2 className="luxury-section-title text-luxury-charcoal mb-10 text-4xl">Other Rooms</h2>
+            <h2 className="luxury-section-title text-luxury-charcoal mb-10 text-4xl">
+              Other Rooms
+            </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherRooms.map((r) => (
                 <Link
@@ -236,8 +303,12 @@ export default async function RoomDetailPage({
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="luxury-section-title text-lg  md:text-3xl">{r.name}</h3>
-                    <p className="text-luxury-muted text-sm mt-2">${r.pricePerNight} / night</p>
+                    <h3 className="luxury-section-title text-lg  md:text-3xl">
+                      {r.name}
+                    </h3>
+                    <p className="text-luxury-muted text-sm mt-2">
+                      ${r.pricePerNight} / night
+                    </p>
                   </div>
                 </Link>
               ))}

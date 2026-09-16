@@ -7,7 +7,6 @@ export default async function MeetingsGrid() {
   const apiSpaces = await getMeetingSpaces();
   const spaces = apiSpaces.length > 0 ? apiSpaces : meetingsPage.spaces;
 
-
   return (
     <section className="relative pb-24 lg:pb-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -15,7 +14,7 @@ export default async function MeetingsGrid() {
           {spaces.map((space) => (
             <Link
               key={space.slug}
-              href={`/meetings-events/${space.slug}`}
+              href={`/meeting-events/${space.slug}`}
               className="group luxury-surface overflow-hidden flex flex-col"
             >
               <div className="aspect-4/3 overflow-hidden luxury-img-zoom">
@@ -29,21 +28,35 @@ export default async function MeetingsGrid() {
               </div>
               <div className="p-7 flex flex-col grow">
                 <h3 className="luxury-section-title text-3xl">{space.name}</h3>
-                <p className="text-luxury-muted mt-4 leading-relaxed grow">{space.excerpt}</p>
+                <p className="text-luxury-muted mt-4 leading-relaxed grow">
+                  {space.excerpt}
+                </p>
                 <ul className="flex  gap-10 mt-5 text-xs text-luxury-muted">
                   {space.capacity && (
                     <li className="flex items-center gap-2">
-                      <i className="fa-solid fa-users text-sm shrink-0" aria-hidden="true" /> {space.capacity}
+                      <i
+                        className="fa-solid fa-users text-sm shrink-0"
+                        aria-hidden="true"
+                      />{" "}
+                      {space.capacity}
                     </li>
                   )}
                   {space.size && (
                     <li className="flex items-center gap-2">
-                      <i className="fa-solid fa-expand text-sm shrink-0" aria-hidden="true" /> {space.size}
+                      <i
+                        className="fa-solid fa-expand text-sm shrink-0"
+                        aria-hidden="true"
+                      />{" "}
+                      {space.size}
                     </li>
                   )}
                 </ul>
                 <span className="inline-flex items-center gap-2 brown-btn luxury-label text-[11px] mt-5 group-hover:gap-3 transition-all">
-                  View Details <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
+                  View Details{" "}
+                  <i
+                    className="fa-solid fa-arrow-right text-base"
+                    aria-hidden="true"
+                  />
                 </span>
               </div>
             </Link>

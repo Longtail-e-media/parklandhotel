@@ -2,7 +2,7 @@
 
 import type { RoomType } from "@/types";
 import { useState } from "react";
-import { getSiteRegulars} from "@/lib/data";
+import { getSiteRegulars } from "@/lib/data";
 const siteRegulars = await getSiteRegulars();
 export default function RoomBookingWidget({
   className = "",
@@ -19,8 +19,13 @@ export default function RoomBookingWidget({
 
   return (
     <aside className={`luxury-surface p-7 sm:p-8 ${className}`}>
-      <h2 className="luxury-section-title text-3-xl md:text-4xl mb-5">Reserve Your Stay</h2>
-     <p className="md:mb-10">Enjoy warm hospitality designed to make your visit effortless. Relax and recharge with comfort that feels personal.</p>
+      <h2 className="luxury-section-title text-3-xl md:text-4xl mb-5">
+        Reserve Your Stay
+      </h2>
+      <p className="md:mb-10">
+        Enjoy warm hospitality designed to make your visit effortless. Relax and
+        recharge with comfort that feels personal.
+      </p>
 
       <form
         className="space-y-5"
@@ -33,29 +38,54 @@ export default function RoomBookingWidget({
         }}
       >
         <div>
-          <label htmlFor="check-in" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="check-in"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Check In Date
           </label>
           <div className="flex items-center gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-            <i className="fa-solid fa-calendar-check text-base text-luxury-muted shrink-0" aria-hidden="true" />
+            <i
+              className="fa-solid fa-calendar-check text-base text-luxury-muted shrink-0"
+              aria-hidden="true"
+            />
             <input
               id="check-in"
               type="date"
               required
               min={today}
               value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
+              onChange={(e) => {
+                const nextCheckIn = e.target.value;
+                const [year, month, day] = nextCheckIn.split("-").map(Number);
+                const nextCheckOut = new Date(year, month - 1, day + 1);
+
+                setCheckIn(nextCheckIn);
+                setCheckOut(
+                  [
+                    nextCheckOut.getFullYear(),
+                    String(nextCheckOut.getMonth() + 1).padStart(2, "0"),
+                    String(nextCheckOut.getDate()).padStart(2, "0"),
+                  ].join("-"),
+                );
+              }}
               className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal focus:outline-none"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="check-out" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="check-out"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Check Out Date
           </label>
           <div className="flex items-center gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-            <i className="fa-solid fa-calendar-xmark text-base text-luxury-muted shrink-0" aria-hidden="true" />
+            <i
+              className="fa-solid fa-calendar-xmark text-base text-luxury-muted shrink-0"
+              aria-hidden="true"
+            />
             <input
               id="check-out"
               type="date"
@@ -70,8 +100,12 @@ export default function RoomBookingWidget({
 
         {/* <Recaptcha /> */}
 
-        <button type="submit" className="luxury-btn hover:cursor-pointer rounded-2xl luxury-btn-accent mt-4 justify-center py-4!">
-          Check Availability <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
+        <button
+          type="submit"
+          className="luxury-btn hover:cursor-pointer rounded-2xl luxury-btn-accent mt-4 justify-center py-4!"
+        >
+          Check Availability{" "}
+          <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
         </button>
       </form>
     </aside>

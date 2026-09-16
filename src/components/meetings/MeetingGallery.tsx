@@ -2,29 +2,33 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Keyboard, Pagination } from "swiper/modules";
+import type { Swiper as SwiperInstance } from "swiper";
+import { Keyboard } from "swiper/modules";
+import { useRef } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
-export default function MeetingGallery({ images, name }: { images: string[]; name: string }) {
+export default function MeetingGallery({
+  images,
+  name,
+}: {
+  images: string[];
+  name: string;
+}) {
+  const swiperRef = useRef<SwiperInstance | null>(null);
+
   return (
     <div
       className="relative min-w-0 w-full max-w-full overflow-hidden"
-      style={
-        {
-          "--swiper-pagination-color": "var(--luxury-gold)",
-          "--swiper-pagination-bullet-inactive-color": "var(--luxury-charcoal)",
-          "--swiper-pagination-bullet-inactive-opacity": "0.2",
-        } as React.CSSProperties
-      }
+      style={{} as React.CSSProperties}
     >
       <Swiper
-        modules={[Navigation, Keyboard, Pagination]}
+        modules={[Keyboard]}
         keyboard={{ enabled: true }}
-        navigation={{ prevEl: ".meeting-gallery-prev", nextEl: ".meeting-gallery-next" }}
-        pagination={{ clickable: true, el: ".meeting-gallery-pagination" }}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
         a11y={{ containerMessage: `${name} photos` }}
         className="luxury-media min-w-0 w-full max-w-full"
       >
@@ -44,24 +48,32 @@ export default function MeetingGallery({ images, name }: { images: string[]; nam
         ))}
 
         {images.length > 1 && (
-          <div slot="container-end" className="flex items-center justify-between gap-4 my-5 mr-1">
-            <div className="meeting-gallery-pagination flex items-center gap-2 static! w-auto!" />
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                aria-label="Previous photo"
-                className="testimonial-nav-btn meeting-gallery-prev w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer"
-              >
-                <i className="fa-solid fa-arrow-left text-base" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                aria-label="Next photo"
-                className="testimonial-nav-btn meeting-gallery-next w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer border-0"
-              >
-                <i className="fa-solid fa-arrow-right text-base" aria-hidden="true" />
-              </button>
-            </div>
+          <div
+            slot="container-end"
+            className="absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 items-center justify-between px-3 pointer-events-none"
+          >
+            <button
+              type="button"
+              aria-label="Previous photo"
+              onClick={() => swiperRef.current?.slidePrev()}
+              className="testimonial-nav-btn meeting-gallery-prev pointer-events-auto w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer"
+            >
+              <i
+                className="fa-solid fa-arrow-left text-base"
+                aria-hidden="true"
+              />
+            </button>
+            <button
+              type="button"
+              aria-label="Next photo"
+              onClick={() => swiperRef.current?.slideNext()}
+              className="testimonial-nav-btn meeting-gallery-next pointer-events-auto w-10! h-10! hover:bg-(--color-primary-green) hover:cursor-pointer border-0"
+            >
+              <i
+                className="fa-solid fa-arrow-right text-base"
+                aria-hidden="true"
+              />
+            </button>
           </div>
         )}
       </Swiper>

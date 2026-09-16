@@ -5,14 +5,45 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Recaptcha from "@/components/ui/Recaptcha";
-import { nameSchema, emailSchema, phoneSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import {
+  nameSchema,
+  emailSchema,
+  phoneSchema,
+  eventSchema,
+  PHONE_ALLOWED_CHARS,
+  PHONE_MAX_LENGTH,
+} from "@/lib/validation";
 import { submitEnquiry } from "@/lib/enquiry";
 
-
 const fields = [
-  { name: "name", label: "Full Name", placeholder: "Full Name", type: "text", icon: "user" },
-  { name: "email", label: "Email", placeholder: "Email", type: "email", icon: "envelope" },
-  { name: "mobile", label: "Mobile No.", placeholder: "Mobile No.", type: "tel", icon: "phone" },
+  {
+    name: "name",
+    label: "Full Name",
+    placeholder: "Full Name",
+    type: "text",
+    icon: "user",
+  },
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Email",
+    type: "email",
+    icon: "envelope",
+  },
+  {
+    name: "mobile",
+    label: "Mobile No.",
+    placeholder: "Mobile No.",
+    type: "tel",
+    icon: "phone",
+  },
+  {
+    name: "eventName",
+    label: "Event Name",
+    placeholder: "e.g. Birthday celebration",
+    type: "text",
+    icon: "calendar",
+  },
 ] as const;
 
 const EVENT_SLOTS = [
@@ -26,6 +57,7 @@ const meetingEnquirySchema = z.object({
   name: nameSchema,
   email: emailSchema,
   mobile: phoneSchema,
+  eventName: eventSchema,
   eventSlot: z.string().min(1, "Please select an event slot."),
   eventDate: z.string().min(1, "Please select a date."),
   message: z.string(),
@@ -33,7 +65,9 @@ const meetingEnquirySchema = z.object({
 
 type MeetingEnquiryFormValues = z.infer<typeof meetingEnquirySchema>;
 
-export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string } = {}) {
+export default function MeetingEnquiryForm({
+  spaceName,
+}: { spaceName?: string } = {}) {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -48,7 +82,15 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
     formState: { errors },
   } = useForm<MeetingEnquiryFormValues>({
     resolver: zodResolver(meetingEnquirySchema),
-    defaultValues: { name: "", email: "", mobile: "", eventSlot: "", eventDate: "", message: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      mobile: "",
+      eventName: "",
+      eventSlot: "",
+      eventDate: "",
+      message: "",
+    },
   });
 
   const { onChange: onMobileChange, ...mobileField } = register("mobile");
@@ -67,21 +109,28 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const result = await submitEnquiry("enquery_mail_hall.php", {
-      full_name: data.name,
-      email: data.email,
-      phone: data.mobile,
-      schedule_slot: data.eventSlot,
-      event_date: data.eventDate,
-      pax: String(pax),
-      special_request: data.message,
-      package_name: spaceName || "General Enquiry",
-    }, captchaToken);
+    const result = await submitEnquiry(
+      "enquery_mail_hall.php",
+      {
+        full_name: data.name,
+        email: data.email,
+        phone: data.mobile,
+        event_name: data.eventName,
+        schedule_slot: data.eventSlot,
+        event_date: data.eventDate,
+        pax: String(pax),
+        special_request: data.message,
+        package_name: spaceName || "General Enquiry",
+      },
+      captchaToken,
+    );
 
     setIsSubmitting(false);
 
     if (!result.ok) {
-      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
+      setSubmitError(
+        result.message ?? "Something went wrong. Please try again later.",
+      );
       return;
     }
 
@@ -95,7 +144,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
       {fields.map(({ name, label, placeholder, type, icon }) => (
         <div key={name}>
-          <label htmlFor={`hall-${name}`} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor={`hall-${name}`}
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             {label}
             <span className="text-red-500">*</span>
           </label>
@@ -104,7 +156,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
               errors[name] ? "border-red-400" : "border-hairline"
             }`}
           >
-            <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
+            <i
+              className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`}
+              aria-hidden="true"
+            />
             <input
               id={`hall-${name}`}
               type={type}
@@ -118,7 +173,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
                 ? {
                     ...mobileField,
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      e.target.value = e.target.value.replace(PHONE_ALLOWED_CHARS, "");
+                      e.target.value = e.target.value.replace(
+                        PHONE_ALLOWED_CHARS,
+                        "",
+                      );
                       onMobileChange(e);
                     },
                   }
@@ -135,7 +193,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="hall-date" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="hall-date"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Date
             <span className="text-red-500">*</span>
           </label>
@@ -144,13 +205,18 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
               errors.eventDate ? "border-red-400" : "border-hairline"
             }`}
           >
-            <i className="fa-solid fa-calendar text-base text-luxury-muted shrink-0" aria-hidden="true" />
+            <i
+              className="fa-solid fa-calendar text-base text-luxury-muted shrink-0"
+              aria-hidden="true"
+            />
             <input
               id="hall-date"
               type="date"
               min={today}
               aria-invalid={!!errors.eventDate}
-              aria-describedby={errors.eventDate ? "hall-date-error" : undefined}
+              aria-describedby={
+                errors.eventDate ? "hall-date-error" : undefined
+              }
               className="w-full min-w-0 bg-transparent text-sm text-luxury-charcoal focus:outline-none"
               {...register("eventDate")}
             />
@@ -163,7 +229,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
         </div>
 
         <div>
-          <label htmlFor="hall-pax" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+          <label
+            htmlFor="hall-pax"
+            className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+          >
             Pax
             <span className="text-red-500">*</span>
           </label>
@@ -202,7 +271,10 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
       </div>
 
       <div>
-        <label htmlFor="hall-eventSlot" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+        <label
+          htmlFor="hall-eventSlot"
+          className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+        >
           Event Slot
           <span className="text-red-500">*</span>
         </label>
@@ -210,7 +282,11 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
           control={control}
           name="eventSlot"
           render={({ field }) => (
-            <EventSlotSelect value={field.value} onChange={field.onChange} hasError={!!errors.eventSlot} />
+            <EventSlotSelect
+              value={field.value}
+              onChange={field.onChange}
+              hasError={!!errors.eventSlot}
+            />
           )}
         />
         {errors.eventSlot && (
@@ -221,11 +297,17 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
       </div>
 
       <div>
-        <label htmlFor="hall-message" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+        <label
+          htmlFor="hall-message"
+          className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+        >
           Message
         </label>
         <div className="flex items-start gap-3 rounded-2xl border border-hairline px-5 py-4 focus-within:border-soft transition-colors">
-          <i className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5" aria-hidden="true" />
+          <i
+            className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5"
+            aria-hidden="true"
+          />
           <textarea
             id="hall-message"
             rows={3}
@@ -238,7 +320,9 @@ export default function MeetingEnquiryForm({ spaceName }: { spaceName?: string }
 
       <Recaptcha onChange={setCaptchaToken} />
 
-      {submitError && <p className="text-xs text-red-500 font-medium">{submitError}</p>}
+      {submitError && (
+        <p className="text-xs text-red-500 font-medium">{submitError}</p>
+      )}
 
       <button
         type="submit"
@@ -272,7 +356,8 @@ function EventSlotSelect({
     if (!open) return;
 
     const onPointerDown = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+      if (rootRef.current && !rootRef.current.contains(e.target as Node))
+        setOpen(false);
     };
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -300,8 +385,13 @@ function EventSlotSelect({
           open ? "border-soft" : hasError ? "border-red-400" : "border-hairline"
         }`}
       >
-        <i className="fa-solid fa-clock text-base text-luxury-muted shrink-0" aria-hidden="true" />
-        <span className={`flex-1 min-w-0 text-sm ${selected ? "text-luxury-charcoal" : "text-luxury-muted"}`}>
+        <i
+          className="fa-solid fa-clock text-base text-luxury-muted shrink-0"
+          aria-hidden="true"
+        />
+        <span
+          className={`flex-1 min-w-0 text-sm ${selected ? "text-luxury-charcoal" : "text-luxury-muted"}`}
+        >
           {selected ? selected.label : "Select slot"}
         </span>
         <i
@@ -316,7 +406,9 @@ function EventSlotSelect({
         role="listbox"
         aria-label="Event Slot"
         className={`absolute left-0 right-0 top-[calc(100%+0.5rem)] z-20 origin-top rounded-2xl border border-hairline bg-white py-1.5 shadow-xl transition-all duration-150 ${
-          open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+          open
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
         {EVENT_SLOTS.map((slot) => {
@@ -332,11 +424,18 @@ function EventSlotSelect({
                 setOpen(false);
               }}
               className={`flex w-full cursor-pointer items-center justify-between gap-3 px-5 py-3 text-left text-sm transition-colors hover:bg-luxury-charcoal/5 ${
-                isSelected ? "text-luxury-charcoal font-medium" : "text-luxury-charcoal/80"
+                isSelected
+                  ? "text-luxury-charcoal font-medium"
+                  : "text-luxury-charcoal/80"
               }`}
             >
               {slot.label}
-              {isSelected && <i className="fa-solid fa-check text-base text-gold" aria-hidden="true" />}
+              {isSelected && (
+                <i
+                  className="fa-solid fa-check text-base text-gold"
+                  aria-hidden="true"
+                />
+              )}
             </button>
           );
         })}

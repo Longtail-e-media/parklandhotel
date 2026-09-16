@@ -1,9 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { OfferItem } from "@/types";
-import { formatOfferExpiry, getOffersList } from "@/lib/offers";
+import { getOffers } from "@/lib/data";
+import { formatOfferExpiry } from "@/lib/offers";
 
-function OfferCard({ offer, priority }: { offer: OfferItem; priority: boolean }) {
+function OfferCard({
+  offer,
+  priority,
+}: {
+  offer: OfferItem;
+  priority: boolean;
+}) {
   return (
     <Link
       href={`/offers/${offer.slug}`}
@@ -23,7 +30,9 @@ function OfferCard({ offer, priority }: { offer: OfferItem; priority: boolean })
           Expires {formatOfferExpiry(offer.expiryDate)}
         </span>
         <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-luxury-dark/85 via-luxury-dark/20 to-transparent px-5 pt-10 pb-5">
-          <p className="text-white font-display text-lg leading-tight md:text-3xl">{offer.name}</p>
+          <p className="text-white font-display text-lg leading-tight md:text-3xl">
+            {offer.name}
+          </p>
         </div>
       </div>
     </Link>
@@ -31,16 +40,27 @@ function OfferCard({ offer, priority }: { offer: OfferItem; priority: boolean })
 }
 
 export default async function OffersGrid() {
-  const items = await getOffersList();
+  const items = await getOffers();
 
   return (
     <section className="relative pb-24 lg:pb-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 animate-fade-in-up delay-100">
-          {items.map((offer, i) => (
-            <OfferCard key={offer.slug} offer={offer} priority={i === 0} />
-          ))}
-        </div>
+        {items.length === 0 ? (
+          <div className="py-16 text-center animate-fade-in-up">
+            <h2 className="luxury-section-title text-2xl text-luxury-charcoal">
+              Offers Coming Soon
+            </h2>
+            <p className="text-luxury-muted mt-3">
+              New offers will be available here soon.
+            </p>
+          </div>
+        ) : (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 animate-fade-in-up delay-100">
+            {items.map((offer, i) => (
+              <OfferCard key={offer.slug} offer={offer} priority={i === 0} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

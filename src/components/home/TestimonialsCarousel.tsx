@@ -1,14 +1,17 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import type { Testimonial } from "@/types";
 import Watermark from "@/components/ui/Watermark";
 
 import "swiper/css";
-import "swiper/css/pagination";
 
-export default function TestimonialsCarousel({ testimonials }: { testimonials: Testimonial[] }) {
+export default function TestimonialsCarousel({
+  testimonials,
+}: {
+  testimonials: Testimonial[];
+}) {
   if (testimonials.length === 0) return null;
 
   return (
@@ -31,26 +34,35 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="text-center max-w-2xl mx-auto mb-16 animate-fade-in-up">
           <p className="luxury-label text-gold-text mb-5">Guest Stories</p>
-          <h2 className="luxury-section-title text-luxury-charcoal">Shared Experiences</h2>
-          <p className="text-luxury-muted mt-5">Genuine stories of comfort, nature, and hospitality.</p>
+          <h2 className="luxury-section-title text-luxury-charcoal">
+            Shared Experiences
+          </h2>
+          <p className="text-luxury-muted mt-5">
+            Genuine stories of comfort, nature, and hospitality.
+          </p>
         </div>
 
         <Swiper
-          modules={[Autoplay, Pagination]}
+          modules={[Autoplay]}
           spaceBetween={24}
           slidesPerView={1}
           loop={testimonials.length > 2}
-          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
           breakpoints={{ 768: { slidesPerView: 2 } }}
           a11y={{ containerMessage: "Guest testimonials" }}
-          className="testimonial-swiper !pb-14"
+          className="testimonial-swiper"
         >
           {testimonials.map((t) => (
-
             <SwiperSlide key={t.author} className="!h-auto">
               <figure className="relative h-full luxury-surface p-9 lg:p-10">
-                <p aria-hidden className="absolute top-5 right-8 text-7xl leading-none text-gold/15 font-serif">
+                <p
+                  aria-hidden
+                  className="absolute top-5 right-8 text-7xl leading-none text-gold/15 font-serif"
+                >
                   &rdquo;
                 </p>
                 <div className="relative flex gap-0.5 text-(--color-rating) mb-5">
@@ -62,19 +74,22 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
                     />
                   ))}
                 </div>
-<blockquote
-  className="relative text-luxury-charcoal/80 leading-8 mb-7 h-56 overflow-auto"
-  dangerouslySetInnerHTML={{ __html: t.quote }}
-></blockquote>
-
+                <blockquote
+                  className="relative text-luxury-charcoal/80 leading-8 mb-7 h-56 overflow-auto"
+                  dangerouslySetInnerHTML={{ __html: t.quote }}
+                ></blockquote>
 
                 <figcaption className="relative flex items-center gap-4 border-t border-hairline pt-6">
                   <span className="flex items-center justify-center w-11 h-11 rounded-full border border-hairline luxury-hero-title text-base text-gold shrink-0">
                     {t.author.trim().charAt(0)}
                   </span>
                   <span>
-                    <span className="block luxury-section-title text-lg">{t.author}</span>
-                    <span className="block luxury-label text-[10px] text-luxury-muted mt-1">{t.source}</span>
+                    <span className="block luxury-section-title text-lg">
+                      {t.author}
+                    </span>
+                    <span className="block luxury-label text-[10px] text-luxury-muted mt-1">
+                      {t.source}
+                    </span>
                   </span>
                 </figcaption>
               </figure>

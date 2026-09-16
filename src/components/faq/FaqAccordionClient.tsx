@@ -21,12 +21,13 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
         duration={17}
       />
 
-    <div className="after:fixed hidden xl:block after:left-0 after:top-30
-    after:w-100 after:h-100
-    after:bg-[url('/img/question.png')]
+      <div
+        className="after:fixed hidden xl:block after:left-20 after:top-30
+    after:w-50 after:h-50
+    after:bg-[url('/img/faq.png')]
     after:bg-contain after:bg-no-repeat after:bg-right-bottom
-    after:pointer-events-none after:opacity-80"></div>
-
+    after:pointer-events-none after:opacity-30"
+      ></div>
 
       <div className="max-w-3xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col gap-4 animate-fade-in-up delay-300">
@@ -43,7 +44,9 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
                   aria-controls={panelId}
                   className="w-full flex items-center justify-between gap-6 py-6 text-left cursor-pointer"
                 >
-                  <span className="font-medium text-luxury-charcoal">{item.question}</span>
+                  <span className="font-medium text-luxury-charcoal">
+                    {item.question}
+                  </span>
                   <i
                     aria-hidden="true"
                     className={`fa-solid fa-plus text-xl shrink-0 text-luxury-charcoal transition-transform duration-300 ${
@@ -55,15 +58,17 @@ export default function FaqAccordionClient({ items }: { items: FaqItem[] }) {
                 <div
                   id={panelId}
                   className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
                   }`}
                 >
-<div
-  className={`overflow-hidden text-luxury-muted leading-relaxed ${
-    isOpen ? "pb-6" : ""
-  }`}
-  dangerouslySetInnerHTML={{ __html: item.answer }}
-/>
+                  <div
+                    className={`overflow-hidden text-luxury-muted leading-relaxed ${
+                      isOpen ? "pb-6" : ""
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: item.answer }}
+                  />
                 </div>
               </div>
             );

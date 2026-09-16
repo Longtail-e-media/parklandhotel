@@ -10,15 +10,25 @@ import Link from "next/link";
  * back to the static copy; the photo prefers the first live meeting space.
  */
 export default async function LeisureSection() {
-  const [meetingsPackage, spaces] = await Promise.all([getMeetingsPackage(), getMeetingSpaces()]);
+  const [meetingsPackage, spaces] = await Promise.all([
+    getMeetingsPackage(),
+    getMeetingSpaces(),
+  ]);
 
-  const title = meetingsPackage?.title ? stripHtml(meetingsPackage.title) : meetingsPage.header.title;
-  const slug = meetingsPackage?.slug ? meetingsPackage.slug: meetingsPage.header.slug;
-  const subtitle = meetingsPackage?.sub_title ? stripHtml(meetingsPackage.sub_title) : meetingsPage.header.eyebrow;
+  const title = meetingsPackage?.title
+    ? stripHtml(meetingsPackage.title)
+    : meetingsPage.header.title;
+  const slug = meetingsPackage?.slug
+    ? meetingsPackage.slug
+    : meetingsPage.header.slug;
+  const subtitle = meetingsPackage?.sub_title
+    ? stripHtml(meetingsPackage.sub_title)
+    : meetingsPage.header.eyebrow;
   const paragraphs = meetingsPackage?.description
     ? meetingsPackage.description
     : [meetingsPage.intro];
-  const image = meetingsPackage?.banner_img?.[0]?.url || spaces[0]?.image || leisure.image;
+  const image =
+    meetingsPackage?.banner_img?.[0]?.url || spaces[0]?.image || leisure.image;
 
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden">
@@ -39,20 +49,33 @@ export default async function LeisureSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-2 gap-16 items-center">
         <div className="order-2 lg:order-1 animate-slide-in-left">
-          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">{subtitle}</p>
-           <Link href={`${slug}`} className="block w-full h-full"> <h2 className="luxury-section-title text-luxury-charcoal mb-6">{title}</h2></Link>
-            <div dangerouslySetInnerHTML={{ __html: paragraphs }}></div>
+          <p className="luxury-eyebrow luxury-label text-gold-text mb-6">
+            {subtitle}
+          </p>
+          <Link href={`${slug}`} className="block w-full h-full">
+            {" "}
+            <h2 className="luxury-section-title text-luxury-charcoal mb-6">
+              {title}
+            </h2>
+          </Link>
+          <div
+            className="text-luxury-muted "
+            dangerouslySetInnerHTML={{ __html: paragraphs }}
+          ></div>
+          <Link className="luxury-btn luxury-btn-accent mt-10" href={`${slug}`}>
+            Explore Event Spaces
+          </Link>
         </div>
         <div className="order-1 lg:order-2 relative animate-slide-in-right">
           <div className="aspect-4/5 luxury-media luxury-img-zoom rounded-[10px]">
-           <Link href={`${slug}`} className="block w-full h-full">
-            <Image
-              src={image}
-              alt="Meeting and event space at Hotel Parkland"
-              width={700}
-              height={875}
-              className="w-full h-full object-cover"
-            />
+            <Link href={`${slug}`} className="block w-full h-full">
+              <Image
+                src={image}
+                alt="Meeting and event space at Hotel Parkland"
+                width={700}
+                height={875}
+                className="w-full h-full object-cover"
+              />
             </Link>
           </div>
         </div>

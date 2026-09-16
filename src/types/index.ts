@@ -21,6 +21,8 @@ export interface RoomType {
   /** Nightly rate in USD — printed on the badge over the photo. */
   pricePerNight: number;
   amenities_name: string;
+  content_1: string;
+
   /** Floor area as written on the card, e.g. "34 Sqm". */
   size: string;
   bed: string;
@@ -52,7 +54,7 @@ export interface DiningVenue {
   sub_title?: string;
   category: "restaurant" | "bar";
   image: string;
-   read_more: string;
+  read_more: string;
   amenities_name: string;
   images?: string[];
   excerpt: string;
