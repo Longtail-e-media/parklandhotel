@@ -42,7 +42,7 @@ export const navItems: NavItem[] = [
   { label: "Offers & Packages", href: "/offers" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" }
+  { label: "Contact", href: "/contact" },
 ];
 
 export const hero = {
@@ -128,6 +128,7 @@ export const rooms: RoomType[] = [
   {
     slug: "deluxe-room",
     name: "Deluxe Room",
+    content_1: "coming soon",
     image: "/img/rooms/room-deluxe.jpg",
     images: ["/img/rooms/room-deluxe.jpg", "/img/garden.jpg", "/img/pool.jpg"],
     description:
@@ -139,7 +140,7 @@ export const rooms: RoomType[] = [
     pricePerNight: 85,
     size: "28 Sq.m",
     amenities_name: "Amenities",
-   occupancy: 2 + 1,
+    occupancy: 2 + 1,
     bed: "1 Queen Bed",
     rating: 4.3,
     features: [{ title: "wifi" }, { title: "tv" }, { title: "breakfast" }],
@@ -147,9 +148,14 @@ export const rooms: RoomType[] = [
   {
     slug: "suite-room",
     name: "Suite Room",
-     amenities_name:"Amenities",
+    content_1: "coming soon",
+    amenities_name: "Amenities",
     image: "/img/rooms/room-premier.jpg",
-    images: ["/img/rooms/room-premier.jpg", "/img/garden.jpg", "/img/dining.jpg"],
+    images: [
+      "/img/rooms/room-premier.jpg",
+      "/img/garden.jpg",
+      "/img/dining.jpg",
+    ],
     description:
       "Spacious interiors with elevated finishes, designed for longer, more restorative stays.",
     longDescription: [
@@ -158,7 +164,7 @@ export const rooms: RoomType[] = [
     ],
     pricePerNight: 120,
     size: "34 Sq.m",
-   occupancy: 2 + 1,
+    occupancy: 2 + 1,
     bed: "1 King Bed",
     rating: 4.6,
     featured: true,
@@ -166,7 +172,8 @@ export const rooms: RoomType[] = [
   },
   {
     slug: "presidential-room",
-     amenities_name:"Amenities",
+    amenities_name: "Amenities",
+    content_1: "coming soon",
     name: "Presidential Room",
     image: "/img/rooms/room-villa.jpg",
     images: ["/img/rooms/room-villa.jpg", "/img/pool.jpg", "/img/garden.jpg"],
@@ -178,7 +185,7 @@ export const rooms: RoomType[] = [
     ],
     pricePerNight: 180,
     size: "46 Sq.m",
-   occupancy: 2 + 1,
+    occupancy: 2 + 1,
     bed: "1 KingBed",
     rating: 4.9,
     featured: true,
@@ -191,12 +198,26 @@ export const dining = {
   title: "Flavours Under the Sauraha Sky",
   paragraph:
     "From authentic Nepalese flavours to international favourites, discover dining experiences crafted to delight every palate.\n\nOur culinary spaces offer sophisticated settings, quality ingredients and attentive service—from relaxed breakfasts to memorable dinners and evening gatherings.",
-    slug: "dining-bar",
+  slug: "dining-bar",
   features: [
-{title:"Outdoor Dining", description:"Al fresco dining surrounded by the beauty of Sauraha."},
-{title:"Buffet Dining", description:"A generous selection of fresh flavours for every palate."},
-{title:"Restaurant", description:"Contemporary dining featuring local and international cuisine."},
-{title:"Bar", description:"Unwind with signature drinks and a relaxed evening ambience."},
+    {
+      title: "Outdoor Dining",
+      description: "Al fresco dining surrounded by the beauty of Sauraha.",
+    },
+    {
+      title: "Buffet Dining",
+      description: "A generous selection of fresh flavours for every palate.",
+    },
+    {
+      title: "Restaurant",
+      description:
+        "Contemporary dining featuring local and international cuisine.",
+    },
+    {
+      title: "Bar",
+      description:
+        "Unwind with signature drinks and a relaxed evening ambience.",
+    },
   ],
   image: "/img/dining.jpg",
 };
@@ -310,7 +331,10 @@ export const exploreLinks = [
   { label: "Experiences", href: "" },
 ];
 export const quickLinks = [
-  { label: "Book Your Stay", href: "https://www.mayurstay.com/parklandhotel/result.php?hotel_code=AZZxYq2" },
+  {
+    label: "Book Your Stay",
+    href: "https://www.mayurstay.com/parklandhotel/result.php?hotel_code=AZZxYq2",
+  },
   { label: "Special Offers", href: "/offers" },
   { label: "Getting Here", href: "" },
   { label: "Privacy Policy", href: "" },
@@ -330,11 +354,31 @@ export const amenities: AmenityItem[] = [
 ];
 
 export const trustBadges = [
-  { name: "TripAdvisor", image: "/img/trust/trip.png" , link:"https://www.tripadvisor.com/Hotel_Review-g1367591-d1896438-Reviews-Hotel_Parkland-Sauraha_Chitwan_District_Narayani_Zone_Central_Region.html"},
-  { name: "Booking.com", image: "/img/trust/bo.png", link:"https://www.booking.com/hotel/np/parkland-chitwan.html" },
-  { name: "Agoda", image: "/img/trust/ag.png", link:"https://www.agoda.com/hotel-parkland/hotel/chitwan-np.html?cid=-218" },
-  { name: "Expedia", image: "/img/trust/ex.png", link:"https://www.expedia.com/Sauraha-Hotels-Hotel-Parkland.h22518607.Hotel-Information?regionId=11702&langid=1033&semcid=US.UB.GOOGLE.PT-c-EN.HOTEL&semdtl=a1625600556.b127830482108.r1.g1dsa-287861008464.i145058999560.d1270356234835.e1c.j11011034.k19070016.f11t1.n1.l1g.h1b.m1" },
-  { name: "Goibibo", image: "/img/trust/goibibo.png", link:"https://www.goibibo.com/hotels/parkland-hotel-in-chitwan-6035664439464244233/" },
+  {
+    name: "TripAdvisor",
+    image: "/img/trust/trip.png",
+    link: "https://www.tripadvisor.com/Hotel_Review-g1367591-d1896438-Reviews-Hotel_Parkland-Sauraha_Chitwan_District_Narayani_Zone_Central_Region.html",
+  },
+  {
+    name: "Booking.com",
+    image: "/img/trust/bo.png",
+    link: "https://www.booking.com/hotel/np/parkland-chitwan.html",
+  },
+  {
+    name: "Agoda",
+    image: "/img/trust/ag.png",
+    link: "https://www.agoda.com/hotel-parkland/hotel/chitwan-np.html?cid=-218",
+  },
+  {
+    name: "Expedia",
+    image: "/img/trust/ex.png",
+    link: "https://www.expedia.com/Sauraha-Hotels-Hotel-Parkland.h22518607.Hotel-Information?regionId=11702&langid=1033&semcid=US.UB.GOOGLE.PT-c-EN.HOTEL&semdtl=a1625600556.b127830482108.r1.g1dsa-287861008464.i145058999560.d1270356234835.e1c.j11011034.k19070016.f11t1.n1.l1g.h1b.m1",
+  },
+  {
+    name: "Goibibo",
+    image: "/img/trust/goibibo.png",
+    link: "https://www.goibibo.com/hotels/parkland-hotel-in-chitwan-6035664439464244233/",
+  },
 ];
 
 export const testimonials: Testimonial[] = [
@@ -368,7 +412,10 @@ export const gallery = [
   { src: "/img/garden.jpg", alt: "Mature gardens at Hotel Parkland" },
   { src: "/img/pool.jpg", alt: "Swimming pool surrounded by gardens" },
   { src: "/img/dining.jpg", alt: "Outdoor dining terrace" },
-  { src: "/img/activities/elephant-bathing.jpg", alt: "Elephant bathing in the river" },
+  {
+    src: "/img/activities/elephant-bathing.jpg",
+    alt: "Elephant bathing in the river",
+  },
   { src: "/img/rooms/room-deluxe.jpg", alt: "Deluxe Garden Room interior" },
   { src: "/img/activities/canoe.jpg", alt: "Dugout canoe ride on the river" },
 ];
@@ -393,18 +440,46 @@ export const galleryPage = {
   ],
   items: [
     { src: "/img/hero.jpg", alt: "Hotel Parkland at dusk", category: "hotel" },
-    { src: "/img/garden.jpg", alt: "Mature gardens at Hotel Parkland", category: "hotel" },
-    { src: "/img/rooms/room-deluxe.jpg", alt: "Deluxe Garden Room interior", category: "rooms" },
-    { src: "/img/rooms/room-premier.jpg", alt: "Suite Room interior", category: "rooms" },
-    { src: "/img/rooms/room-villa.jpg", alt: "Presidential Room interior", category: "rooms" },
-    { src: "/img/dining.jpg", alt: "Outdoor dining terrace", category: "dining" },
-    { src: "/img/pool.jpg", alt: "Swimming pool surrounded by gardens", category: "wellness" },
+    {
+      src: "/img/garden.jpg",
+      alt: "Mature gardens at Hotel Parkland",
+      category: "hotel",
+    },
+    {
+      src: "/img/rooms/room-deluxe.jpg",
+      alt: "Deluxe Garden Room interior",
+      category: "rooms",
+    },
+    {
+      src: "/img/rooms/room-premier.jpg",
+      alt: "Suite Room interior",
+      category: "rooms",
+    },
+    {
+      src: "/img/rooms/room-villa.jpg",
+      alt: "Presidential Room interior",
+      category: "rooms",
+    },
+    {
+      src: "/img/dining.jpg",
+      alt: "Outdoor dining terrace",
+      category: "dining",
+    },
+    {
+      src: "/img/pool.jpg",
+      alt: "Swimming pool surrounded by gardens",
+      category: "wellness",
+    },
     {
       src: "/img/activities/elephant-bathing.jpg",
       alt: "Elephant bathing in the river",
       category: "experiences",
     },
-    { src: "/img/activities/canoe.jpg", alt: "Dugout canoe ride on the river", category: "experiences" },
+    {
+      src: "/img/activities/canoe.jpg",
+      alt: "Dugout canoe ride on the river",
+      category: "experiences",
+    },
     {
       src: "/img/activities/jungle-drive.jpg",
       alt: "Jungle jeep drive through Chitwan",
@@ -467,7 +542,8 @@ export const faqPage = {
     },
     {
       question: "What languages does your staff speak?",
-      answer: "Our team is comfortable communicating in English, Nepali and Hindi.",
+      answer:
+        "Our team is comfortable communicating in English, Nepali and Hindi.",
     },
   ] as FaqItem[],
 };
@@ -629,12 +705,18 @@ export const meetingsPage = {
       name: "Grand Conference Hall",
       image: "/img/dining.jpg",
       images: ["/img/dining.jpg", "/img/garden.jpg"],
-      excerpt: "Our largest indoor venue, set up for conferences, seminars and corporate retreats.",
+      excerpt:
+        "Our largest indoor venue, set up for conferences, seminars and corporate retreats.",
       description:
         "<p>The Grand Conference Hall is Hotel Parkland's largest indoor venue — a flexible, naturally lit space that reconfigures for theatre-style seminars, classroom training sessions or banquet-style gatherings.</p><p>Standard AV equipment, high-speed wi-fi and dedicated event staff come as part of every booking, with catering drawn from our restaurant kitchen.</p>",
       capacity: "Up to 120 guests, theatre-style",
       size: "150 Sq.m",
-      features: ["Theatre, classroom & banquet layouts", "AV equipment included", "High-speed wi-fi", "On-site catering"],
+      features: [
+        "Theatre, classroom & banquet layouts",
+        "AV equipment included",
+        "High-speed wi-fi",
+        "On-site catering",
+      ],
       setupStyles: [
         { style: "U-Shape Style", pax: 40 },
         { style: "Classroom Style", pax: 60 },
@@ -649,12 +731,18 @@ export const meetingsPage = {
       name: "Garden Pavilion",
       image: "/img/garden.jpg",
       images: ["/img/garden.jpg", "/img/pool.jpg"],
-      excerpt: "An open-air setting among the gardens, built for weddings and celebrations.",
+      excerpt:
+        "An open-air setting among the gardens, built for weddings and celebrations.",
       description:
         "<p>Set beneath Hotel Parkland's mature trees, the Garden Pavilion is our open-air venue for weddings, receptions and milestone celebrations — string lighting and lawn seating included.</p><p>The space pairs easily with the adjoining Garden Terrace for cocktail hours and evening dining, and our events team can help shape a full-day itinerary around it.</p>",
       capacity: "Up to 200 guests, reception-style",
       size: "300 Sq.m open lawn",
-      features: ["Open-air garden setting", "Wedding & reception ready", "String lighting", "Dedicated events team"],
+      features: [
+        "Open-air garden setting",
+        "Wedding & reception ready",
+        "String lighting",
+        "Dedicated events team",
+      ],
       setupStyles: [
         { style: "U-Shape Style", pax: 60 },
         { style: "Classroom Style", pax: 90 },
@@ -669,12 +757,18 @@ export const meetingsPage = {
       name: "The Boardroom",
       image: "/img/rooms/room-premier.jpg",
       images: ["/img/rooms/room-premier.jpg", "/img/dining.jpg"],
-      excerpt: "An intimate, private room for small corporate meetings and interviews.",
+      excerpt:
+        "An intimate, private room for small corporate meetings and interviews.",
       description:
         "<p>For smaller gatherings — board meetings, interviews or client presentations — the Boardroom offers a private, air-conditioned space away from the rest of the hotel.</p><p>Seats up to twelve around a single table, with tea and coffee service available throughout.</p>",
       capacity: "Up to 12 guests, boardroom-style",
       size: "40 Sq.m",
-      features: ["Air conditioned", "Private & quiet", "Tea & coffee service", "Flexible half/full-day booking"],
+      features: [
+        "Air conditioned",
+        "Private & quiet",
+        "Tea & coffee service",
+        "Flexible half/full-day booking",
+      ],
     },
   ] as MeetingSpace[],
 };
@@ -725,15 +819,69 @@ export const servicesPage = {
   descriptions: SERVICE_DESCRIPTIONS,
   /** Full static fallback, used only if the `services` API is unreachable. */
   items: [
-    { slug: "airport-pickup-drop", title: "Airport Pickup & Drop", icon: "fa-solid fa-plane-arrival", image: "" ,  content_0:"" },
-    { slug: "high-speed-internet", title: "High Speed Internet", icon: "fa-solid fa-wifi", image: "" , content_0:""},
-    { slug: "swimming-pool", title: "Swimming Pool", icon: "fa-solid fa-water-ladder", image: "", content_0:"" },
-    { slug: "elevator", title: "Elevator", icon: "fa-solid fa-elevator", image: "", content_0:"" },
-    { slug: "fitness-center", title: "Fitness Center", icon: "fa-solid fa-dumbbell", image: "", content_0:"" },
-    { slug: "coffee-shop", title: "Coffee Shop", icon: "fa-solid fa-mug-saucer", image: "", content_0:"" },
-    { slug: "parking-space", title: "Parking Space", icon: "fa-solid fa-square-parking", image: "", content_0:"" },
-    { slug: "spa-wellness", title: "Spa & Wellness", icon: "fa-solid fa-spa", image: "", content_0:"" },
-    { slug: "event-destination", title: "Event Destination", icon: "fa-solid fa-champagne-glasses", image: "", content_0:"" },
+    {
+      slug: "airport-pickup-drop",
+      title: "Airport Pickup & Drop",
+      icon: "fa-solid fa-plane-arrival",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "high-speed-internet",
+      title: "High Speed Internet",
+      icon: "fa-solid fa-wifi",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "swimming-pool",
+      title: "Swimming Pool",
+      icon: "fa-solid fa-water-ladder",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "elevator",
+      title: "Elevator",
+      icon: "fa-solid fa-elevator",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "fitness-center",
+      title: "Fitness Center",
+      icon: "fa-solid fa-dumbbell",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "coffee-shop",
+      title: "Coffee Shop",
+      icon: "fa-solid fa-mug-saucer",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "parking-space",
+      title: "Parking Space",
+      icon: "fa-solid fa-square-parking",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "spa-wellness",
+      title: "Spa & Wellness",
+      icon: "fa-solid fa-spa",
+      image: "",
+      content_0: "",
+    },
+    {
+      slug: "event-destination",
+      title: "Event Destination",
+      icon: "fa-solid fa-champagne-glasses",
+      image: "",
+      content_0: "",
+    },
   ].map((item) => ({
     ...item,
     description: SERVICE_DESCRIPTIONS[item.slug] ?? [],

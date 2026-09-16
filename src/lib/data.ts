@@ -198,7 +198,7 @@ interface CmsRoomItem {
   /** Content up to the CMS's "read more" marker — the card blurb. */
   description?: string;
   /** Content after the "read more" marker — shown only on the detail page. */
-  content_1?: string | null;
+  content_1?: string;
   price?: string;
   /** Free-text floor area, e.g. "5sq.m" — CMS doesn't normalise the unit. */
   rooms_Size?: string | null;
@@ -271,7 +271,7 @@ function mapRoomItem(item: CmsRoomItem): RoomType {
     slug: item.slug,
     name: item.title,
     bed: item.bed,
-    content_1: item.content_1,
+    content_1: item.content_1 ?? "",
     amenities_name: item.amenities_name,
     occupancy: item.occupancy,
     img: item.img,
