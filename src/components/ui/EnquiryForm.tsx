@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,6 +10,7 @@ import {
   emailSchema,
   phoneSchema,
   PHONE_ALLOWED_CHARS,
+  addressSchema,
   PHONE_MAX_LENGTH,
 } from "@/lib/validation";
 import { submitEnquiry } from "@/lib/enquiry";
@@ -36,12 +37,20 @@ const fields = [
     type: "tel",
     icon: "phone",
   },
+  {
+    name: "address",
+    label: "Address",
+    placeholder: "Address",
+    type: "text",
+    icon: "location",
+  },
 ] as const;
 
 const enquirySchema = z.object({
   name: nameSchema,
   email: emailSchema,
   phone: phoneSchema,
+  address: addressSchema,
   eventDate: z.string().min(1, "Please select a date."),
   request: z.string(),
 });
@@ -61,11 +70,27 @@ export default function EnquiryForm({
   submitLabel?: string;
   subject?: string;
 }) {
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showSubmittedMessage, setShowSubmittedMessage] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [pax, setPax] = useState(1);
+
+  useEffect(() => {
+    if (!submitted) return;
+
+    const fadeTimeout = window.setTimeout(
+      () => setShowSubmittedMessage(false),
+      3500,
+    );
+    const removeTimeout = window.setTimeout(() => setSubmitted(false), 4000);
+    return () => {
+      window.clearTimeout(fadeTimeout);
+      window.clearTimeout(removeTimeout);
+    };
+  }, [submitted]);
+
   const today = new Date().toISOString().slice(0, 10);
   const {
     register,
@@ -79,6 +104,7 @@ export default function EnquiryForm({
       email: "",
       phone: "",
       eventDate: "",
+      address: "",
       request: "",
     },
   });
@@ -91,47 +117,43 @@ export default function EnquiryForm({
   };
 
   const onSubmit = async (data: EnquiryFormValues) => {
-    if (!captchaToken) {
-      setSubmitError("Please complete the reCAPTCHA.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   setSubmitError("Please complete the reCAPTCHA.");
+    //   return;
+    // }
 
     setIsSubmitting(true);
     setSubmitError(null);
 
-    const message = [
-      subject ? `Enquiry about: ${subject}` : null,
-      `Date: ${data.eventDate}`,
-      `Pax: ${pax}`,
-      data.request,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
     const result = await submitEnquiry(
-      "enquery_mail_contact.php",
+      "enquery_mail_dining.php",
       {
+        subject,
         name: data.name,
         email: data.email,
         phone: data.phone,
-        message,
+        address: data.address,
+        eventDate: data.eventDate,
+        pax,
+        message: data.request,
       },
-      captchaToken,
+      // captchaToken,
     );
 
     setIsSubmitting(false);
 
-    if (!result.ok) {
-      setSubmitError(
-        result.message ?? "Something went wrong. Please try again later.",
-      );
-      return;
-    }
+    // if (!result.ok) {
+    //   setSubmitError(
+    //     result.message ?? "Something went wrong. Please try again later.",
+    //   );
+    //   return;
+    // }
 
     setSubmitted(true);
+    setShowSubmittedMessage(true);
     reset();
     setPax(1);
-    setCaptchaToken(null);
+    // setCaptchaToken(null);
   };
 
   return (
@@ -293,7 +315,7 @@ export default function EnquiryForm({
         </div>
       </div>
 
-      <Recaptcha onChange={setCaptchaToken} />
+      {/* <Recaptcha onChange={setCaptchaToken} /> */}
 
       {submitError && (
         <p className="text-sm text-red-500 font-medium">{submitError}</p>
@@ -307,7 +329,11 @@ export default function EnquiryForm({
         {isSubmitting ? "Sending…" : submitted ? "Message Sent" : submitLabel}
       </button>
       {submitted && (
-        <p className="text-sm text-luxury-muted text-center">
+        <p
+          className={`text-sm text-luxury-muted ps-3 bg-green-700 text-white py-4 transition-opacity duration-500 ${
+            showSubmittedMessage ? "opacity-100" : "opacity-0"
+          }`}
+        >
           Thank you — our reservations team will be in touch shortly.
         </p>
       )}

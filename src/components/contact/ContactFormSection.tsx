@@ -1,20 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Watermark from "@/components/ui/Watermark";
 import Recaptcha from "@/components/ui/Recaptcha";
-import { nameSchema, emailSchema, phoneSchema, addressSchema, messageSchema, PHONE_ALLOWED_CHARS, PHONE_MAX_LENGTH } from "@/lib/validation";
+import {
+  nameSchema,
+  emailSchema,
+  phoneSchema,
+  addressSchema,
+  messageSchema,
+  PHONE_ALLOWED_CHARS,
+  PHONE_MAX_LENGTH,
+} from "@/lib/validation";
 import { submitEnquiry } from "@/lib/enquiry";
 
 const fields = [
-  { name: "name", label: "Full Name", placeholder: "Your Name", type: "text", icon: "user" },
-  { name: "email", label: "Email", placeholder: "Your Email", type: "email", icon: "envelope" },
-  { name: "number", label: "Phone Number", placeholder: "Phone Number", type: "tel", icon: "phone" },
-  { name: "address", label: "Address", placeholder: "Address", type: "text", icon: "location-pin" },
+  {
+    name: "name",
+    label: "Full Name",
+    placeholder: "Your Name",
+    type: "text",
+    icon: "user",
+  },
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Your Email",
+    type: "email",
+    icon: "envelope",
+  },
+  {
+    name: "number",
+    label: "Phone Number",
+    placeholder: "Phone Number",
+    type: "tel",
+    icon: "phone",
+  },
+  {
+    name: "address",
+    label: "Address",
+    placeholder: "Address",
+    type: "text",
+    icon: "location-pin",
+  },
 ] as const;
 
 const contactSchema = z.object({
@@ -31,7 +63,8 @@ export default function ContactFormSection() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showSubmittedMessage, setShowSubmittedMessage] = useState(false);
+  // const [submitError, setSubmitError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -44,33 +77,56 @@ export default function ContactFormSection() {
 
   const { onChange: onNumberChange, ...numberField } = register("number");
 
+  useEffect(() => {
+    if (!submitted) return;
+
+    const fadeTimer = window.setTimeout(() => {
+      setShowSubmittedMessage(false);
+    }, 4000);
+    const removeTimer = window.setTimeout(() => {
+      setSubmitted(false);
+    }, 4500);
+
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [submitted]);
+
   const onSubmit = async (data: ContactFormValues) => {
-    if (!captchaToken) {
-      setSubmitError("Please complete the reCAPTCHA.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   setSubmitError("Please complete the reCAPTCHA.");
+    //   return;
+    // }
 
     setIsSubmitting(true);
-    setSubmitError(null);
+    // setSubmitError(null);
 
-    const result = await submitEnquiry("enquery_mail_contact.php", {
-      name: data.name,
-      email: data.email,
-      address: data.address,
-      phone: data.number,
-      message: data.message,
-    }, captchaToken);
+    const result = await submitEnquiry(
+      "enquery_mail_contact.php",
+      {
+        name: data.name,
+        email: data.email,
+        address: data.address,
+        phone: data.number,
+        message: data.message,
+      },
+      // captchaToken,
+    );
 
     setIsSubmitting(false);
 
-    if (!result.ok) {
-      setSubmitError(result.message ?? "Something went wrong. Please try again later.");
-      return;
-    }
+    // if (!result.ok) {
+    //   setSubmitError(
+    //     result.message ?? "Something went wrong. Please try again later.",
+    //   );
+    //   return;
+    // }
 
     setSubmitted(true);
+    setShowSubmittedMessage(true);
     reset();
-    setCaptchaToken(null);
+    // setCaptchaToken(null);
   };
 
   return (
@@ -97,10 +153,17 @@ export default function ContactFormSection() {
             Get in Touch!
           </h1>
 
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
+          <form
+            className="space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
             {fields.map(({ name, label, placeholder, type, icon }) => (
               <div key={name}>
-                <label htmlFor={name} className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+                <label
+                  htmlFor={name}
+                  className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+                >
                   {label} <span className="text-red-500">*</span>
                 </label>
                 <div
@@ -108,7 +171,10 @@ export default function ContactFormSection() {
                     errors[name] ? "border-red-400" : "border-hairline"
                   }`}
                 >
-                  <i className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`} aria-hidden="true" />
+                  <i
+                    className={`fa-solid fa-${icon} text-base text-luxury-muted shrink-0`}
+                    aria-hidden="true"
+                  />
                   <input
                     id={name}
                     type={type}
@@ -116,13 +182,20 @@ export default function ContactFormSection() {
                     maxLength={name === "number" ? PHONE_MAX_LENGTH : undefined}
                     placeholder={placeholder}
                     aria-invalid={!!errors[name]}
-                    aria-describedby={errors[name] ? `${name}-error` : undefined}
+                    aria-describedby={
+                      errors[name] ? `${name}-error` : undefined
+                    }
                     className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-muted focus:outline-none"
                     {...(name === "number"
                       ? {
                           ...numberField,
-                          onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                            e.target.value = e.target.value.replace(PHONE_ALLOWED_CHARS, "");
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>,
+                          ) => {
+                            e.target.value = e.target.value.replace(
+                              PHONE_ALLOWED_CHARS,
+                              "",
+                            );
                             onNumberChange(e);
                           },
                         }
@@ -138,7 +211,10 @@ export default function ContactFormSection() {
             ))}
 
             <div>
-              <label htmlFor="message" className="luxury-label text-[11px] text-luxury-charcoal block mb-3">
+              <label
+                htmlFor="message"
+                className="luxury-label text-[11px] text-luxury-charcoal block mb-3"
+              >
                 Your Message <span className="text-red-500">*</span>
               </label>
               <div
@@ -146,13 +222,18 @@ export default function ContactFormSection() {
                   errors.message ? "border-red-400" : "border-hairline"
                 }`}
               >
-                <i className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5" aria-hidden="true" />
+                <i
+                  className="fa-solid fa-message text-base text-luxury-muted shrink-0 mt-0.5"
+                  aria-hidden="true"
+                />
                 <textarea
                   id="message"
                   rows={4}
                   placeholder="Message"
                   aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "message-error" : undefined}
+                  aria-describedby={
+                    errors.message ? "message-error" : undefined
+                  }
                   className="flex-1 min-w-0 bg-transparent text-sm text-luxury-charcoal placeholder:text-luxury-muted focus:outline-none resize-none"
                   {...register("message")}
                 />
@@ -164,20 +245,30 @@ export default function ContactFormSection() {
               )}
             </div>
 
-            <Recaptcha onChange={setCaptchaToken} />
+            {/* <Recaptcha onChange={setCaptchaToken} /> */}
 
-            {submitError && <p className="text-sm text-red-500 font-medium">{submitError}</p>}
+            {/* {submitError && (
+              <p className="text-sm text-red-500 font-medium">{submitError}</p>
+            )} */}
 
             <button
               type="submit"
               disabled={isSubmitting}
               className="luxury-btn luxury-btn-accent cursor-pointer max-w-80 justify-center !py-4 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Sending…" : submitted ? "Message Sent" : "Send Message"}
+              {isSubmitting
+                ? "Sending…"
+                : submitted
+                  ? "Message Sent"
+                  : "Send Message"}
             </button>
             {submitted && (
-              <p className="text-sm text-luxury-muted text-center bg-green-700 text-white py-4">
-                Thank you — our reservations team will be in touch shortly.
+              <p
+                className={`text-sm text-luxury-muted ps-3 bg-green-700 text-white py-4 transition-opacity duration-500 ${
+                  showSubmittedMessage ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                Thank you — Our reservations team will be in touch shortly.
               </p>
             )}
           </form>

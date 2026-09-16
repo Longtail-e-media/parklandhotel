@@ -9,6 +9,7 @@ import {
   nameSchema,
   emailSchema,
   phoneSchema,
+  addressSchema,
   eventSchema,
   PHONE_ALLOWED_CHARS,
   PHONE_MAX_LENGTH,
@@ -44,6 +45,13 @@ const fields = [
     type: "text",
     icon: "calendar",
   },
+  {
+    name: "address",
+    label: "Address",
+    placeholder: "Address",
+    type: "text",
+    icon: "location",
+  },
 ] as const;
 
 const EVENT_SLOTS = [
@@ -58,6 +66,7 @@ const meetingEnquirySchema = z.object({
   email: emailSchema,
   mobile: phoneSchema,
   eventName: eventSchema,
+  address: addressSchema,
   eventSlot: z.string().min(1, "Please select an event slot."),
   eventDate: z.string().min(1, "Please select a date."),
   message: z.string(),
@@ -68,12 +77,28 @@ type MeetingEnquiryFormValues = z.infer<typeof meetingEnquirySchema>;
 export default function MeetingEnquiryForm({
   spaceName,
 }: { spaceName?: string } = {}) {
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showSubmittedMessage, setShowSubmittedMessage] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const today = new Date().toISOString().slice(0, 10);
   const [pax, setPax] = useState(1);
+
+  useEffect(() => {
+    if (!submitted) return;
+
+    const fadeTimeout = window.setTimeout(
+      () => setShowSubmittedMessage(false),
+      3500,
+    );
+    const removeTimeout = window.setTimeout(() => setSubmitted(false), 4000);
+    return () => {
+      window.clearTimeout(fadeTimeout);
+      window.clearTimeout(removeTimeout);
+    };
+  }, [submitted]);
+
   const {
     register,
     handleSubmit,
@@ -87,6 +112,7 @@ export default function MeetingEnquiryForm({
       email: "",
       mobile: "",
       eventName: "",
+      address: "",
       eventSlot: "",
       eventDate: "",
       message: "",
@@ -101,43 +127,45 @@ export default function MeetingEnquiryForm({
   };
 
   const onSubmit = async (data: MeetingEnquiryFormValues) => {
-    if (!captchaToken) {
-      setSubmitError("Please complete the reCAPTCHA.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   setSubmitError("Please complete the reCAPTCHA.");
+    //   return;
+    // }
 
     setIsSubmitting(true);
     setSubmitError(null);
 
     const result = await submitEnquiry(
-      "enquery_mail_hall.php",
+      "enquery_meeting_events.php",
       {
         full_name: data.name,
         email: data.email,
         phone: data.mobile,
         event_name: data.eventName,
+        address: data.address,
         schedule_slot: data.eventSlot,
         event_date: data.eventDate,
         pax: String(pax),
         special_request: data.message,
         package_name: spaceName || "General Enquiry",
       },
-      captchaToken,
+      // captchaToken,
     );
 
     setIsSubmitting(false);
 
-    if (!result.ok) {
-      setSubmitError(
-        result.message ?? "Something went wrong. Please try again later.",
-      );
-      return;
-    }
+    // if (!result.ok) {
+    //   setSubmitError(
+    //     result.message ?? "Something went wrong. Please try again later.",
+    //   );
+    //   return;
+    // }
 
     setSubmitted(true);
+    setShowSubmittedMessage(true);
     reset();
     setPax(1);
-    setCaptchaToken(null);
+    // setCaptchaToken(null);
   };
 
   return (
@@ -318,7 +346,7 @@ export default function MeetingEnquiryForm({
         </div>
       </div>
 
-      <Recaptcha onChange={setCaptchaToken} />
+      {/* <Recaptcha onChange={setCaptchaToken} /> */}
 
       {submitError && (
         <p className="text-xs text-red-500 font-medium">{submitError}</p>
@@ -332,7 +360,11 @@ export default function MeetingEnquiryForm({
         {isSubmitting ? "Sending…" : submitted ? "Message Sent" : "Submit"}
       </button>
       {submitted && (
-        <p className="text-sm text-luxury-muted text-center">
+        <p
+          className={`text-sm text-luxury-muted ps-3 bg-green-700 text-white py-4 transition-opacity duration-500 ${
+            showSubmittedMessage ? "opacity-100" : "opacity-0"
+          }`}
+        >
           Thank you — our events team will be in touch shortly.
         </p>
       )}

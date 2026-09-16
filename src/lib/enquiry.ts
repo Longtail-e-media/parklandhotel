@@ -5,7 +5,8 @@
 // server-side and send the email themselves; there is nothing to configure
 // on the Next.js side beyond the recipient's reCAPTCHA site key.
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost/hotelparkland/api/v1/";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost/hotelparkland/api/v1/";
 
 // The CMS also serves these PHP endpoints from its root — e.g.
 // http://localhost/hotelparkland/enquery_mail_contact.php when the API is
@@ -30,7 +31,7 @@ export function cmsEndpointUrl(endpointFile: string): string {
 export async function submitEnquiry(
   endpointFile: string,
   data: Record<string, unknown>,
-  captchaToken: string,
+  // captchaToken: string,
 ): Promise<EnquiryResult> {
   try {
     const res = await fetch(cmsEndpointUrl(endpointFile), {
@@ -40,17 +41,27 @@ export async function submitEnquiry(
     });
 
     if (!res.ok) {
-      return { ok: false, message: "Server responded with an error. Please try again later." };
+      return {
+        ok: false,
+        message: "Server responded with an error. Please try again later.",
+      };
     }
 
     const json = await res.json().catch(() => null);
     if (json && json.action === "unsuccess") {
-      return { ok: false, message: json.message || "Something went wrong. Please try again later." };
+      return {
+        ok: false,
+        message:
+          json.message || "Something went wrong. Please try again later.",
+      };
     }
 
     return { ok: true };
   } catch (err) {
     console.warn("[submitEnquiry] failed:", err);
-    return { ok: false, message: "Something went wrong. Please try again later." };
+    return {
+      ok: false,
+      message: "Something went wrong. Please try again later.",
+    };
   }
 }

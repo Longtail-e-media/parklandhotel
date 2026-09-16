@@ -75,7 +75,9 @@ function organizationSchema() {
   };
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang={site.locale}
@@ -95,7 +97,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema()),
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col font-sans">
