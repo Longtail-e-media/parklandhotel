@@ -14,7 +14,7 @@
  */
 
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://parkland.sambajracharya.com.np"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://parkland-hotel.vercel.app"
 ).replace(/\/$/, "");
 
 export const site = {
@@ -107,5 +107,7 @@ export const links = {
    * only as a fallback for when that CMS field is unavailable.
    */
   booking: `${SITE_URL}/result.php?hotel_code=QmLox96`,
-  social: ["https://www.facebook.com/Hotel-Parkland-Chitwan-National-Park-Sauraha"] as string[],
+  social: [
+    "https://www.facebook.com/Hotel-Parkland-Chitwan-National-Park-Sauraha",
+  ] as string[],
 } as const;
